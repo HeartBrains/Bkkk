@@ -23,8 +23,9 @@ import { ShopPage } from './components/pages/ShopPage';
 import { PressPage } from './components/pages/PressPage';
 import { ContactPage } from './components/pages/ContactPage';
 import { HiddenAssetsPage } from './components/pages/HiddenAssetsPage';
+import { ArtistDetailPage } from './components/pages/ArtistDetailPage';
 
-export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'shop' | 'press' | 'contact' | 'hidden-assets';
+export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'artist-detail' | 'shop' | 'press' | 'contact' | 'hidden-assets';
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false); // New state for Landing Page
@@ -132,8 +133,9 @@ export default function App() {
         {currentPage === 'exhibitions' && <ExhibitionsPage onNavigate={handleNavigate} />}
         {currentPage === 'exhibition-detail' && <ExhibitionDetailPage onNavigate={handleNavigate} slug={selectedSlug || "unwinding-architecture"} backPage={backPage} />}
         {currentPage === 'archives' && <ArchivesPage onNavigate={handleNavigate} />}
-        {currentPage === 'residency' && <ResidencyPage />}
-        {currentPage === 'shop' && <ShopPage />}
+        {currentPage === 'residency' && <ResidencyPage onNavigate={handleNavigate} />}
+        {currentPage === 'artist-detail' && <ArtistDetailPage onNavigate={handleNavigate} slug={selectedSlug} backPage={backPage} />}
+        {currentPage === 'shop' && <ShopPage onNavigate={handleNavigate} />}
         {currentPage === 'press' && <PressPage />}
         {currentPage === 'contact' && <ContactPage />}
         {currentPage === 'hidden-assets' && <HiddenAssetsPage />}

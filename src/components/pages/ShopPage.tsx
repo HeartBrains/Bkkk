@@ -5,7 +5,11 @@ import { Reveal } from '../ui/Reveal';
 
 type SortOption = 'newest' | 'price-asc' | 'price-desc';
 
-export function ShopPage() {
+interface ShopPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function ShopPage({ onNavigate }: ShopPageProps) {
   const [activeTab, setActiveTab] = useState<'products' | 'bookings'>('products');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
@@ -94,7 +98,10 @@ export function ShopPage() {
                 {activeTab === 'products' ? (
                     products.map((product, index) => (
                         <Reveal key={product.id} delay={index * 0.1}>
-                            <div className="group cursor-pointer max-w-md">
+                            <div 
+                                className="group cursor-pointer max-w-md"
+                                onClick={() => onNavigate?.('contact')}
+                            >
                                 {/* Placeholder Image */}
                                 <div className="aspect-[4/5] w-full bg-gray-300 mb-6" />
                                 
@@ -116,7 +123,10 @@ export function ShopPage() {
                                     <span className="text-xl md:text-2xl font-normal font-sans text-black">{booking.price}</span>
                                 </div>
                                 
-                                <button className="border border-black px-4 py-2 text-lg font-sans text-black hover:bg-black hover:text-white transition-colors">
+                                <button 
+                                    className="border border-black px-4 py-2 text-lg font-sans text-black hover:bg-black hover:text-white transition-colors cursor-pointer"
+                                    onClick={() => onNavigate?.('contact')}
+                                >
                                     Book Ticket
                                 </button>
                             </div>

@@ -24,12 +24,22 @@ export function PressPage() {
                 <div className="border-b border-gray-200 py-8">
                     <p className="text-gray-500 mb-2">November 22, 2025</p>
                     <h2 className="text-2xl font-sans text-black mb-4">Bangkok Kunsthalle Opens New Exhibition</h2>
-                    <a href="#" className="text-black underline underline-offset-4 hover:text-gray-600 transition-colors">Download PDF</a>
+                    <button 
+                        onClick={() => console.log('Download PDF')} 
+                        className="text-black underline underline-offset-4 hover:text-gray-600 transition-colors"
+                    >
+                        Download PDF
+                    </button>
                 </div>
                 <div className="border-b border-gray-200 py-8">
                     <p className="text-gray-500 mb-2">October 15, 2025</p>
                     <h2 className="text-2xl font-sans text-black mb-4">Interview with Curator Mark Chearavanont</h2>
-                    <a href="#" className="text-black underline underline-offset-4 hover:text-gray-600 transition-colors">Read Article</a>
+                    <button 
+                        onClick={() => console.log('Read Article')}
+                        className="text-black underline underline-offset-4 hover:text-gray-600 transition-colors"
+                    >
+                        Read Article
+                    </button>
                 </div>
             </div>
         </Reveal>

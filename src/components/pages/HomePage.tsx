@@ -89,7 +89,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
       </HeroSlider>
 
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         
         {/* Current Exhibitions */}
         <section className="flex flex-col md:flex-row mb-32 md:mb-40">

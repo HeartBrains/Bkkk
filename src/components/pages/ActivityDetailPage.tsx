@@ -86,7 +86,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
                {galleryImages.map((src, index) => (
                   <CarouselItem key={index} className="h-full pl-0">
                      <ImageWithFallback
-                        src={src}
+                        src={`https://picsum.photos/seed/${index + 1}/1920/1080`}
                         alt={`${postData.title} Gallery ${index + 1}`}
                         className="w-full h-full object-cover opacity-90"
                      />
@@ -116,7 +116,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
                       }`}
                    >
                       <ImageWithFallback
-                         src={src}
+                         src={`https://picsum.photos/seed/${index + 1}/1920/1080`}
                          alt={`Thumbnail ${index + 1}`}
                          className="w-full h-full object-cover"
                       />

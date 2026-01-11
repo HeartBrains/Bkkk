@@ -17,7 +17,7 @@ export function VisitPage() {
             </ParallaxHero>
 
             {/* Content */}
-            <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+            <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
                 <VisitInfo />
             </div>
         </div>

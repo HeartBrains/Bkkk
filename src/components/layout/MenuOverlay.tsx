@@ -231,10 +231,20 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                         </button>
                     </div>
 
-                    <div className="text-xl md:text-2xl font-normal text-gray-500 select-none tracking-wide">
-                        <span className="text-white cursor-pointer hover:text-gray-300 transition-colors">EN</span>
+                    <div className="text-xl md:text-2xl font-normal text-gray-500 select-none tracking-wide flex items-center">
+                        <button 
+                            className="text-white cursor-pointer hover:text-gray-300 transition-colors"
+                            onClick={() => console.log('Switch to EN')}
+                        >
+                            EN
+                        </button>
                         <span className="mx-2">|</span>
-                        <span className="cursor-pointer hover:text-white transition-colors">TH</span>
+                        <button 
+                            className="cursor-pointer hover:text-white transition-colors"
+                            onClick={() => console.log('Switch to TH')}
+                        >
+                            TH
+                        </button>
                     </div>
                 </motion.div>
 

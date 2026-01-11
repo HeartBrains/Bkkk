@@ -11,6 +11,7 @@ interface BlogPageProps {
 
 interface BlogPost {
     id: string;
+    slug: string; // Add slug
     title: string;
     subtitle: string;
     date: string;
@@ -28,52 +29,52 @@ const BLOG_DATA: BlogYear[] = [
     {
         year: '2026',
         posts: [
-            { id: '2026-1', title: 'Future Visions', subtitle: 'Art of Tomorrow', date: '15 January 2026', image: ASSETS.BLOG_1, isCurrent: true },
+            { id: '2026-1', slug: 'future-visions', title: 'Future Visions', subtitle: 'Art of Tomorrow', date: '15 January 2026', image: ASSETS.BLOG_1, isCurrent: true },
         ]
     },
     {
         year: '2025',
         posts: [
-            { id: '2025-1', title: 'Art as a Reflection of Society', subtitle: 'Contemporary perspectives', date: '01 December 2025', image: ASSETS.BLOG_1 },
-            { id: '2025-2', title: 'The Evolution of Light Installations', subtitle: 'Illuminating spaces', date: '15 November 2025', image: ASSETS.BLOG_2 },
-            { id: '2025-3', title: 'Digital Frontiers in Art', subtitle: 'Virtual reality meets canvas', date: '20 October 2025', image: ASSETS.BLOG_3 },
-            { id: '2025-4', title: 'Sustainable Sculpture', subtitle: 'Eco-friendly materials', date: '05 September 2025', image: ASSETS.BLOG_4 },
+            { id: '2025-1', slug: 'art-as-reflection', title: 'Art as a Reflection of Society', subtitle: 'Contemporary perspectives', date: '01 December 2025', image: ASSETS.BLOG_1 },
+            { id: '2025-2', slug: 'evolution-of-light', title: 'The Evolution of Light Installations', subtitle: 'Illuminating spaces', date: '15 November 2025', image: ASSETS.BLOG_2 },
+            { id: '2025-3', slug: 'digital-frontiers', title: 'Digital Frontiers in Art', subtitle: 'Virtual reality meets canvas', date: '20 October 2025', image: ASSETS.BLOG_3 },
+            { id: '2025-4', slug: 'sustainable-sculpture', title: 'Sustainable Sculpture', subtitle: 'Eco-friendly materials', date: '05 September 2025', image: ASSETS.BLOG_4 },
         ]
     },
     {
         year: '2024',
         posts: [
-            { id: '2024-1', title: 'Shadows and Silhouettes', subtitle: 'A Study in Contrast', date: '15 December 2024', image: ASSETS.BLOG_3 },
-            { id: '2024-2', title: 'Neon Cities: Urban Aesthetics', subtitle: 'City lights and nights', date: '10 November 2024', image: ASSETS.BLOG_4 },
-            { id: '2024-3', title: 'Abstract Expressionism Today', subtitle: 'Color and form', date: '22 September 2024', image: ASSETS.BLOG_5 },
-            { id: '2024-4', title: 'Minimalist Architecture', subtitle: 'Less is more', date: '14 August 2024', image: ASSETS.BLOG_6 },
-            { id: '2024-5', title: 'The Sound of Art', subtitle: 'Auditory experiences', date: '30 June 2024', image: ASSETS.BLOG_1 },
+            { id: '2024-1', slug: 'shadows-and-silhouettes', title: 'Shadows and Silhouettes', subtitle: 'A Study in Contrast', date: '15 December 2024', image: ASSETS.BLOG_3 },
+            { id: '2024-2', slug: 'neon-cities', title: 'Neon Cities: Urban Aesthetics', subtitle: 'City lights and nights', date: '10 November 2024', image: ASSETS.BLOG_4 },
+            { id: '2024-3', slug: 'abstract-expressionism', title: 'Abstract Expressionism Today', subtitle: 'Color and form', date: '22 September 2024', image: ASSETS.BLOG_5 },
+            { id: '2024-4', slug: 'minimalist-architecture', title: 'Minimalist Architecture', subtitle: 'Less is more', date: '14 August 2024', image: ASSETS.BLOG_6 },
+            { id: '2024-5', slug: 'sound-of-art', title: 'The Sound of Art', subtitle: 'Auditory experiences', date: '30 June 2024', image: ASSETS.BLOG_1 },
         ]
     },
     {
         year: '2023',
         posts: [
-            { id: '2023-1', title: 'Traditional Dance in Modern Times', subtitle: 'Cultural preservation', date: '05 December 2023', image: ASSETS.BLOG_5 },
-            { id: '2023-2', title: 'Ceramics and Culture', subtitle: 'Clay through history', date: '12 October 2023', image: ASSETS.BLOG_2 },
-            { id: '2023-3', title: 'Street Art Revolution', subtitle: 'Walls that speak', date: '18 August 2023', image: ASSETS.BLOG_3 },
-            { id: '2023-4', title: 'Textile Narratives', subtitle: 'Woven stories', date: '05 June 2023', image: ASSETS.BLOG_4 },
-            { id: '2023-5', title: 'Performance Art Retrospective', subtitle: 'Body as medium', date: '22 April 2023', image: ASSETS.BLOG_6 },
+            { id: '2023-1', slug: 'traditional-dance', title: 'Traditional Dance in Modern Times', subtitle: 'Cultural preservation', date: '05 December 2023', image: ASSETS.BLOG_5 },
+            { id: '2023-2', slug: 'ceramics-and-culture', title: 'Ceramics and Culture', subtitle: 'Clay through history', date: '12 October 2023', image: ASSETS.BLOG_2 },
+            { id: '2023-3', slug: 'street-art', title: 'Street Art Revolution', subtitle: 'Walls that speak', date: '18 August 2023', image: ASSETS.BLOG_3 },
+            { id: '2023-4', slug: 'textile-narratives', title: 'Textile Narratives', subtitle: 'Woven stories', date: '05 June 2023', image: ASSETS.BLOG_4 },
+            { id: '2023-5', slug: 'performance-art-retro', title: 'Performance Art Retrospective', subtitle: 'Body as medium', date: '22 April 2023', image: ASSETS.BLOG_6 },
         ]
     },
     {
         year: '2022',
         posts: [
-            { id: '2022-1', title: 'Industrial Spaces Reimagined', subtitle: 'Architecture and art', date: '01 December 2022', image: ASSETS.BLOG_6 },
-            { id: '2022-2', title: 'Photography in the Digital Age', subtitle: 'Capturing moments', date: '15 October 2022', image: ASSETS.BLOG_1 },
-            { id: '2022-3', title: 'Installation Art Basics', subtitle: 'Immersive environments', date: '20 August 2022', image: ASSETS.BLOG_2 },
-            { id: '2022-4', title: 'Color Theory in Practice', subtitle: 'Emotional spectrum', date: '10 June 2022', image: ASSETS.BLOG_3 },
+            { id: '2022-1', slug: 'industrial-spaces', title: 'Industrial Spaces Reimagined', subtitle: 'Architecture and art', date: '01 December 2022', image: ASSETS.BLOG_6 },
+            { id: '2022-2', slug: 'photography-digital', title: 'Photography in the Digital Age', subtitle: 'Capturing moments', date: '15 October 2022', image: ASSETS.BLOG_1 },
+            { id: '2022-3', slug: 'installation-basics', title: 'Installation Art Basics', subtitle: 'Immersive environments', date: '20 August 2022', image: ASSETS.BLOG_2 },
+            { id: '2022-4', slug: 'color-theory', title: 'Color Theory in Practice', subtitle: 'Emotional spectrum', date: '10 June 2022', image: ASSETS.BLOG_3 },
         ]
     },
     {
         year: '2021',
         posts: [
-            { id: '2021-1', title: 'The Origins of Bauhaus', subtitle: 'Design history', date: '12 December 2021', image: ASSETS.BLOG_4 },
-            { id: '2021-2', title: 'Art Deco Revival', subtitle: 'Geometric elegance', date: '05 October 2021', image: ASSETS.BLOG_5 },
+            { id: '2021-1', slug: 'origins-bauhaus', title: 'The Origins of Bauhaus', subtitle: 'Design history', date: '12 December 2021', image: ASSETS.BLOG_4 },
+            { id: '2021-2', slug: 'art-deco-revival', title: 'Art Deco Revival', subtitle: 'Geometric elegance', date: '05 October 2021', image: ASSETS.BLOG_5 },
         ]
     }
 ];
@@ -196,7 +197,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
        </ParallaxHero>
 
       {/* Content Section */}
-      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         <div className="flex flex-col md:flex-row">
             
             {/* Sidebar - Shows only years that are currently loaded/visible */}
@@ -228,7 +229,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
                                 <Reveal key={post.id}>
                                     <div 
                                         className="flex flex-col gap-6 cursor-pointer group w-full md:max-w-2xl"
-                                        onClick={() => onNavigate('blog-detail')}
+                                        onClick={() => onNavigate('blog-detail', post.slug)}
                                     >
                                         {/* Image */}
                                         <div className="aspect-[4/5] w-full bg-gray-200 overflow-hidden">

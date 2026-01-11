@@ -2,7 +2,7 @@ import { Instagram, Facebook, AtSign } from 'lucide-react';
 
 export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
-    <footer className="w-full bg-black text-white py-12 px-6 md:px-12 border-t border-white/10">
+    <footer className="w-full bg-black text-white md:px-12 border-t border-white/10 p-[48px]">
       <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0">
         
         {/* Left: Logo */}
@@ -40,7 +40,7 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
+            <a href="mailto:info@bangkokkunsthalle.com" className="hover:text-gray-300 transition-colors">
               <AtSign className="w-5 h-5" />
             </a>
           </div>

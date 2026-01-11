@@ -71,7 +71,7 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
       </ParallaxHero>
 
       {/* Main Content */}
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Activities Label - Col 1-2 */}

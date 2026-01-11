@@ -16,7 +16,7 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false }: Head
     >
       <div 
         onClick={onLogoClick}
-        className="text-3xl font-bold tracking-tight leading-none font-sans cursor-pointer mt-[0px] mr-[0px] mb-[0px] ml-[24px]"
+        className="text-3xl font-bold tracking-tight leading-none font-sans cursor-pointer mt-[0px] mr-[0px] mb-[0px] ml-0 md:ml-[24px]"
       >
         Bangkok
         <br />
@@ -27,7 +27,7 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false }: Head
         onClick={onMenuClick}
         className={`w-[9vw] h-[9vw] min-w-[9vw] min-h-[9vw] md:w-[6vw] md:h-[6vw] md:min-w-[6vw] md:min-h-[6vw] !p-0 ${isTransparent ? "text-white hover:bg-white/20 hover:text-white" : "text-black hover:bg-black/10"}`}
       >
-        <Menu className="!w-[45%] !h-[45%]" strokeWidth={1.5} />
+        <Menu className="!w-[82%] !h-[82%] md:!w-[45%] md:!h-[45%]" strokeWidth={1.5} />
       </Button>
     </header>
   );

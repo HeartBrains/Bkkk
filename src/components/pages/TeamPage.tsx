@@ -177,7 +177,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
       </ParallaxHero>
 
-      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         <div className="flex flex-col md:flex-row">
           
           {/* Sidebar */}

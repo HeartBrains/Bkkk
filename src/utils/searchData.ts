@@ -1,5 +1,6 @@
 import { MOCK_POSTS } from './mockData';
 import { RECORDS } from './records';
+import { ARTISTS_DATA } from './residencyData';
 
 export interface SearchDocument {
   id: string;
@@ -73,6 +74,13 @@ export const STATIC_SEARCH_DATA: SearchDocument[] = [
     content: 'Get in touch with us for inquiries, press information, or collaborations.',
     keywords: 'email phone address press inquiries connect hello',
     page: 'contact'
+  },
+  {
+    id: 'press',
+    title: 'Press',
+    content: 'Press releases, media kits, and coverage of Bangkok Kunsthalle.',
+    keywords: 'media news kit release journalism download coverage',
+    page: 'press'
   },
   {
     id: 'founder',
@@ -263,9 +271,17 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
     }
   });
 
-  // 3. (Optional) Fetch from real API if available
-  // const apiPosts = await fetch(API_ENDPOINT).then(res => res.json());
-  // ... map and push to data ...
+  // 4. Add Artists from Residency
+  ARTISTS_DATA.forEach(artist => {
+      data.push({
+          id: `artist-${artist.slug}`,
+          title: artist.name,
+          content: stripHtml(artist.bio + " " + artist.statement),
+          keywords: `artist resident residency ${artist.period} ${artist.category}`,
+          page: 'artist-detail',
+          slug: artist.slug
+      });
+  });
 
   return data;
 }

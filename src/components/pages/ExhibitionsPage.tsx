@@ -98,7 +98,7 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
       </ParallaxHero>
 
       {/* Content Container */}
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         <div className="flex flex-col md:flex-row">
             
             {/* Left Sidebar - Navigation */}
@@ -144,7 +144,7 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
                                     {/* Image */}
                                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                                         <ImageWithFallback 
-                                            src={item.image} 
+                                            src={`https://picsum.photos/seed/${index + 1}/600/800`}
                                             alt={item.title}
                                             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                         />

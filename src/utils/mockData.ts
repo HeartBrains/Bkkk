@@ -86,7 +86,7 @@ export const MOCK_POSTS: Record<string, WPPost> = {
         slug: 'art-as-reflection',
         type: 'post',
         title: 'Art as a Reflection of Society',
-        date: '22 Nov 2025',
+        date: '01 December 2025',
         categories: ['Contemporary Art', 'Culture', 'Insights'],
         content: `
     <p>Art has always served as a mirror to society, reflecting its triumphs, struggles, and evolving identity. In the contemporary landscape, this relationship has become even more intricate. Artists are not merely observers but active participants in the cultural dialogue, challenging norms and envisioning new futures.</p>
@@ -103,7 +103,27 @@ export const MOCK_POSTS: Record<string, WPPost> = {
                 { title: "Digital Horizons", desc: "Investigating the intersection of technology and traditional artistic practices." }
             ]
         }
-    }
+    },
+    'future-visions': createMockPost('future-visions', 'post', 'Future Visions', '15 January 2026', ASSETS.BLOG_1),
+    'evolution-of-light': createMockPost('evolution-of-light', 'post', 'The Evolution of Light Installations', '15 November 2025', ASSETS.BLOG_2),
+    'digital-frontiers': createMockPost('digital-frontiers', 'post', 'Digital Frontiers in Art', '20 October 2025', ASSETS.BLOG_3),
+    'sustainable-sculpture': createMockPost('sustainable-sculpture', 'post', 'Sustainable Sculpture', '05 September 2025', ASSETS.BLOG_4),
+    'shadows-and-silhouettes': createMockPost('shadows-and-silhouettes', 'post', 'Shadows and Silhouettes', '15 December 2024', ASSETS.BLOG_3),
+    'neon-cities': createMockPost('neon-cities', 'post', 'Neon Cities: Urban Aesthetics', '10 November 2024', ASSETS.BLOG_4),
+    'abstract-expressionism': createMockPost('abstract-expressionism', 'post', 'Abstract Expressionism Today', '22 September 2024', ASSETS.BLOG_5),
+    'minimalist-architecture': createMockPost('minimalist-architecture', 'post', 'Minimalist Architecture', '14 August 2024', ASSETS.BLOG_6),
+    'sound-of-art': createMockPost('sound-of-art', 'post', 'The Sound of Art', '30 June 2024', ASSETS.BLOG_1),
+    'traditional-dance': createMockPost('traditional-dance', 'post', 'Traditional Dance in Modern Times', '05 December 2023', ASSETS.BLOG_5),
+    'ceramics-and-culture': createMockPost('ceramics-and-culture', 'post', 'Ceramics and Culture', '12 October 2023', ASSETS.BLOG_2),
+    'street-art': createMockPost('street-art', 'post', 'Street Art Revolution', '18 August 2023', ASSETS.BLOG_3),
+    'textile-narratives': createMockPost('textile-narratives', 'post', 'Textile Narratives', '05 June 2023', ASSETS.BLOG_4),
+    'performance-art-retro': createMockPost('performance-art-retro', 'post', 'Performance Art Retrospective', '22 April 2023', ASSETS.BLOG_6),
+    'industrial-spaces': createMockPost('industrial-spaces', 'post', 'Industrial Spaces Reimagined', '01 December 2022', ASSETS.BLOG_6),
+    'photography-digital': createMockPost('photography-digital', 'post', 'Photography in the Digital Age', '15 October 2022', ASSETS.BLOG_1),
+    'installation-basics': createMockPost('installation-basics', 'post', 'Installation Art Basics', '20 August 2022', ASSETS.BLOG_2),
+    'color-theory': createMockPost('color-theory', 'post', 'Color Theory in Practice', '10 June 2022', ASSETS.BLOG_3),
+    'origins-bauhaus': createMockPost('origins-bauhaus', 'post', 'The Origins of Bauhaus', '12 December 2021', ASSETS.BLOG_4),
+    'art-deco-revival': createMockPost('art-deco-revival', 'post', 'Art Deco Revival', '05 October 2021', ASSETS.BLOG_5),
 };
 
 // Keep exports for backward compatibility if needed, though mostly using lookup now
