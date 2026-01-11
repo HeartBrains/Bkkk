@@ -131,31 +131,31 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             <div className="md:col-span-6 flex flex-col gap-8">
                 <Reveal>
                     <div className="flex flex-col gap-1">
-                        <h1 className="text-3xl md:text-5xl font-bold text-black leading-tight tracking-tight mb-4">
+                        <h1 className={`text-3xl md:text-5xl font-bold text-black leading-tight tracking-tight mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {displayName}
                         </h1>
-                        <p className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {language === 'th' ? 'ศิลปินพำนัก' : 'Artist in Residence'}
                         </p>
-                        <p className="text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight mt-2">{displayPeriod}</p>
+                        <p className={`text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{displayPeriod}</p>
                     </div>
                 </Reveal>
             </div>
 
             {/* Right Column - Text Content */}
-            <div className="md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-8">
+            <div className={`md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                 <Reveal delay={0.2}>
                     <div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{language === 'th' ? 'ชีวประวัติ' : 'Biography'}</h3>
-                        <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? 'ชีวประวัติ' : 'Biography'}</h3>
+                        <p className={`text-lg md:text-xl text-gray-700 leading-relaxed ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {displayBio}
                         </p>
                     </div>
                 </Reveal>
                 <Reveal delay={0.4}>
                      <div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{language === 'th' ? 'ถ้อยแถลงการพำนัก' : 'Residency Statement'}</h3>
-                        <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? 'ถ้อยแถลงการพำนัก' : 'Residency Statement'}</h3>
+                        <p className={`text-lg md:text-xl text-gray-700 leading-relaxed ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {displayStatement}
                         </p>
                     </div>

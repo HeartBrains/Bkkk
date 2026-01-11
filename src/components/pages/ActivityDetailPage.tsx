@@ -173,7 +173,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
             </div>
 
             {/* Right Column */}
-            <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
+            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                <Reveal delay={0.2}>
                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
@@ -182,7 +182,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
                          <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                              {language === 'th' ? 'ตารางกิจกรรม' : 'Schedule'}
                          </h3>
-                         <div className="space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.acf.schedule.map((item: any, idx: number) => (
                                 <p key={idx}><span className="font-bold">{item.title}</span> {item.details}</p>
                             ))}

@@ -1,6 +1,7 @@
-import { MOCK_POSTS } from './mockData';
+import { MOCK_POSTS_BILINGUAL } from './mockDataBilingual';
 import { RECORDS } from './records';
 import { ARTISTS_DATA } from './residencyData';
+import { translations } from './translations';
 
 export interface SearchDocument {
   id: string;
@@ -8,202 +9,29 @@ export interface SearchDocument {
   content: string;
   keywords: string;
   page: string;
-  slug?: string; // Added to support navigation to specific slugs
+  slug?: string;
+  lang: 'en' | 'th';
 }
 
-export const STATIC_SEARCH_DATA: SearchDocument[] = [
-  {
-    id: 'home',
-    title: 'Home',
-    content: 'Bangkok Kunsthalle is a multidisciplinary platform for contemporary art in Thailand.',
-    keywords: 'art contemporary thailand platform bangkok main',
-    page: 'home'
-  },
-  {
-    id: 'about',
-    title: 'About Us',
-    content: 'Learn about our vision to ignite the Thai contemporary art scene, our history, and the team behind Bangkok Kunsthalle.',
-    keywords: 'history vision team background mission story who we are',
-    page: 'about'
-  },
-  {
-    id: 'vision',
-    title: 'Our Vision',
-    content: 'We aim to be a leading platform for contemporary art, fostering dialogue and creativity.',
-    keywords: 'mission goals creativity dialogue future strategy manifesto',
-    page: 'vision'
-  },
-  {
-    id: 'visit',
-    title: 'Visit Us',
-    content: 'Plan your visit to Bangkok Kunsthalle. Check our opening hours, location map, and directions.',
-    keywords: 'location map hours directions ticket access transport address',
-    page: 'visit'
-  },
-  {
-    id: 'exhibitions',
-    title: 'Exhibitions',
-    content: 'Discover our current, upcoming, and past exhibitions featuring local and international artists.',
-    keywords: 'show gallery display art artists calendar schedule what is on',
-    page: 'exhibitions'
-  },
-  {
-    id: 'activities',
-    title: 'Activities',
-    content: 'Join our educational programs, workshops, artist talks, and special events.',
-    keywords: 'events workshops education talks programs learning public',
-    page: 'activities'
-  },
-  {
-    id: 'blog',
-    title: 'Blog & News',
-    content: 'Read the latest updates, articles, interviews, and insights from the art world.',
-    keywords: 'articles updates press reviews insights journalism media',
-    page: 'blog'
-  },
-  {
-    id: 'support',
-    title: 'Support Us',
-    content: 'Help us sustain our mission by becoming a patron or donor. Support the future of Thai art.',
-    keywords: 'donate patron sponsorship funding membership giving philanthropy',
-    page: 'support'
-  },
-  {
-    id: 'contact',
-    title: 'Contact',
-    content: 'Get in touch with us for inquiries, press information, or collaborations.',
-    keywords: 'email phone address press inquiries connect hello',
-    page: 'contact'
-  },
-  {
-    id: 'press',
-    title: 'Press',
-    content: 'Press releases, media kits, and coverage of Bangkok Kunsthalle.',
-    keywords: 'media news kit release journalism download coverage',
-    page: 'press'
-  },
-  {
-    id: 'founder',
-    title: 'Founder',
-    content: 'Meet the founder of Bangkok Kunsthalle.',
-    keywords: 'biography leadership owner director profile',
-    page: 'founder'
-  },
-  {
-    id: 'team',
-    title: 'Our Team',
-    content: 'The dedicated team working behind the scenes at Bangkok Kunsthalle.',
-    keywords: 'staff curators management jobs careers hiring',
-    page: 'team'
-  },
-  {
-    id: 'residency',
-    title: 'Residency',
-    content: 'Our artist residency program supporting creative development.',
-    keywords: 'artist-in-residence studio program development exchange housing',
-    page: 'residency'
-  },
-  {
-    id: 'archives',
-    title: 'Archives',
-    content: 'Explore our digital archives of past events and exhibitions.',
-    keywords: 'history past events database records library collection',
-    page: 'archives'
-  },
-  {
-    id: 'kyaf',
-    title: 'Khao Yai Art & Film',
-    content: 'Experience art and film in the unique setting of Khao Yai.',
-    keywords: 'kyaf khao yai art film festival nature',
-    page: 'khaoyai'
-  },
-  {
-    id: 'shop',
-    title: 'Shop',
-    content: 'Browse our collection of books, merchandise, and unique items.',
-    keywords: 'store merchandise books gifts buy',
-    page: 'shop'
-  },
-  {
-    id: 'bookings',
-    title: 'Bookings',
-    content: 'Book tickets for events, screenings, and special programs.',
-    keywords: 'tickets reservations seats entry',
-    page: 'shop'
-  },
-  {
-    id: 'products',
-    title: 'Products',
-    content: 'Explore our curated selection of art products and publications.',
-    keywords: 'merch goods souvenirs catalogue',
-    page: 'shop'
-  },
-  {
-    id: 'current-exhibitions',
-    title: 'Current Exhibitions',
-    content: 'See what is currently on view at Bangkok Kunsthalle.',
-    keywords: 'now showing present display',
-    page: 'exhibitions'
-  },
-  {
-    id: 'upcoming-exhibitions',
-    title: 'Upcoming Exhibitions',
-    content: 'Preview the future exhibitions and projects coming soon.',
-    keywords: 'future coming soon next',
-    page: 'exhibitions'
-  },
-  {
-    id: 'moving-image',
-    title: 'Moving Image Program',
-    content: 'Our dedicated program for video art, film, and moving images.',
-    keywords: 'film video cinema screen movie',
-    page: 'exhibitions'
-  },
-  {
-    id: 'public-program',
-    title: 'Public Program',
-    content: 'Engage with our public programs including talks, tours, and workshops.',
-    keywords: 'education community participation',
-    page: 'activities'
-  },
-  {
-    id: 'screening-program',
-    title: 'Screening Program',
-    content: 'Attend our regular film screenings and audio-visual presentations.',
-    keywords: 'film movie cinema watch',
-    page: 'activities'
-  },
-  {
-    id: 'artists-residence',
-    title: 'Artists in Residence',
-    content: 'Meet the current artists living and working at the Kunsthalle.',
-    keywords: 'resident studio practice living',
-    page: 'residency'
-  },
-  {
-    id: 'prev-residence',
-    title: 'Previous Artists in Residence',
-    content: 'Explore the archive of artists who have participated in our residency.',
-    keywords: 'alumni past residents history',
-    page: 'residency'
-  },
-  {
-    id: 'past-exhibitions',
-    title: 'Past Exhibitions',
-    content: 'Look back at our previous exhibitions and projects.',
-    keywords: 'history archive retrospective',
-    page: 'archives'
-  },
-  {
-    id: 'past-activities',
-    title: 'Past Activities',
-    content: 'Browse our archive of past events and programs.',
-    keywords: 'history events archive old',
-    page: 'archives'
-  }
+const STATIC_PAGES_CONFIG = [
+  { id: 'home', page: 'home', titleKey: 'nav.home', content: { en: 'Bangkok Kunsthalle is a multidisciplinary platform for contemporary art in Thailand.', th: 'บางกอก คุนสท์ฮัลเล่ เป็นพื้นที่ทางศิลปะร่วมสมัยและพหุสาขาวิชาในประเทศไทย' }, keywords: 'art contemporary thailand platform bangkok main ศิลปะ ร่วมสมัย ไทย กรุงเทพ' },
+  { id: 'about', page: 'about', titleKey: 'nav.aboutUs', contentKey: 'about.description', keywords: 'history vision team background mission story who we are ประวัติ วิสัยทัศน์ ทีมงาน' },
+  { id: 'vision', page: 'vision', titleKey: 'nav.vision', contentKey: 'about.vision.content', keywords: 'mission goals creativity dialogue future strategy manifesto พันธกิจ เป้าหมาย' },
+  { id: 'visit', page: 'visit', titleKey: 'nav.visit', contentKey: 'visit.title', keywords: 'location map hours directions ticket access transport address ที่ตั้ง แผนที่ เวลาทำการ' },
+  { id: 'exhibitions', page: 'exhibitions', titleKey: 'nav.exhibitions', content: { en: 'Discover our current, upcoming, and past exhibitions.', th: 'ค้นพบนิทรรศการปัจจุบัน นิทรรศการที่กำลังจะมาถึง และนิทรรศการที่ผ่านมา' }, keywords: 'show gallery display art artists calendar schedule นิทรรศการ ศิลปะ ศิลปิน' },
+  { id: 'activities', page: 'activities', titleKey: 'nav.activities', content: { en: 'Join our educational programs, workshops, artist talks, and special events.', th: 'เข้าร่วมโปรแกรมการศึกษา เวิร์กช็อป การบรรยายของศิลปิน และกิจกรรมพิเศษของเรา' }, keywords: 'events workshops education talks programs learning public กิจกรรม เวิร์กช็อป การศึกษา' },
+  { id: 'blog', page: 'blog', titleKey: 'nav.blog', content: { en: 'Read the latest updates, articles, interviews, and insights.', th: 'อ่านข่าวสารล่าสุด บทความ บทสัมภาษณ์ และข้อมูลเชิงลึก' }, keywords: 'articles updates press reviews insights journalism media บทความ ข่าวสาร สื่อ' },
+  { id: 'support', page: 'support', titleKey: 'nav.support', content: { en: 'Help us sustain our mission by becoming a patron or donor.', th: 'ช่วยสนับสนุนพันธกิจของเราโดยการเป็นผู้มีอุปการคุณหรือผู้บริจาค' }, keywords: 'donate patron sponsorship funding membership giving philanthropy บริจาค สนับสนุน' },
+  { id: 'contact', page: 'contact', titleKey: 'nav.contact', content: { en: 'Get in touch with us for inquiries, press information, or collaborations.', th: 'ติดต่อเราสำหรับการสอบถาม ข้อมูลสื่อมวลชน หรือความร่วมมือ' }, keywords: 'email phone address press inquiries connect hello ติดต่อ อีเมล โทรศัพท์' },
+  { id: 'press', page: 'press', titleKey: 'nav.press', contentKey: 'press.title', keywords: 'media news kit release journalism download coverage สื่อ ข่าว ประชาสัมพันธ์' },
+  { id: 'founder', page: 'founder', titleKey: 'nav.founder', contentKey: 'about.foundingDirector', keywords: 'biography leadership owner director profile ผู้ก่อตั้ง ผู้อำนวยการ' },
+  { id: 'team', page: 'team', titleKey: 'nav.team', contentKey: 'team.team', keywords: 'staff curators management jobs careers hiring ทีมงาน ภัณฑารักษ์' },
+  { id: 'residency', page: 'residency', titleKey: 'nav.residency', contentKey: 'residency.description', keywords: 'artist-in-residence studio program development exchange housing ศิลปินพำนัก' },
+  { id: 'archives', page: 'archives', titleKey: 'nav.archives', content: { en: 'Explore our digital archives of past events and exhibitions.', th: 'สำรวจคลังข้อมูลดิจิทัลของกิจกรรมและนิทรรศการที่ผ่านมาของเรา' }, keywords: 'history past events database records library collection ประวัติ คลังข้อมูล' },
+  { id: 'khaoyai', page: 'khaoyai', titleKey: 'nav.khaoyai', contentKey: 'khaoyai.title', keywords: 'kyaf khao yai art film festival nature เขาใหญ่ ศิลปะ ภาพยนตร์' },
+  { id: 'shop', page: 'shop', titleKey: 'nav.shop', contentKey: 'shop.title', keywords: 'store merchandise books gifts buy ร้านค้า สินค้า หนังสือ' },
 ];
 
-// Helper to strip HTML tags for search content
 function stripHtml(html: string): string {
   const tmp = document.createElement("DIV");
   tmp.innerHTML = html;
@@ -211,80 +39,139 @@ function stripHtml(html: string): string {
 }
 
 export async function getFullSearchData(): Promise<SearchDocument[]> {
-  // 1. Start with static pages
-  const data = [...STATIC_SEARCH_DATA];
+  const data: SearchDocument[] = [];
 
-  // 2. Add dynamic content (simulated from mockData)
-  Object.values(MOCK_POSTS).forEach(post => {
-    let page = '';
-    let keywords = '';
+  // 1. Static Pages (EN & TH)
+  STATIC_PAGES_CONFIG.forEach(config => {
+    // EN
+    data.push({
+      id: `${config.id}-en`,
+      title: translations.en[config.titleKey as keyof typeof translations.en] || config.titleKey,
+      content: config.contentKey 
+        ? (translations.en[config.contentKey as keyof typeof translations.en] || '') 
+        : (typeof config.content === 'object' ? config.content.en : ''),
+      keywords: config.keywords,
+      page: config.page,
+      lang: 'en'
+    });
 
-    if (post.type === 'activity') {
-      page = 'activity-detail';
-      keywords = `activity event ${post.categories?.join(' ') || ''}`;
-    } else if (post.type === 'exhibition') {
-      page = 'exhibition-detail';
-      keywords = `exhibition art show`;
-    } else if (post.type === 'post') {
-      page = 'blog-detail';
-      keywords = `blog news ${post.categories?.join(' ') || ''}`;
-    }
-
-    if (page) {
-      data.push({
-        id: `${post.type}-${post.slug}`,
-        title: post.title,
-        content: stripHtml(post.content),
-        keywords: keywords,
-        page: page,
-        slug: post.slug
-      });
-    }
+    // TH
+    data.push({
+      id: `${config.id}-th`,
+      title: translations.th[config.titleKey as keyof typeof translations.th] || config.titleKey,
+      content: config.contentKey 
+        ? (translations.th[config.contentKey as keyof typeof translations.th] || '') 
+        : (typeof config.content === 'object' ? config.content.th : ''),
+      keywords: config.keywords,
+      page: config.page,
+      lang: 'th'
+    });
   });
 
-  // 3. Add content from RECORDS (Archives/Past events)
+  // 2. Bilingual Posts (Activities, Exhibitions, Blog)
+  Object.values(MOCK_POSTS_BILINGUAL).forEach(post => {
+    (['en', 'th'] as const).forEach(lang => {
+      const p = post[lang];
+      if (!p) return;
+
+      let page = '';
+      let keywords = '';
+
+      if (p.type === 'activity') {
+        page = 'activity-detail';
+        keywords = `activity event ${p.categories?.join(' ') || ''}`;
+      } else if (p.type === 'exhibition') {
+        page = 'exhibition-detail';
+        keywords = `exhibition art show`;
+      } else if (p.type === 'post') {
+        page = 'blog-detail';
+        keywords = `blog news ${p.categories?.join(' ') || ''}`;
+      }
+
+      if (page) {
+        data.push({
+          id: `${p.type}-${p.slug}-${lang}`,
+          title: p.title,
+          content: stripHtml(p.content),
+          keywords: keywords,
+          page: page,
+          slug: p.slug,
+          lang: lang
+        });
+      }
+    });
+  });
+
+  // 3. Records (Archives) - Currently assuming EN mostly, but we can duplicate for TH or just leave as EN
+  // Since we don't have explicit TH translations for RECORDS in the file provided, we will map them to EN
+  // and maybe provide a generic TH fallback if needed, or just let them be searchable in EN.
+  // To make them searchable in TH mode, we should at least include them with lang='th' if we want them to appear in TH search results.
   RECORDS.forEach(record => {
-    // Check for duplicates based on slug
-    const exists = data.some(d => d.slug === record.slug);
-    if (exists) return;
+      // Check if already exists in MOCK_POSTS_BILINGUAL (to avoid duplicates if they overlap)
+      // The logic in original file did this.
+      const exists = Object.values(MOCK_POSTS_BILINGUAL).some(p => p.en.slug === record.slug);
+      if (exists) return;
 
-    let page = '';
-    let keywords = '';
+      let page = '';
+      let keywords = '';
 
-    if (record.category === 'activity' || record.category === 'event') {
-      page = 'activity-detail';
-      keywords = `activity event ${record.status} ${record.description || ''}`;
-    } else if (record.category === 'exhibition') {
-      page = 'exhibition-detail';
-      keywords = `exhibition art show ${record.status} ${record.description || ''}`;
-    }
+      if (record.category === 'activity' || record.category === 'event') {
+        page = 'activity-detail';
+        keywords = `activity event ${record.status} ${record.description || ''}`;
+      } else if (record.category === 'exhibition') {
+        page = 'exhibition-detail';
+        keywords = `exhibition art show ${record.status} ${record.description || ''}`;
+      }
 
-    if (page) {
-      data.push({
-        id: `record-${record.id}`,
-        title: record.title,
-        content: `${record.description || ''} (${record.date})`,
-        keywords: keywords,
-        page: page,
-        slug: record.slug
-      });
-    }
+      if (page) {
+        // Add for EN
+        data.push({
+          id: `record-${record.id}-en`,
+          title: record.title,
+          content: `${record.description || ''} (${record.date})`,
+          keywords: keywords,
+          page: page,
+          slug: record.slug,
+          lang: 'en'
+        });
+
+        // Add for TH (using same content as fallback, so it appears in TH search)
+        data.push({
+          id: `record-${record.id}-th`,
+          title: record.title, // Keep EN title
+          content: `${record.description || ''} (${record.date})`,
+          keywords: keywords,
+          page: page,
+          slug: record.slug,
+          lang: 'th'
+        });
+      }
   });
 
-  // 4. Add Artists from Residency
+  // 4. Artists
   ARTISTS_DATA.forEach(artist => {
+      // EN
       data.push({
-          id: `artist-${artist.slug}`,
+          id: `artist-${artist.slug}-en`,
           title: artist.name,
           content: stripHtml(artist.bio + " " + artist.statement),
           keywords: `artist resident residency ${artist.period} ${artist.category}`,
           page: 'artist-detail',
-          slug: artist.slug
+          slug: artist.slug,
+          lang: 'en'
+      });
+       // TH (Fallback)
+      data.push({
+          id: `artist-${artist.slug}-th`,
+          title: artist.name,
+          content: stripHtml(artist.bio + " " + artist.statement),
+          keywords: `artist resident residency ${artist.period} ${artist.category}`,
+          page: 'artist-detail',
+          slug: artist.slug,
+          lang: 'th'
       });
   });
 
   return data;
 }
 
-// Keep the default export for backward compatibility if needed, but prefer getFullSearchData
-export const searchData = STATIC_SEARCH_DATA;
