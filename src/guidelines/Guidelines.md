@@ -1,4 +1,7 @@
 **Add your own guidelines here**
+## font consistent ##
+- make font size consistent for entire website, adjust to 5  font sizes, font's weight to 4 weight
+
 <!--
 
 System Guidelines

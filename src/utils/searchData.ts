@@ -1,12 +1,16 @@
+import { MOCK_POSTS } from './mockData';
+import { RECORDS } from './records';
+
 export interface SearchDocument {
   id: string;
   title: string;
   content: string;
   keywords: string;
   page: string;
+  slug?: string; // Added to support navigation to specific slugs
 }
 
-export const searchData: SearchDocument[] = [
+export const STATIC_SEARCH_DATA: SearchDocument[] = [
   {
     id: 'home',
     title: 'Home',
@@ -99,17 +103,172 @@ export const searchData: SearchDocument[] = [
     page: 'archives'
   },
   {
-    id: 'exhibition-search-for-life',
-    title: 'Search for Life I',
-    content: 'Exhibition by Stephanie Comilang. A video installation exploring themes of migration, memory, and the butterfly effect.',
-    keywords: 'stephanie comilang video art installation butterfly terrazzo current exhibition',
-    page: 'exhibition-detail'
+    id: 'kyaf',
+    title: 'Khao Yai Art & Film',
+    content: 'Experience art and film in the unique setting of Khao Yai.',
+    keywords: 'kyaf khao yai art film festival nature',
+    page: 'khaoyai'
   },
   {
-    id: 'activity-neon-reveries',
-    title: 'Neon Reveries: Wong Kar-Wai Screening Series',
-    content: 'Screening series featuring In the Mood for Love, Happy Together, Chungking Express, and Fallen Angels.',
-    keywords: 'film cinema movie wong kar wai screening event activity',
-    page: 'activity-detail'
+    id: 'shop',
+    title: 'Shop',
+    content: 'Browse our collection of books, merchandise, and unique items.',
+    keywords: 'store merchandise books gifts buy',
+    page: 'shop'
+  },
+  {
+    id: 'bookings',
+    title: 'Bookings',
+    content: 'Book tickets for events, screenings, and special programs.',
+    keywords: 'tickets reservations seats entry',
+    page: 'shop'
+  },
+  {
+    id: 'products',
+    title: 'Products',
+    content: 'Explore our curated selection of art products and publications.',
+    keywords: 'merch goods souvenirs catalogue',
+    page: 'shop'
+  },
+  {
+    id: 'current-exhibitions',
+    title: 'Current Exhibitions',
+    content: 'See what is currently on view at Bangkok Kunsthalle.',
+    keywords: 'now showing present display',
+    page: 'exhibitions'
+  },
+  {
+    id: 'upcoming-exhibitions',
+    title: 'Upcoming Exhibitions',
+    content: 'Preview the future exhibitions and projects coming soon.',
+    keywords: 'future coming soon next',
+    page: 'exhibitions'
+  },
+  {
+    id: 'moving-image',
+    title: 'Moving Image Program',
+    content: 'Our dedicated program for video art, film, and moving images.',
+    keywords: 'film video cinema screen movie',
+    page: 'exhibitions'
+  },
+  {
+    id: 'public-program',
+    title: 'Public Program',
+    content: 'Engage with our public programs including talks, tours, and workshops.',
+    keywords: 'education community participation',
+    page: 'activities'
+  },
+  {
+    id: 'screening-program',
+    title: 'Screening Program',
+    content: 'Attend our regular film screenings and audio-visual presentations.',
+    keywords: 'film movie cinema watch',
+    page: 'activities'
+  },
+  {
+    id: 'artists-residence',
+    title: 'Artists in Residence',
+    content: 'Meet the current artists living and working at the Kunsthalle.',
+    keywords: 'resident studio practice living',
+    page: 'residency'
+  },
+  {
+    id: 'prev-residence',
+    title: 'Previous Artists in Residence',
+    content: 'Explore the archive of artists who have participated in our residency.',
+    keywords: 'alumni past residents history',
+    page: 'residency'
+  },
+  {
+    id: 'past-exhibitions',
+    title: 'Past Exhibitions',
+    content: 'Look back at our previous exhibitions and projects.',
+    keywords: 'history archive retrospective',
+    page: 'archives'
+  },
+  {
+    id: 'past-activities',
+    title: 'Past Activities',
+    content: 'Browse our archive of past events and programs.',
+    keywords: 'history events archive old',
+    page: 'archives'
   }
 ];
+
+// Helper to strip HTML tags for search content
+function stripHtml(html: string): string {
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+}
+
+export async function getFullSearchData(): Promise<SearchDocument[]> {
+  // 1. Start with static pages
+  const data = [...STATIC_SEARCH_DATA];
+
+  // 2. Add dynamic content (simulated from mockData)
+  Object.values(MOCK_POSTS).forEach(post => {
+    let page = '';
+    let keywords = '';
+
+    if (post.type === 'activity') {
+      page = 'activity-detail';
+      keywords = `activity event ${post.categories?.join(' ') || ''}`;
+    } else if (post.type === 'exhibition') {
+      page = 'exhibition-detail';
+      keywords = `exhibition art show`;
+    } else if (post.type === 'post') {
+      page = 'blog-detail';
+      keywords = `blog news ${post.categories?.join(' ') || ''}`;
+    }
+
+    if (page) {
+      data.push({
+        id: `${post.type}-${post.slug}`,
+        title: post.title,
+        content: stripHtml(post.content),
+        keywords: keywords,
+        page: page,
+        slug: post.slug
+      });
+    }
+  });
+
+  // 3. Add content from RECORDS (Archives/Past events)
+  RECORDS.forEach(record => {
+    // Check for duplicates based on slug
+    const exists = data.some(d => d.slug === record.slug);
+    if (exists) return;
+
+    let page = '';
+    let keywords = '';
+
+    if (record.category === 'activity' || record.category === 'event') {
+      page = 'activity-detail';
+      keywords = `activity event ${record.status} ${record.description || ''}`;
+    } else if (record.category === 'exhibition') {
+      page = 'exhibition-detail';
+      keywords = `exhibition art show ${record.status} ${record.description || ''}`;
+    }
+
+    if (page) {
+      data.push({
+        id: `record-${record.id}`,
+        title: record.title,
+        content: `${record.description || ''} (${record.date})`,
+        keywords: keywords,
+        page: page,
+        slug: record.slug
+      });
+    }
+  });
+
+  // 3. (Optional) Fetch from real API if available
+  // const apiPosts = await fetch(API_ENDPOINT).then(res => res.json());
+  // ... map and push to data ...
+
+  return data;
+}
+
+// Keep the default export for backward compatibility if needed, but prefer getFullSearchData
+export const searchData = STATIC_SEARCH_DATA;

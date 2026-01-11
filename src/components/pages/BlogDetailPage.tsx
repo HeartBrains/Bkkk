@@ -1,72 +1,130 @@
-import { ASSETS } from '../../utils/assets';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { ArrowLeft } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { WPPost } from '../../utils/types';
+import { fetchPostBySlug } from '../../utils/api';
+import { ParallaxHero } from '../ui/ParallaxHero';
+import { Reveal } from '../ui/Reveal';
 
 interface BlogDetailPageProps {
   onNavigate: (page: string) => void;
+  post?: WPPost;
+  slug?: string;
 }
 
-export function BlogDetailPage({ onNavigate }: BlogDetailPageProps) {
+export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) {
+  const [postData, setPostData] = useState<WPPost | undefined>(post);
+  const [loading, setLoading] = useState(!post && !!slug);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (post) {
+        setPostData(post);
+        setLoading(false);
+        return;
+    }
+    
+    if (slug) {
+        setLoading(true);
+        fetchPostBySlug(slug, 'post')
+            .then(data => {
+                if (data) {
+                    setPostData(data);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+    }
+  }, [post, slug]);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Post...</div>;
+  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">Post not found.</div>;
+
   return (
     <div className="w-full bg-white min-h-screen pb-24">
       {/* Hero */}
-      <div className="h-[60vh] md:h-[80vh] w-full relative overflow-hidden group">
-         <ImageWithFallback
-            src={ASSETS.BLOG_1}
-            alt="Blog Detail Hero"
-            className="w-full h-full object-cover"
-         />
-         <div className="absolute bottom-8 left-6 md:left-12 z-20">
-            <button 
-                onClick={() => onNavigate('blog')}
-                className="flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
-            >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium font-sans">Back to Blog</span>
-            </button>
-        </div>
-      </div>
+      {postData.featuredImage ? (
+         <ParallaxHero 
+            image={postData.featuredImage.sourceUrl} 
+            height="h-[80vh]"
+         >
+             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
+             <div className="absolute bottom-8 left-6 md:left-12 z-20">
+                <button 
+                    onClick={() => onNavigate('blog')}
+                    className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                    <span className="text-sm font-medium font-sans">Back to Blog</span>
+                </button>
+            </div>
+         </ParallaxHero>
+      ) : (
+         <div className="h-[20vh] bg-gray-100 w-full relative">
+            <div className="absolute bottom-8 left-6 md:left-12 z-20">
+                <button 
+                    onClick={() => onNavigate('blog')}
+                    className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-black hover:text-gray-600 transition-colors bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm"
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                    <span className="text-sm font-medium font-sans">Back to Blog</span>
+                </button>
+            </div>
+         </div>
+      )}
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
-         {/* Title */}
-         <h1 className="text-3xl md:text-4xl font-serif text-gray-900 mb-12">
-           Art as a Reflection of Society
-         </h1>
-
-         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+      <div className="w-full px-6 py-12 md:py-16">
+         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
-            <div className="md:w-1/3">
-               <div className="text-xl md:text-2xl text-gray-400 font-serif space-y-2">
-                  <p>Contemporary Art</p>
-                  <p>Culture</p>
-                  <p>Insights</p>
-                  <p className="mt-4">22 Nov 2025</p>
-               </div>
+            <div className="md:col-span-5 flex flex-col gap-8">
+               <Reveal>
+                    <div className="flex flex-col gap-1">
+                        <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                            {postData.title}
+                        </h1>
+
+                        {postData.categories && (
+                            <>
+                                {postData.categories.map((cat, idx) => (
+                                    <p key={idx} className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">{cat}</p>
+                                ))}
+                            </>
+                        )}
+
+                        {postData.date && (
+                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">{postData.date}</p>
+                        )}
+                    </div>
+               </Reveal>
             </div>
 
             {/* Right Column */}
-            <div className="md:w-2/3 text-gray-800 font-sans leading-relaxed text-lg space-y-8">
-               <p>
-                 Art has always served as a mirror to society, reflecting its triumphs, struggles, and evolving identity. In the contemporary landscape, this relationship has become even more intricate. Artists are not merely observers but active participants in the cultural dialogue, challenging norms and envisioning new futures.
-               </p>
-               
-               <p>
-                 The role of public institutions like the Bangkok Kunsthalle is to facilitate this conversation. By providing a space where diverse voices can be heard, we foster a community that values creativity and critical thinking. Our upcoming exhibitions aim to explore these themes deeply, inviting visitors to engage with art that speaks directly to the human condition in the 21st century.
-               </p>
+            <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
+               <Reveal delay={0.2}>
+                   <div dangerouslySetInnerHTML={{ __html: postData.content }} />
+               </Reveal>
 
-               <div>
-                 <h3 className="text-xl font-medium mb-4 text-black">Key Themes</h3>
-                 <div className="space-y-2 text-base">
-                    <p><span className="font-semibold">Identity & Belonging:</span> Exploring how personal and collective identities are shaped in a globalized world.</p>
-                    <p><span className="font-semibold">Urban Transformation:</span> Documenting the changing face of our cities and the impact on local communities.</p>
-                    <p><span className="font-semibold">Digital Horizons:</span> Investigating the intersection of technology and traditional artistic practices.</p>
-                 </div>
-               </div>
+               {postData.acf?.keyThemes && (
+                   <Reveal delay={0.3}>
+                       <div>
+                         <h3 className="text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight">Key Themes</h3>
+                         <div className="space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                            {postData.acf.keyThemes.map((item: any, idx: number) => (
+                                 <p key={idx}><span className="font-bold">{item.title}:</span> {item.desc}</p>
+                            ))}
+                         </div>
+                       </div>
+                   </Reveal>
+               )}
 
-               <p className="text-sm text-gray-500">
-                 Join us for our monthly talks and workshops to dive deeper into these topics with our featured artists and curators.
-               </p>
+               <Reveal delay={0.4}>
+                   <p className="text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight">
+                     Join us for our monthly talks and workshops to dive deeper into these topics with our featured artists and curators.
+                   </p>
+               </Reveal>
             </div>
          </div>
       </div>

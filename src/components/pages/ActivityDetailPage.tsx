@@ -1,69 +1,195 @@
-import { ASSETS } from '../../utils/assets';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { ArrowLeft } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "../ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef, useState, useEffect } from 'react';
+import { WPPost } from '../../utils/types';
+import { fetchPostBySlug } from '../../utils/api';
+import { Reveal } from '../ui/Reveal';
+import { VisitInfo } from './sections/VisitInfo';
 
 interface ActivityDetailPageProps {
   onNavigate: (page: string) => void;
+  activity?: WPPost;
+  slug?: string;
+  backPage?: string;
 }
 
-export function ActivityDetailPage({ onNavigate }: ActivityDetailPageProps) {
+export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: ActivityDetailPageProps) {
+  const [postData, setPostData] = useState<WPPost | undefined>(activity);
+  const [loading, setLoading] = useState(!activity && !!slug);
+  const [error, setError] = useState(false);
+
+  const plugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  )
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    if (activity) {
+        setPostData(activity);
+        setLoading(false);
+        return;
+    }
+    
+    if (slug) {
+        setLoading(true);
+        fetchPostBySlug(slug, 'activity')
+            .then(data => {
+                if (data) {
+                    setPostData(data);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+    }
+  }, [activity, slug]);
+
+  // Carousel logic (only if postData exists)
+  useEffect(() => {
+    if (!api) return
+    setCurrent(api.selectedScrollSnap())
+    api.on("select", () => setCurrent(api.selectedScrollSnap()))
+  }, [api])
+
+  const scrollTo = (index: number) => api?.scrollTo(index);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Activity...</div>;
+  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">Activity not found.</div>;
+
+  // Use gallery from postData or fallback to featured image
+  const galleryImages = postData.gallery && postData.gallery.length > 0 
+    ? postData.gallery 
+    : (postData.featuredImage ? [postData.featuredImage.sourceUrl] : []);
+
   return (
     <div className="w-full bg-white min-h-screen pb-24">
       {/* Hero */}
-      <div className="h-[60vh] md:h-[80vh] w-full relative overflow-hidden group">
-         <ImageWithFallback
-            src={ASSETS.EVENT_HERO}
-            alt="Neon Reveries"
-            className="w-full h-full object-cover"
-         />
+      <div className="h-[80vh] w-full relative overflow-hidden group bg-black">
+         <Carousel
+            setApi={setApi}
+            plugins={[plugin.current]}
+            className="w-full h-full"
+            opts={{ align: "start", loop: true }}
+         >
+            <CarouselContent className="h-full -ml-0">
+               {galleryImages.map((src, index) => (
+                  <CarouselItem key={index} className="h-full pl-0">
+                     <ImageWithFallback
+                        src={src}
+                        alt={`${postData.title} Gallery ${index + 1}`}
+                        className="w-full h-full object-cover opacity-90"
+                     />
+                  </CarouselItem>
+               ))}
+            </CarouselContent>
+            
+            {galleryImages.length > 1 && (
+                <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    <CarouselPrevious className="pointer-events-auto static transform-none h-12 w-12 bg-black/30 hover:bg-black/50 border-none text-white" />
+                    <CarouselNext className="pointer-events-auto static transform-none h-12 w-12 bg-black/30 hover:bg-black/50 border-none text-white" />
+                </div>
+            )}
+         </Carousel>
+
+         {/* Thumbnails */}
+         {galleryImages.length > 1 && (
+             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2">
+                {galleryImages.map((src, index) => (
+                   <button
+                      key={index}
+                      onClick={() => scrollTo(index)}
+                      className={`w-16 h-10 rounded-md overflow-hidden border-2 transition-all duration-300 ${
+                         current === index 
+                            ? 'border-white scale-105 shadow-lg' 
+                            : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'
+                      }`}
+                   >
+                      <ImageWithFallback
+                         src={src}
+                         alt={`Thumbnail ${index + 1}`}
+                         className="w-full h-full object-cover"
+                      />
+                   </button>
+                ))}
+             </div>
+         )}
+
+         {/* Back Button */}
          <div className="absolute bottom-8 left-6 md:left-12 z-20">
             <button 
-                onClick={() => onNavigate('activities')}
-                className="flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                onClick={() => onNavigate(backPage || 'activities')}
+                className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium font-sans">Back to Activities</span>
+                <span className="text-sm font-medium font-sans">
+                    {backPage === 'archives' ? 'Back to Archives' : 'Back to Activities'}
+                </span>
             </button>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
-         {/* Title */}
-         <h1 className="text-3xl md:text-4xl font-serif text-gray-900 mb-12">Neon Reveries</h1>
-
-         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+      <div className="w-full px-6 py-12 md:py-16">
+         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
-            <div className="md:w-1/3">
-               <div className="text-xl md:text-2xl text-gray-400 font-serif space-y-2">
-                  <p>Wong Kar-Wai</p>
-                  <p>Screening Series</p>
-                  <p>Screenings</p>
-                  <p className="mt-4">01 Oct – 01 Nov 2025</p>
-               </div>
+            <div className="md:col-span-5 flex flex-col gap-8">
+               <Reveal>
+                   <div className="flex flex-col gap-1">
+                       <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                          {postData.title}
+                       </h1>
+
+                       {postData.categories?.map((cat, idx) => (
+                           <p key={idx} className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">{cat}</p>
+                       ))}
+                       
+                       {postData.date && (
+                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">{postData.date}</p>
+                       )}
+
+                       <div className="mt-8">
+                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">Curated by</p>
+                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">Stefano Rabolli Pansera</p>
+                       </div>
+                   </div>
+               </Reveal>
             </div>
 
             {/* Right Column */}
-            <div className="md:w-2/3 text-gray-800 font-sans leading-relaxed text-lg space-y-8">
-               <p>
-                 This August and September, Bangkok Kunsthalle screens four Wong Kar Wai classics on Saturday nights, beginning with 'In the Mood for Love' (2000) on August 22—filmed partly in the Yaowarat neighborhood of the Kunsthalle. The series continues with 'Happy Together' (1997) on August 23, 'Chungking Express' (1994) on August 30, and 'Fallen Angels' (1995) on September 6. Moving from quiet longing to restless encounters and neon-lit nights, the films capture Wong's unforgettable vision of love, loneliness, and fleeting connection.
-               </p>
+            <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
+               <Reveal delay={0.2}>
+                   <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
-               <div>
-                 <h3 className="text-xl font-medium mb-4 text-black">Filming Schedule</h3>
-                 <div className="space-y-2 text-base">
-                    <p><span className="font-semibold">'In the Mood for Love' (2000)</span> on August 22 19.00 (one round only)</p>
-                    <p><span className="font-semibold">'Happy Together' (1997)</span> on August 23 Round 1 at 17.00 Round 2 at 19.00</p>
-                    <p><span className="font-semibold">'Chungking Express' (1994)</span> on August 30 Round 1 at 17.00 Round 2 at 19.00</p>
-                    <p><span className="font-semibold">'Fallen Angels' (1995)</span> on September 6 Round 1 at 17.00 Round 2 at 19.00</p>
-                    <p className="mt-4 text-gray-600">Screenings are free! Please book in advance as there is limited seating. The program will be in Original Voice with Thai subtitles. (No English Subtitles)</p>
-                 </div>
-               </div>
-
-               <p className="text-sm text-gray-500">
-                 We encourage you to arrive at Bangkok Kunsthalle 15-30 minutes before the screening begins. Seats not claimed by the start of the film may be released to visitors in the standby line.
-               </p>
+                   {postData.acf?.schedule && (
+                       <div>
+                         <h3 className="text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight">Filming Schedule</h3>
+                         <div className="space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                            {postData.acf.schedule.map((item: any, idx: number) => (
+                                <p key={idx}><span className="font-bold">{item.title}</span> {item.details}</p>
+                            ))}
+                            {postData.acf.additionalContent && (
+                                <p className="mt-4 text-black">{postData.acf.additionalContent}</p>
+                            )}
+                         </div>
+                       </div>
+                   )}
+               </Reveal>
             </div>
+         </div>
+
+         <div className="mt-24 md:mt-32">
+            <VisitInfo />
          </div>
       </div>
     </div>

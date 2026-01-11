@@ -32,7 +32,7 @@ export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => voi
         
         <div className="absolute inset-0 flex items-center justify-center">
             <Reveal>
-                <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif text-white text-center">
+                <h1 className="text-4xl md:text-6xl lg:text-8xl font-sans text-white text-center">
                     Khao Yai<br />Art Forest
                 </h1>
             </Reveal>
@@ -40,10 +40,10 @@ export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => voi
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 space-y-4">
+      <div className="w-full px-6 py-12 md:py-20 space-y-4">
         <Reveal>
             <div className="text-center py-20">
-                <p className="text-xl text-gray-500 font-serif">Coming Soon</p>
+                <p className="text-xl text-gray-500 font-sans">Coming Soon</p>
             </div>
         </Reveal>
       </div>

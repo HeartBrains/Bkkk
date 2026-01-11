@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MenuOverlay } from './components/layout/MenuOverlay';
+import { BackToTop } from './components/ui/BackToTop';
 import { LandingPage } from './components/pages/LandingPage'; // Import LandingPage
 import { HomePage } from './components/pages/HomePage';
 import { KhaoYaiPage } from './components/pages/KhaoYaiPage';
 import { AboutPage } from './components/pages/AboutPage';
-import { FounderPage } from './components/pages/FounderPage';
 import { TeamPage } from './components/pages/TeamPage';
 import { SupportPage } from './components/pages/SupportPage';
 import { VisitPage } from './components/pages/VisitPage';
@@ -32,6 +32,10 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // New state for navigation history and detail pages
+  const [selectedSlug, setSelectedSlug] = useState<string | undefined>();
+  const [backPage, setBackPage] = useState<Page | undefined>();
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -40,7 +44,19 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (page: string) => {
+  const handleNavigate = (page: string, slug?: string, backTo?: Page) => {
+      // If navigating to a detail page, set the slug and back reference
+      if (slug) {
+          setSelectedSlug(slug);
+      }
+      if (backTo) {
+          setBackPage(backTo);
+      } else {
+          // If simply navigating top-level, reset backPage unless we want to keep history?
+          // Usually we want to reset it so default "Back" works.
+          setBackPage(undefined);
+      }
+
       setCurrentPage(page as Page);
       window.scrollTo(0, 0);
       setIsMenuOpen(false);
@@ -73,9 +89,12 @@ export default function App() {
     currentPage === 'about' ||
     currentPage === 'founder' ||
     currentPage === 'team' ||
+    currentPage === 'support' ||
+    currentPage === 'archives' ||
     currentPage === 'vision' ||
     currentPage === 'history' ||
-    currentPage === 'contact'
+    currentPage === 'contact' ||
+    currentPage === 'shop'
   ) && !scrolled;
 
   return (
@@ -100,19 +119,19 @@ export default function App() {
         {currentPage === 'vision' && <AboutPage onNavigate={handleNavigate} activePage="vision" />}
         {currentPage === 'history' && <AboutPage onNavigate={handleNavigate} activePage="history" />}
         
-        {currentPage === 'founder' && <FounderPage onNavigate={handleNavigate} />}
-        {currentPage === 'team' && <TeamPage onNavigate={handleNavigate} />}
+        {currentPage === 'founder' && <TeamPage onNavigate={handleNavigate} activePage="founder" />}
+        {currentPage === 'team' && <TeamPage onNavigate={handleNavigate} activePage="founder" />}
         
         {currentPage === 'support' && <SupportPage />}
         {currentPage === 'visit' && <VisitPage />}
         {currentPage === 'news' && <PostPage onNavigate={handleNavigate} />}
         {currentPage === 'activities' && <ActivitiesPage onNavigate={handleNavigate} />}
-        {currentPage === 'activity-detail' && <ActivityDetailPage onNavigate={handleNavigate} />}
+        {currentPage === 'activity-detail' && <ActivityDetailPage onNavigate={handleNavigate} slug={selectedSlug || "neon-reveries"} backPage={backPage} />}
         {currentPage === 'blog' && <BlogPage onNavigate={handleNavigate} />}
-        {currentPage === 'blog-detail' && <BlogDetailPage onNavigate={handleNavigate} />}
+        {currentPage === 'blog-detail' && <BlogDetailPage onNavigate={handleNavigate} slug={selectedSlug || "art-as-reflection"} />}
         {currentPage === 'exhibitions' && <ExhibitionsPage onNavigate={handleNavigate} />}
-        {currentPage === 'exhibition-detail' && <ExhibitionDetailPage onNavigate={handleNavigate} />}
-        {currentPage === 'archives' && <ArchivesPage />}
+        {currentPage === 'exhibition-detail' && <ExhibitionDetailPage onNavigate={handleNavigate} slug={selectedSlug || "unwinding-architecture"} backPage={backPage} />}
+        {currentPage === 'archives' && <ArchivesPage onNavigate={handleNavigate} />}
         {currentPage === 'residency' && <ResidencyPage />}
         {currentPage === 'shop' && <ShopPage />}
         {currentPage === 'press' && <PressPage />}
@@ -121,6 +140,7 @@ export default function App() {
       </main>
 
       <Footer onNavigate={handleNavigate} />
+      <BackToTop />
     </div>
   );
 }

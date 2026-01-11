@@ -1,86 +1,68 @@
-import { ASSETS } from '../../utils/assets';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Reveal } from '../ui/Reveal';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
+import { Button } from '../ui/button';
 
 export function ContactPage() {
   return (
-    <div className="w-full bg-white min-h-screen">
-      {/* Hero Section */}
-      <div className="h-[50vh] md:h-[60vh] w-full relative overflow-hidden">
-        <ImageWithFallback 
-          src={ASSETS.BUILDING} 
-          alt="Contact Us" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <h1 className="text-5xl md:text-7xl font-serif text-white">
-            Contact Us
-          </h1>
-        </div>
+    <div className="bg-white min-h-screen pb-24 font-sans text-black">
+      {/* Hero Map */}
+       <div className="w-full h-[60vh] md:h-[80vh] bg-[#D9D9D9] relative overflow-hidden">
+          <img 
+              src="https://images.unsplash.com/photo-1676144844767-b25cb5e6c896?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwY29uY3JldGUlMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwxfHx8fDE3Njc5ODI1NjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+              alt="Bangkok Kunsthalle"
+              className="w-full h-full object-cover grayscale"
+          />
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-serif mb-8">Get in Touch</h2>
-            <p className="text-lg text-gray-600 leading-relaxed mb-12 font-sans">
-              We'd love to hear from you. Whether you have questions about our exhibitions, programs, or would like to collaborate, please don't hesitate to reach out.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-gray-400 mt-1" />
-                <div>
-                  <h3 className="font-medium mb-1">Address</h3>
-                  <p className="text-gray-600">
-                    Bangkok Kunsthalle<br />
-                    123 Art Street<br />
-                    Bangkok, Thailand 10110
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-gray-400 mt-1" />
-                <div>
-                  <h3 className="font-medium mb-1">Email</h3>
-                  <a href="mailto:info@bangkokkunsthalle.org" className="text-gray-600 hover:text-black transition-colors">
-                    info@bangkokkunsthalle.org
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-gray-400 mt-1" />
-                <div>
-                  <h3 className="font-medium mb-1">Phone</h3>
-                  <a href="tel:+6621234567" className="text-gray-600 hover:text-black transition-colors">
-                    +66 2 123 4567
-                  </a>
-                </div>
-              </div>
+      <div className="w-full px-6 pt-24">
+        
+        {/* Contact Content */}
+        <div className="flex flex-col md:flex-row mb-32 md:mb-40">
+             {/* Left Column */}
+            <div className="w-full md:w-1/2 mb-12 md:mb-0">
+                <Reveal>
+                    <h1 className="text-xl md:text-2xl font-normal sticky top-32 tracking-tight">Contact Us</h1>
+                </Reveal>
             </div>
-          </div>
 
-          <div>
-            <h3 className="text-2xl font-serif mb-6">Opening Hours</h3>
-            <div className="space-y-4 text-gray-600">
-              <div className="flex justify-between py-3 border-b border-gray-200">
-                <span>Tuesday - Friday</span>
-                <span>10:00 - 18:00</span>
-              </div>
-              <div className="flex justify-between py-3 border-b border-gray-200">
-                <span>Saturday - Sunday</span>
-                <span>11:00 - 19:00</span>
-              </div>
-              <div className="flex justify-between py-3 border-b border-gray-200">
-                <span>Monday</span>
-                <span className="text-gray-400">Closed</span>
-              </div>
+            {/* Right Column */}
+            <div className="w-full md:w-1/2 flex flex-col gap-8">
+                <Reveal delay={0.1}>
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl md:text-2xl font-normal leading-tight">
+                            Connect with Bangkok Kunsthalle.<br />
+                            For inquiries regarding exhibitions,<br />
+                            press, private visits, or educational<br />
+                            purpose.
+                        </p>
+                        <p className="text-xl md:text-2xl font-normal leading-tight mt-4">
+                            Please leave a message below.
+                        </p>
+                    </div>
+                </Reveal>
+
+                <Reveal delay={0.2}>
+                    <form className="flex flex-col gap-6 w-full max-w-lg" onSubmit={(e) => e.preventDefault()}>
+                        <Input 
+                            placeholder="Email" 
+                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans"
+                        />
+                        <Textarea 
+                            placeholder="Inquiry Box" 
+                            className="rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans"
+                        />
+                        <Button 
+                            type="submit"
+                            className="rounded-none bg-[#1A1A1A] hover:bg-black text-white px-8 py-6 text-lg w-fit font-sans"
+                        >
+                            Submit
+                        </Button>
+                    </form>
+                </Reveal>
             </div>
-          </div>
         </div>
+
       </div>
     </div>
   );

@@ -1,89 +1,135 @@
-import { ASSETS } from '../../utils/assets';
+import activitiesHero from "figma:asset/0071ef88c5b70f64f427c978c8989d4f2ff57cb1.png";
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Reveal } from '../ui/Reveal';
-
+import { ParallaxHero } from '../ui/ParallaxHero';
+import { useState } from 'react';
 
 interface ActivitiesPageProps {
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, slug?: string) => void;
 }
 
+const ACTIVITIES_DATA = [
+    {
+        id: '1',
+        title: 'Morlam Collective,\nJitti Chompee, 2025.',
+        image: 'https://images.unsplash.com/photo-1677123628739-dea0cfd09fce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNb3JsYW0lMjBDb2xsZWN0aXZlJTIwcGVyZm9ybWFuY2UlMjBhcnQlMjB0cmFkaXRpb25hbCUyMFRoYWklMjBkYW5jZXxlbnwxfHx8fDE3NjgwMzk2Njl8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Performance'],
+        slug: 'morlam-collective'
+    },
+    {
+        id: '2',
+        title: 'Living Cinematheque,\na screening series by artist in\nresidence, Spencer Sweeney.',
+        image: 'https://images.unsplash.com/photo-1572689600233-ce64e0d0d504?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxTcGVuY2VyJTIwU3dlZW5leSUyMGFydGlzdCUyMHRhbGslMjBibGFjayUyMGFuZCUyMHdoaXRlJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzY4MDM5NjY5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Screening'],
+        slug: 'living-cinematheque'
+    },
+    {
+        id: '3',
+        title: 'Liminal Signals\nCedric Arnold\nand Thanapat Ogaslert, 2025.',
+        image: 'https://images.unsplash.com/photo-1557005751-f6bea54d48d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMaW1pbmFsJTIwU2lnbmFscyUyMGV4cGVyaW1lbnRhbCUyMHNvdW5kJTIwcGVyZm9ybWFuY2UlMjBhcnR8ZW58MXx8fHwxNzY4MDM5NjcwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Performance', 'Sound'],
+        slug: 'liminal-signals'
+    },
+    {
+        id: '4',
+        title: 'A Very Long Gif,\na screening series and hangout by\nartist in residence, Eduardo Williams.',
+        image: 'https://images.unsplash.com/photo-1609167110008-9ded171e95b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBJTIwVmVyeSUyMExvbmclMjBHaWYlMjBFZHVhcmRvJTIwV2lsbGlhbXMlMjB2aWRlbyUyMGFydHxlbnwxfHx8fDE3NjgwMzk2NzB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Screening'],
+        slug: 'a-very-long-gif'
+    },
+    {
+        id: '5',
+        title: 'The Tuss, Ryan Ogaslert,\nand Mark Chearavanont\nRushup Edge, 2025.',
+        image: 'https://images.unsplash.com/photo-1746556333642-ba1bd743c8be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUaGUlMjBUdXNzJTIwUnlhbiUyME9nYXNsZXJ0JTIwUnVzaHVwJTIwRWRnZSUyMHBlcmZvcm1hbmNlfGVufDF8fHx8MTc2ODAzOTY3MHww&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Performance'],
+        slug: 'the-tuss'
+    },
+    {
+        id: '6',
+        title: 'Neon Reveries, Wong Kar-Wai\nscreening series: In the Mood for\nLove, Happy Together, Chungking\nExpress, and Fallen Angels.',
+        image: 'https://images.unsplash.com/photo-1701245035244-9a683d76cb2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxXb25nJTIwS2FyJTIwV2FpJTIwTmVvbiUyMFJldmVyaWVzJTIwbW92aWUlMjBzY2VuZSUyMHJlZCUyMGdyZWVuJTIwbGlnaHR8ZW58MXx8fHwxNzY4MDM5NjcwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+        tags: ['Screening'],
+        slug: 'neon-reveries'
+    }
+];
+
 export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+
+  const filteredData = activeTag 
+    ? ACTIVITIES_DATA.filter(item => item.tags.includes(activeTag))
+    : ACTIVITIES_DATA;
+
   return (
-    <div className="w-full bg-white pb-24 min-h-screen">
+    <div className="w-full bg-white pb-24 min-h-screen font-sans text-black">
       {/* Hero */}
-      <div className="w-full h-[50vh] md:h-[60vh] relative overflow-hidden bg-gray-100">
+      <ParallaxHero 
+        image={activitiesHero}
+        height="h-[80vh]"
+      >
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
+      </ParallaxHero>
 
-      </div>
-
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-         <Reveal>
-            <h1 className="text-xl md:text-2xl font-serif text-gray-900">Activities</h1>
-         </Reveal>
-      </div>
-
-      {/* Featured Card */}
-      <div className="max-w-7xl mx-auto px-6 mb-12">
-        <Reveal delay={0.1}>
-            <div 
-                className="relative aspect-[16/9] w-full overflow-hidden group cursor-pointer"
-                onClick={() => onNavigate('activity-detail')}
-            >
-                 <ImageWithFallback 
-                    src={ASSETS.ACTIVITY_NEON} 
-                    alt="Neon Reveries" 
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-between p-6 md:p-10">
-                  <div>
-                    <h2 className="text-4xl md:text-6xl font-sans font-bold text-white mb-2 tracking-tight">Neon Reveries</h2>
-                    <p className="text-xl md:text-2xl text-white/90 font-sans font-medium">Wong Kar-Wai Screening Series</p>
-                  </div>
-                  
-                  <div className="text-white/90 text-sm md:text-base font-sans space-y-1 md:w-1/2">
-                    <div className="flex justify-between gap-4">
-                      <span>22/8 - In the Mood for Love (2000)</span>
-                      <span>19:00</span>
-                    </div>
-                    <div className="flex justify-between gap-4">
-                      <span>23/8 - Happy Together (1997)</span>
-                      <span>17:00 / 19:00</span>
-                    </div>
-                    <div className="flex justify-between gap-4">
-                      <span>30/8 - Chungking Express (1994)</span>
-                      <span>17:00 / 19:00</span>
-                    </div>
-                    <div className="flex justify-between gap-4">
-                      <span>6/9 - Fallen Angels (1995)</span>
-                      <span>17:00 / 19:00</span>
-                    </div>
-                  </div>
-                </div>
-
+      {/* Main Content */}
+      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] pl-[48px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
+            
+            {/* Activities Label - Col 1-2 */}
+            <div className="md:col-span-2">
+                 <div className="md:sticky md:top-32">
+                    <h2 className="text-xl md:text-2xl font-normal text-black tracking-tight md:sticky md:top-32">Activities</h2>
+                 </div>
             </div>
-        </Reveal>
-      </div>
 
-      {/* List Layout - Also clickable */}
-      <div className="max-w-7xl mx-auto px-6">
-        <Reveal delay={0.2}>
-            <div 
-                className="flex flex-col md:flex-row gap-12 md:gap-24 border-t border-gray-200 pt-8 cursor-pointer hover:bg-gray-50 transition-colors duration-300 p-4 -mx-4 rounded-lg group"
-                onClick={() => onNavigate('activity-detail')}
-            >
-                <div className="md:w-1/3">
-                    <h3 className="text-2xl font-serif text-gray-900 group-hover:text-gray-600 transition-colors">Neon Reveries</h3>
-                </div>
-                <div className="md:w-2/3">
-                    <div className="text-gray-500 font-serif text-lg md:text-xl space-y-2">
-                        <p>Wong Kar-Wai</p>
-                        <p>Screening Series</p>
-                        <p>Screenings</p>
-                        <p>01 Oct – 01 Nov 2025</p>
-                    </div>
+            {/* Tags Filter - Col 3-4 */}
+            <div className="md:col-span-3">
+                <div className="md:sticky md:top-32 flex flex-col gap-2 items-end">
+                    <h3 className="text-xl md:text-2xl font-normal text-black text-right tracking-tight mb-2">Sort by Tags</h3>
+                    {['Performance', 'Screening', 'Talk / Lectures', 'Workshop', 'Sound'].map((tag) => (
+                        <button
+                            key={tag}
+                            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+                            className={`text-right text-xl md:text-2xl font-normal tracking-tight leading-tight transition-colors duration-200 ${
+                                activeTag === tag ? 'text-black' : 'text-gray-400 hover:text-black'
+                            }`}
+                        >
+                            {tag}
+                        </button>
+                    ))}
                 </div>
             </div>
-        </Reveal>
+
+            {/* Gap/Spacer - Col 5-6 */}
+            
+            {/* Content List - Col 6-12 (7 cols) */}
+            <div className="md:col-start-6 md:col-span-7 w-full flex flex-col gap-24">
+                {filteredData.map((item, index) => (
+                    <Reveal key={item.id} delay={index * 0.1}>
+                            <div 
+                            className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group"
+                            onClick={() => onNavigate('activity-detail', item.slug)}
+                        >
+                            {/* Image */}
+                            <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
+                                <ImageWithFallback 
+                                    src={item.image} 
+                                    alt={item.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
+                            </div>
+
+                            {/* Info */}
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-xl md:text-2xl font-normal leading-tight font-sans text-black whitespace-pre-wrap tracking-tight">
+                                    {item.title}
+                                </h3>
+                            </div>
+                        </div>
+                    </Reveal>
+                ))}
+            </div>
+
+        </div>
       </div>
 
     </div>

@@ -1,16 +1,20 @@
 import { ASSETS } from '../../utils/assets';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ParallaxHero } from '../ui/ParallaxHero';
 
 export function EventPage() {
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
        {/* Hero Section */}
-       <div className="h-[60vh] md:h-[80vh] w-full relative overflow-hidden bg-gray-100">
-
-      </div>
+       <ParallaxHero 
+         image={ASSETS.EVENT_HERO} 
+         height="h-[80vh]"
+       >
+         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
+       </ParallaxHero>
 
       {/* Content Section */}
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
+      <div className="w-full px-6 py-16 md:py-24">
         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
             
             {/* Left Column - Header Info */}
@@ -18,7 +22,7 @@ export function EventPage() {
                 <h1 className="text-3xl md:text-4xl font-sans font-medium mb-2 text-black">
                     Neon Reveries
                 </h1>
-                <div className="text-2xl md:text-3xl font-serif text-gray-300 leading-tight mb-4">
+                <div className="text-2xl md:text-3xl font-sans text-gray-300 leading-tight mb-4">
                     Wong Kar-Wai<br/>
                     Screening Series<br/>
                     Screenings

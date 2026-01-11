@@ -1,6 +1,7 @@
 import { ASSETS } from '../../utils/assets';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { ArrowLeft } from 'lucide-react';
+import { ParallaxHero } from '../ui/ParallaxHero';
 
 interface PostPageProps {
   onNavigate: (page: string) => void;
@@ -10,33 +11,37 @@ export function PostPage({ onNavigate }: PostPageProps) {
     return (
         <div className="w-full bg-white pb-24 min-h-screen">
             {/* Hero Section */}
-             <div className="h-[60vh] w-full relative overflow-hidden bg-gray-100 group">
-
-                <div className="absolute inset-0 bg-black/20"></div>
+             <ParallaxHero 
+                image={ASSETS.POST_HERO}
+                height="h-[80vh]"
+             >
+                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
                 <div className="absolute bottom-8 left-6 md:left-12 z-20">
                     <button 
                         onClick={() => onNavigate('home')}
-                        className="flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                        className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
                     >
                         <ArrowLeft className="w-5 h-5" />
                         <span className="text-sm font-medium font-sans">Back to Home</span>
                     </button>
                 </div>
-            </div>
+             </ParallaxHero>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
-                <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+            <div className="w-full px-6 py-12 md:py-16">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
                      {/* Left Column - Meta */}
-                     <div className="md:w-1/3">
-                        <h1 className="text-2xl md:text-3xl font-serif leading-tight mb-6 text-gray-400 font-medium">
-                            Which mirrors quality of artworks chosen to be exhibited there.
-                        </h1>
-                        <p className="text-gray-400 text-lg">Posted: 01 Oct 2025</p>
+                     <div className="md:col-span-5 flex flex-col gap-8">
+                        <div className="flex flex-col gap-1">
+                            <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                                Which mirrors quality of artworks chosen to be exhibited there.
+                            </h1>
+                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">Posted: 01 Oct 2025</p>
+                        </div>
                      </div>
 
                      {/* Right Column - Body */}
-                     <div className="md:w-2/3 text-gray-600 leading-relaxed space-y-6 text-sm md:text-base font-light">
+                     <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus efficitur in est eu ullamcorper. Nam aliquet, ligula sit amet ullamcorper venenatis, leo dolor lacinia magna, sodales convallis tortor augue viverra est. Nulla facilisi. Phasellus id justo eu metus pretium posuere ut viverra nibh. Phasellus elementum nisl nec erat volutpat, id porta lacus iaculis. Phasellus et ullamcorper turpis, eget porttitor tellus.
                         </p>

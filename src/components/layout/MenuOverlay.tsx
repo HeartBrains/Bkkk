@@ -1,4 +1,4 @@
-import { X, ChevronDown } from 'lucide-react';
+import { X, ChevronDown, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { ASSETS } from '../../utils/assets';
@@ -11,17 +11,73 @@ interface MenuOverlayProps {
   activePage: string;
 }
 
-export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOverlayProps) {
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
+interface MenuItem {
+    label: string;
+    page: string;
+    children?: MenuItem[];
+}
 
-  const menuItems = [
-    { label: 'About Us', page: 'about' },
-    { label: 'Exhibitions', page: 'exhibitions' },
-    { label: 'Activities', page: 'activities' },
-    { label: 'Blog', page: 'blog' },
-    { label: 'Archives', page: 'archives' },
+const sitemap: MenuItem[] = [
+    { label: 'Home', page: 'home' },
     { label: 'Visit', page: 'visit' },
-  ];
+    { 
+      label: 'Exhibitions', 
+      page: 'exhibitions',
+      children: [
+          { label: 'Current Exhibitions', page: 'exhibitions' },
+          { label: 'Upcoming Exhibitions', page: 'exhibitions' },
+          { label: 'Moving Image Program', page: 'exhibitions' },
+      ]
+    },
+    {
+        label: 'Activities',
+        page: 'activities',
+        children: [
+            { label: 'Public Program', page: 'activities' },
+            { label: 'Screening Program', page: 'activities' },
+        ]
+    },
+    {
+        label: 'Residency',
+        page: 'residency',
+        children: [
+            { label: 'Artists in Residence', page: 'residency' },
+            { label: 'Previous Artists in Residence', page: 'residency' },
+        ]
+    },
+    { label: 'Blog', page: 'blog' },
+    { label: 'About us', page: 'about' },
+    { label: 'Team', page: 'team' },
+    {
+        label: 'Shop',
+        page: 'shop',
+        children: [
+            { label: 'Bookings', page: 'shop' },
+            { label: 'Products', page: 'shop' },
+        ]
+    },
+    {
+        label: 'Archives',
+        page: 'archives',
+        children: [
+            { label: 'Past Exhibitions', page: 'archives' },
+            { label: 'Past Activities', page: 'archives' },
+        ]
+    },
+    { label: 'Contact Us', page: 'contact' },
+];
+
+export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOverlayProps) {
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  const toggleExpand = (label: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpandedItems(prev => 
+      prev.includes(label) 
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -44,17 +100,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
               className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${ASSETS.BUILDING})` }}
             />
-            <div 
-              className="absolute top-6 left-6 text-xl font-bold tracking-tight leading-none font-serif z-10 text-white cursor-pointer"
-              onClick={() => {
-                onNavigate('home');
-                onClose();
-              }}
-            >
-                Bangkok
-                <br />
-                Kunsthalle
-            </div>
+
           </motion.div>
 
           {/* Right Content Side */}
@@ -88,103 +134,109 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                     }
                 }}
              >
-                <div className="flex flex-col gap-2">
-                    {menuItems.map((item) => (
-                    <motion.button 
-                        key={item.label}
-                        variants={{
-                            hidden: { opacity: 0, x: -20 },
-                            show: { opacity: 1, x: 0 }
-                        }}
-                        onClick={() => {
-                            onNavigate(item.page);
-                            onClose();
-                        }}
-                        className={`text-left text-xl md:text-2xl font-normal transition-colors duration-300 tracking-wide ${
-                            activePage === item.page ? 'text-white' : 'text-gray-400 hover:text-white'
-                        }`}
-                    >
-                        {item.label}
-                    </motion.button>
-                    ))}
-                    
-                    {/* More Section */}
-                    <motion.div 
-                        className="flex flex-col mt-1"
-                        variants={{
-                            hidden: { opacity: 0, x: -20 },
-                            show: { opacity: 1, x: 0 }
-                        }}
-                    >
-                        <button 
-                            onClick={() => setIsMoreOpen(!isMoreOpen)}
-                            className="flex items-center gap-2 text-xl md:text-2xl font-normal text-white transition-colors duration-300 w-full text-left tracking-wide hover:text-gray-300"
-                        >
-                            More 
-                            <ChevronDown className={`w-5 h-5 transition-transform duration-500 ease-[0.22,1,0.36,1] ${isMoreOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        <AnimatePresence>
-                            {isMoreOpen && (
-                                <motion.div 
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                    className="overflow-hidden w-full relative"
-                                >
-                                    <div className="bg-white text-black px-6 py-4 mt-4 w-full md:w-[120%] -ml-6 md:-ml-8 shadow-lg origin-top">
-                                        <div className="flex flex-col gap-2 pl-6 md:pl-8">
-                                            {[
-                                                { label: 'Artist Residency', page: 'residency' },
-                                                { label: 'Contact Us', page: 'contact' },
-                                                { label: 'Support Us', page: 'support' },
-                                                { label: 'Shop', page: 'shop' },
-                                                { label: 'Press', page: 'press' }
-                                            ].map((subItem, idx) => (
-                                                <motion.button 
-                                                    key={subItem.label}
-                                                    initial={{ opacity: 0, y: 10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ delay: idx * 0.05, duration: 0.3 }}
+                <div className="flex flex-col gap-2 -mt-14 px-[0px] py-[0.18px] pt-[15px] pr-[0px] pb-[0px] pl-[0px]">
+                    {sitemap.map((item) => {
+                        const isExpanded = expandedItems.includes(item.label);
+                        const hasChildren = item.children && item.children.length > 0;
+                        const isActive = activePage === item.page;
+
+                        return (
+                            <motion.div 
+                                key={item.label}
+                                variants={{
+                                    hidden: { opacity: 0, x: -20 },
+                                    show: { opacity: 1, x: 0 }
+                                }}
+                                className="flex flex-col"
+                            >
+                                <div className="flex items-center justify-between group">
+                                    <button
+                                        onClick={() => {
+                                            onNavigate(item.page);
+                                            onClose();
+                                        }}
+                                        className={`text-left text-xl md:text-2xl font-normal transition-colors duration-300 tracking-wide ${
+                                            isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </button>
+                                    
+                                    {hasChildren && (
+                                        <button 
+                                            onClick={(e) => toggleExpand(item.label, e)}
+                                            className="p-2 text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                        </button>
+                                    )}
+                                </div>
+
+                                <AnimatePresence>
+                                    {hasChildren && isExpanded && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3 }}
+                                            className="overflow-hidden pl-4 md:pl-6 border-l border-white/10 ml-2 mt-2 space-y-2"
+                                        >
+                                            {item.children!.map((child) => (
+                                                <button
+                                                    key={child.label}
                                                     onClick={() => {
-                                                        onNavigate(subItem.page);
+                                                        onNavigate(child.page);
                                                         onClose();
                                                     }}
-                                                    className="text-left text-lg md:text-xl font-medium text-black hover:text-gray-600 transition-colors duration-200 block"
+                                                    className="block w-full text-left text-lg text-gray-500 hover:text-white transition-colors py-1"
                                                 >
-                                                    {subItem.label}
-                                                </motion.button>
+                                                    {child.label}
+                                                </button>
                                             ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        );
+                    })}
 
-                    {/* Search Section */}
-                    <motion.div 
-                        className="mt-4"
-                        variants={{
-                            hidden: { opacity: 0, x: -20 },
-                            show: { opacity: 1, x: 0 }
-                        }}
-                    >
+                    {/* Footer Section */}
+                </div>
+
+                <motion.div 
+                    className="mt-auto flex justify-between items-end w-full pt-8"
+                    variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        show: { opacity: 1, y: 0 }
+                    }}
+                >
+                    <div className="flex items-center gap-6">
                         <ExpandingSearch 
                             onNavigate={(page) => {
                                 onNavigate(page);
                                 onClose();
                             }}
-                            className="gap-3"
-                            iconClassName="w-5 h-5 md:w-6 md:h-6"
-                            inputClassName="w-40 md:w-60 text-lg"
+                            className="gap-2"
+                            iconClassName="w-6 h-6 text-white"
+                            inputClassName="w-40 text-lg text-white placeholder:text-gray-500"
                         />
-                    </motion.div>
-                </div>
+                        <button 
+                            onClick={() => {
+                                onNavigate('khaoyai');
+                                onClose();
+                            }}
+                            className="text-xl md:text-2xl text-white font-normal hover:text-gray-300 transition-colors uppercase tracking-wide"
+                        >
+                            KYAF
+                        </button>
+                    </div>
 
-                {/* Spacer */}
-                <div className="flex-1" />
+                    <div className="text-xl md:text-2xl font-normal text-gray-500 select-none tracking-wide">
+                        <span className="text-white cursor-pointer hover:text-gray-300 transition-colors">EN</span>
+                        <span className="mx-2">|</span>
+                        <span className="cursor-pointer hover:text-white transition-colors">TH</span>
+                    </div>
+                </motion.div>
 
              </motion.div>
           </motion.div>

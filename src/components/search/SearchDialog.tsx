@@ -3,34 +3,44 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import lunr from "lunr";
-import { searchData, SearchDocument } from "../../utils/searchData";
+import { getFullSearchData, SearchDocument } from "../../utils/searchData";
 
 interface SearchDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onNavigate: (page: string) => void;
+    onNavigate: (page: string, slug?: string) => void; // Updated to accept slug
     initialQuery?: string;
 }
 
 export function SearchDialog({ isOpen, onClose, onNavigate, initialQuery = "" }: SearchDialogProps) {
     const [query, setQuery] = useState(initialQuery);
     const [results, setResults] = useState<SearchDocument[]>([]);
+    const [data, setData] = useState<SearchDocument[]>([]);
+
+    // Fetch search data once on mount
+    useEffect(() => {
+        getFullSearchData().then(fetchedData => {
+            setData(fetchedData);
+        });
+    }, []);
 
     const idx = useMemo(() => {
+        if (data.length === 0) return null;
+
         return lunr(function () {
             this.ref('id');
             this.field('title');
             this.field('content');
             this.field('keywords', { boost: 5 });
 
-            searchData.forEach(doc => {
+            data.forEach(doc => {
                 this.add(doc);
             });
         });
-    }, []);
+    }, [data]);
 
     useEffect(() => {
-        if (!query.trim()) {
+        if (!query.trim() || !idx) {
             setResults([]);
             return;
         }
@@ -41,7 +51,7 @@ export function SearchDialog({ isOpen, onClose, onNavigate, initialQuery = "" }:
             const searchResults = idx.search(searchTerm);
             
             const mappedResults = searchResults.map(r => 
-                searchData.find(d => d.id === r.ref)
+                data.find(d => d.id === r.ref)
             ).filter((d): d is SearchDocument => !!d);
             
             setResults(mappedResults);
@@ -49,7 +59,7 @@ export function SearchDialog({ isOpen, onClose, onNavigate, initialQuery = "" }:
             console.error(e);
             setResults([]);
         }
-    }, [query, idx]);
+    }, [query, idx, data]);
 
     useEffect(() => {
         if (isOpen) {
@@ -62,11 +72,16 @@ export function SearchDialog({ isOpen, onClose, onNavigate, initialQuery = "" }:
         }
     }, [isOpen, initialQuery]);
 
+    const handleResultClick = (result: SearchDocument) => {
+        onNavigate(result.page, result.slug);
+        onClose();
+    };
+
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-xl bg-white text-black z-[60] gap-4">
                 <DialogHeader>
-                    <DialogTitle className="font-serif text-xl">Search</DialogTitle>
+                    <DialogTitle className="font-sans text-xl">Search</DialogTitle>
                     <DialogDescription className="sr-only">
                         Search the website for pages, exhibitions, and news.
                     </DialogDescription>
@@ -89,10 +104,7 @@ export function SearchDialog({ isOpen, onClose, onNavigate, initialQuery = "" }:
                             {results.map((result) => (
                                 <button
                                     key={result.id} 
-                                    onClick={() => {
-                                        onNavigate(result.page);
-                                        onClose();
-                                    }}
+                                    onClick={() => handleResultClick(result)}
                                     className="w-full text-left p-3 hover:bg-gray-100 rounded-md transition-colors block group"
                                 >
                                     <h3 className="font-medium text-black group-hover:text-red-600 transition-colors">
