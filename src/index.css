@@ -125,7 +125,6 @@
     --radius-xs: .125rem;
     --ease-out: cubic-bezier(0, 0, .2, 1);
     --ease-in-out: cubic-bezier(.4, 0, .2, 1);
-    --animate-spin: spin 1s linear infinite;
     --blur-sm: 8px;
     --aspect-video: 16 / 9;
     --default-transition-duration: .15s;
@@ -139,7 +138,7 @@
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
     --font-size-xl: 1.75rem;
-    --font-size-2xl: 2.25rem;
+    --font-size-2xl: 1.75rem;
   }
 }
 
@@ -445,10 +444,16 @@
   :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) p {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-normal);
-    line-height: 1.6;
+    line-height: 2.2;
   }
 
-  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) label, :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) button {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.8;
+  }
+
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) button {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
@@ -468,10 +473,6 @@
 
   .pointer-events-none {
     pointer-events: none;
-  }
-
-  .visible {
-    visibility: visible;
   }
 
   .sr-only {
@@ -946,10 +947,6 @@
     width: calc(var(--spacing) * 6);
   }
 
-  .w-8 {
-    width: calc(var(--spacing) * 8);
-  }
-
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
@@ -1075,10 +1072,6 @@
     transform: none;
   }
 
-  .animate-spin {
-    animation: var(--animate-spin);
-  }
-
   .cursor-pointer {
     cursor: pointer;
   }
@@ -1165,6 +1158,10 @@
 
   .gap-12 {
     gap: calc(var(--spacing) * 12);
+  }
+
+  .gap-16 {
+    gap: calc(var(--spacing) * 16);
   }
 
   .gap-24 {
@@ -1271,11 +1268,6 @@
     border-width: 2px;
   }
 
-  .border-4 {
-    border-style: var(--tw-border-style);
-    border-width: 4px;
-  }
-
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -1325,6 +1317,10 @@
     border-color: #0000;
   }
 
+  .border-transparent\/10 {
+    border-color: oklab(0% none none / 0) oklab(0% none none / 0) oklab(0% none none / 0) oklab(0% none none / 0);
+  }
+
   .border-white {
     border-color: var(--color-white);
   }
@@ -1337,10 +1333,6 @@
     .border-white\/10 {
       border-color: color-mix(in oklab, var(--color-white) 10%, transparent);
     }
-  }
-
-  .border-t-black {
-    border-top-color: var(--color-black);
   }
 
   .bg-\[\#1A1A1A\] {
@@ -1722,6 +1714,11 @@
     font-size: 10px;
   }
 
+  .leading-\[1\.82em\] {
+    --tw-leading: 1.82em;
+    line-height: 1.82em;
+  }
+
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
@@ -1773,6 +1770,10 @@
 
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+
+  .whitespace-pre-line {
+    white-space: pre-line;
   }
 
   .whitespace-pre-wrap {
@@ -2948,7 +2949,7 @@
 }
 
 :root {
-  --font-size: 16px;
+  --font-size: 12px;
   --background: #fff;
   --foreground: oklch(.145 0 0);
   --card: #fff;
@@ -3027,6 +3028,10 @@
 
 html {
   font-size: var(--font-size);
+}
+
+.thai-text {
+  line-height: 1.82em;
 }
 
 @property --tw-translate-x {
@@ -3383,12 +3388,6 @@ html {
   syntax: "*";
   inherits: false;
   initial-value: 0;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes enter {

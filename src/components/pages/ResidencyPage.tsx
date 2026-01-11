@@ -4,12 +4,15 @@ import { ParallaxHero } from '../ui/ParallaxHero';
 import { Reveal } from '../ui/Reveal';
 import { useState } from 'react';
 import { ARTISTS_DATA } from '../../utils/residencyData';
+import { useLanguage } from '../../utils/languageContext';
+import { getTranslation } from '../../utils/translations';
 
 interface ResidencyPageProps {
   onNavigate?: (page: string, slug?: string) => void;
 }
 
 export function ResidencyPage({ onNavigate }: ResidencyPageProps) {
+  const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<'current' | 'previous'>('current');
 
   const filteredArtists = ARTISTS_DATA.filter(artist => artist.category === activeCategory);
@@ -37,19 +40,19 @@ export function ResidencyPage({ onNavigate }: ResidencyPageProps) {
                     <Reveal>
                         <button 
                             onClick={() => setActiveCategory('current')}
-                            className={`text-xl md:text-2xl font-normal leading-tight transition-colors duration-300 block text-left ${
+                            className={`text-xl md:text-2xl font-normal leading-tight transition-colors duration-300 block text-left ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeCategory === 'current' ? 'text-black' : 'text-gray-400 hover:text-gray-600'
                             }`}
                         >
-                            Artists in Residence
+                            {getTranslation(language, 'residency.currentArtists')}
                         </button>
                         <button 
                             onClick={() => setActiveCategory('previous')}
-                            className={`text-xl md:text-2xl font-normal leading-tight transition-colors duration-300 mt-8 ${
+                            className={`text-xl md:text-2xl font-normal leading-tight transition-colors duration-300 mt-8 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeCategory === 'previous' ? 'text-black' : 'text-gray-400 hover:text-gray-600'
                             }`}
                         >
-                            Previous Artists in Residence
+                            {getTranslation(language, 'residency.pastArtists')}
                         </button>
                     </Reveal>
                 </div>
@@ -67,20 +70,20 @@ export function ResidencyPage({ onNavigate }: ResidencyPageProps) {
                                 <div className="aspect-[3/4] w-full bg-gray-100 relative overflow-hidden">
                                     <ImageWithFallback 
                                         src={artist.category === 'current' ? "https://images.unsplash.com/photo-1760260623945-07314e790eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBsb29raW5nJTIwYXQlMjBjYW1lcmElMjBwb3J0cmFpdCUyMGFydGlzdGljfGVufDF8fHx8MTc2ODE1MTAyOXww&ixlib=rb-4.1.0&q=80&w=1080" : artist.image}
-                                        alt={artist.name}
+                                        alt={language === 'th' ? artist.nameTH : artist.name}
                                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <h3 className="text-lg md:text-xl font-normal text-black">{artist.name}</h3>
-                                    <p className="text-lg md:text-xl font-normal text-black">{artist.period}</p>
+                                    <h3 className={`text-lg md:text-xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.nameTH : artist.name}</h3>
+                                    <p className={`text-lg md:text-xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.periodTH : artist.period}</p>
                                 </div>
                             </div>
                         </Reveal>
                     ))
                 ) : (
                      <Reveal>
-                        <p className="text-lg md:text-xl text-gray-400">No artists found in this category.</p>
+                        <p className="text-lg md:text-xl text-gray-400">{getTranslation(language, 'common.noResults')}</p>
                      </Reveal>
                 )}
             </div>

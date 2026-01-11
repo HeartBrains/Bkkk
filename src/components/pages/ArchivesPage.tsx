@@ -4,6 +4,7 @@ import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { fetchRecords, RecordItem, RecordCategory } from '../../utils/records';
 import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
+import { useLanguage } from '../../utils/languageContext';
 
 // Helper to extract the relevant year from a date string
 const getYearFromDate = (dateStr: string): string => {
@@ -19,6 +20,7 @@ interface ArchivesPageProps {
 }
 
 export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
+  const { language, t } = useLanguage();
   const [allRecords, setAllRecords] = useState<RecordItem[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -32,7 +34,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
     const loadRecords = async () => {
       setLoading(true);
       try {
-        const data = await fetchRecords({ status: 'past', category: 'all' });
+        const data = await fetchRecords({ status: 'past', category: 'all', language });
         setAllRecords(data);
       } catch (error) {
         console.error("Failed to fetch records", error);
@@ -42,7 +44,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
     };
 
     loadRecords();
-  }, []);
+  }, [language]);
 
   const availableFilters = useMemo(() => {
       const exhibitions = new Set<string>();
@@ -119,13 +121,13 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                     <div className="flex flex-col gap-4">
                         <h3 
                             onClick={() => handleFilterClick('exhibition', 'all')}
-                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${
+                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeFilter.category === 'exhibition' && activeFilter.year === 'all'
                                 ? 'text-black font-medium'
                                 : 'text-black font-medium hover:text-gray-600'
                             }`}
                         >
-                            Past Exhibition
+                            {t('archives.pastExhibition')}
                         </h3>
                         <div className="flex flex-col gap-2">
                             {availableFilters.exhibitions.length > 0 ? (
@@ -133,7 +135,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                                     <button 
                                         key={`exh-${year}`}
                                         onClick={() => handleFilterClick('exhibition', year)}
-                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${
+                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                             activeFilter.category === 'exhibition' && activeFilter.year === year
                                             ? 'text-black font-medium'
                                             : 'text-gray-400 font-normal hover:text-gray-600'
@@ -143,7 +145,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                                     </button>
                                 ))
                             ) : (
-                                <span className="text-gray-300 font-sans text-lg">No past exhibitions</span>
+                                <span className={`text-gray-300 font-sans text-lg ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('archives.noPastExhibitions')}</span>
                             )}
                         </div>
                     </div>
@@ -152,13 +154,13 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                     <div className="flex flex-col gap-4">
                         <h3 
                             onClick={() => handleFilterClick('activity', 'all')}
-                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${
+                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeFilter.category === 'activity' && activeFilter.year === 'all'
                                 ? 'text-black font-medium'
                                 : 'text-black font-medium hover:text-gray-600'
                             }`}
                         >
-                            Past Activities
+                            {t('archives.pastActivities')}
                         </h3>
                         <div className="flex flex-col gap-2">
                             {availableFilters.activities.length > 0 ? (
@@ -166,7 +168,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                                     <button 
                                         key={`act-${year}`}
                                         onClick={() => handleFilterClick('activity', year)}
-                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${
+                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                             activeFilter.category === 'activity' && activeFilter.year === year
                                             ? 'text-black font-medium'
                                             : 'text-gray-400 font-normal hover:text-gray-600'
@@ -176,7 +178,7 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                                     </button>
                                 ))
                             ) : (
-                                <span className="text-gray-300 font-sans text-lg">No past activities</span>
+                                <span className={`text-gray-300 font-sans text-lg ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('archives.noPastActivities')}</span>
                             )}
                         </div>
                     </div>
@@ -207,11 +209,11 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
 
                                     {/* Info */}
                                     <div className="flex flex-col gap-1">
-                                        <h3 className="text-lg md:text-xl font-normal leading-tight font-sans text-black">{item.title}</h3>
+                                        <h3 className={`text-lg md:text-xl font-normal leading-tight font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
                                         {item.description && (
-                                            <p className="text-lg md:text-xl font-normal text-black leading-tight font-sans">{item.description}</p>
+                                            <p className={`text-lg md:text-xl font-normal text-black leading-tight font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.description}</p>
                                         )}
-                                        <p className="text-lg md:text-xl font-normal text-black leading-tight mt-2 font-sans">{item.date}</p>
+                                        <p className={`text-lg md:text-xl font-normal text-black leading-tight mt-2 font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
                                     </div>
                                 </div>
                             </Reveal>

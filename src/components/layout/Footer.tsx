@@ -1,6 +1,9 @@
 import { Instagram, Facebook, AtSign } from 'lucide-react';
+import { useLanguage } from '../../utils/languageContext';
 
 export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) {
+  const { language } = useLanguage();
+  
   return (
     <footer className="w-full bg-black text-white md:px-12 border-t border-white/10 p-[48px]">
       <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0">
@@ -8,10 +11,10 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
         {/* Left: Logo */}
         <div className="flex flex-col">
           <h1 className="text-3xl md:text-4xl font-bold font-sans leading-none tracking-tight">
-            Bangkok
+            {language === 'th' ? 'บางกอก' : 'Bangkok'}
           </h1>
           <h1 className="text-3xl md:text-4xl font-bold font-sans leading-none tracking-tight">
-            Kunsthalle
+            {language === 'th' ? 'คุนสท์ฮัลเล่' : 'Kunsthalle'}
           </h1>
         </div>
 
@@ -21,15 +24,15 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-sm md:text-base font-normal tracking-wide">
             <button 
               onClick={() => onNavigate?.('support')} 
-              className="hover:text-gray-300 transition-colors text-left"
+              className={`hover:text-gray-300 transition-colors text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}
             >
-              Sponsorship
+              {language === 'th' ? 'การสนับสนุน' : 'Sponsorship'}
             </button>
             <button 
               onClick={() => onNavigate?.('contact')} 
-              className="hover:text-gray-300 transition-colors text-left"
+              className={`hover:text-gray-300 transition-colors text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}
             >
-              Subscription
+              {language === 'th' ? 'สมัครรับข่าวสาร' : 'Subscription'}
             </button>
           </div>
 

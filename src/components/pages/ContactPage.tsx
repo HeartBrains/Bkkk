@@ -2,8 +2,11 @@ import { Reveal } from '../ui/Reveal';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
+import { useLanguage } from '../../utils/languageContext';
 
 export function ContactPage() {
+  const { language } = useLanguage();
+  
   return (
     <div className="bg-white min-h-screen pb-24 font-sans text-black">
       {/* Hero Map */}
@@ -22,7 +25,9 @@ export function ContactPage() {
              {/* Left Column */}
             <div className="w-full md:w-1/2 mb-12 md:mb-0">
                 <Reveal>
-                    <h1 className="text-xl md:text-2xl font-normal sticky top-32 tracking-tight">Contact Us</h1>
+                    <h1 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'ติดต่อเรา' : 'Contact Us'}
+                    </h1>
                 </Reveal>
             </div>
 
@@ -30,14 +35,25 @@ export function ContactPage() {
             <div className="w-full md:w-1/2 flex flex-col gap-8">
                 <Reveal delay={0.1}>
                     <div className="flex flex-col gap-4">
-                        <p className="text-xl md:text-2xl font-normal leading-tight">
-                            Connect with Bangkok Kunsthalle.<br />
-                            For inquiries regarding exhibitions,<br />
-                            press, private visits, or educational<br />
-                            purpose.
+                        <p className={`text-xl md:text-2xl font-normal tracking-tight ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                            {language === 'th' ? (
+                              <>
+                                ติดต่อบางกอก คุนซ์ฮาลเล่<br />
+                                สำหรับข้อสอบถามเกี่ยวกับนิทรรศการ<br />
+                                สื่อมวลชน การเยี่ยมชมส่วนตัว<br />
+                                หรือวัตถุประสงค์ทางการศึกษา
+                              </>
+                            ) : (
+                              <>
+                                Connect with Bangkok Kunsthalle.<br />
+                                For inquiries regarding exhibitions,<br />
+                                press, private visits, or educational<br />
+                                purpose.
+                              </>
+                            )}
                         </p>
-                        <p className="text-xl md:text-2xl font-normal leading-tight mt-4">
-                            Please leave a message below.
+                        <p className={`text-xl md:text-2xl font-normal leading-tight tracking-tight mt-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                            {language === 'th' ? 'กรุณาฝากข้อความด้านล่าง' : 'Please leave a message below.'}
                         </p>
                     </div>
                 </Reveal>
@@ -45,18 +61,18 @@ export function ContactPage() {
                 <Reveal delay={0.2}>
                     <form className="flex flex-col gap-6 w-full max-w-lg" onSubmit={(e) => e.preventDefault()}>
                         <Input 
-                            placeholder="Email" 
-                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans"
+                            placeholder={language === 'th' ? 'อีเมล' : 'Email'}
+                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans tracking-tight"
                         />
                         <Textarea 
-                            placeholder="Inquiry Box" 
-                            className="rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans"
+                            placeholder={language === 'th' ? 'ข้อความสอบถาม' : 'Inquiry Box'}
+                            className={`rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}
                         />
                         <Button 
                             type="submit"
-                            className="rounded-none bg-[#1A1A1A] hover:bg-black text-white px-8 py-6 text-lg w-fit font-sans"
+                            className="rounded-none bg-[#1A1A1A] hover:bg-black text-white px-8 py-6 text-lg w-fit font-sans tracking-tight"
                         >
-                            Submit
+                            {language === 'th' ? 'ส่ง' : 'Submit'}
                         </Button>
                     </form>
                 </Reveal>

@@ -12,6 +12,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Reveal } from '../ui/Reveal';
 import { ARTISTS_DATA, ArtistDetail } from '../../utils/residencyData';
+import { useLanguage } from '../../utils/languageContext';
 
 interface ArtistDetailPageProps {
   onNavigate: (page: string) => void;
@@ -20,6 +21,7 @@ interface ArtistDetailPageProps {
 }
 
 export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPageProps) {
+  const { language, t } = useLanguage();
   const [artist, setArtist] = useState<ArtistDetail | undefined>();
   const [loading, setLoading] = useState(true);
 
@@ -46,8 +48,13 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
 
   const scrollTo = (index: number) => api?.scrollTo(index);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading...</div>;
-  if (!artist) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">Artist not found.</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">{t('common.loading')}</div>;
+  if (!artist) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">{language === 'th' ? 'ไม่พบศิลปิน' : 'Artist not found.'}</div>;
+
+  const displayName = language === 'th' ? artist.nameTH : artist.name;
+  const displayPeriod = language === 'th' ? artist.periodTH : artist.period;
+  const displayBio = language === 'th' ? artist.bioTH : artist.bio;
+  const displayStatement = language === 'th' ? artist.statementTH : artist.statement;
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
@@ -110,14 +117,14 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-medium font-sans">
-                    Back to Residency
+                    {language === 'th' ? 'กลับสู่ศิลปินพำนัก' : 'Back to Residency'}
                 </span>
             </button>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="w-full px-6 py-12 md:py-16">
+      <div className="w-full px-6 py-12 md:py-16 md:pl-[48px]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Left Column - Meta Data */}
@@ -125,12 +132,12 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
                 <Reveal>
                     <div className="flex flex-col gap-1">
                         <h1 className="text-3xl md:text-5xl font-bold text-black leading-tight tracking-tight mb-4">
-                            {artist.name}
+                            {displayName}
                         </h1>
                         <p className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
-                            Artist in Residence
+                            {language === 'th' ? 'ศิลปินพำนัก' : 'Artist in Residence'}
                         </p>
-                        <p className="text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight mt-2">{artist.period}</p>
+                        <p className="text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight mt-2">{displayPeriod}</p>
                     </div>
                 </Reveal>
             </div>
@@ -139,17 +146,17 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             <div className="md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-8">
                 <Reveal delay={0.2}>
                     <div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4">Biography</h3>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{language === 'th' ? 'ชีวประวัติ' : 'Biography'}</h3>
                         <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                            {artist.bio}
+                            {displayBio}
                         </p>
                     </div>
                 </Reveal>
                 <Reveal delay={0.4}>
                      <div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4">Residency Statement</h3>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{language === 'th' ? 'ถ้อยแถลงการพำนัก' : 'Residency Statement'}</h3>
                         <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                            {artist.statement}
+                            {displayStatement}
                         </p>
                     </div>
                 </Reveal>

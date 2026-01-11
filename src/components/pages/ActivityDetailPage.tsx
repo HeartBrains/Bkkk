@@ -11,9 +11,10 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState, useEffect } from 'react';
 import { WPPost } from '../../utils/types';
-import { fetchPostBySlug } from '../../utils/api';
 import { Reveal } from '../ui/Reveal';
 import { VisitInfo } from './sections/VisitInfo';
+import { useLanguage } from '../../utils/languageContext';
+import { getMockPost } from '../../utils/mockDataBilingual';
 
 interface ActivityDetailPageProps {
   onNavigate: (page: string) => void;
@@ -23,6 +24,7 @@ interface ActivityDetailPageProps {
 }
 
 export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: ActivityDetailPageProps) {
+  const { language, t } = useLanguage();
   const [postData, setPostData] = useState<WPPost | undefined>(activity);
   const [loading, setLoading] = useState(!activity && !!slug);
   const [error, setError] = useState(false);
@@ -42,18 +44,17 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
     
     if (slug) {
         setLoading(true);
-        fetchPostBySlug(slug, 'activity')
-            .then(data => {
-                if (data) {
-                    setPostData(data);
-                } else {
-                    setError(true);
-                }
-            })
-            .catch(() => setError(true))
-            .finally(() => setLoading(false));
+        // Use bilingual mock data instead of API
+        const data = getMockPost(slug, language);
+        if (data) {
+            setPostData(data);
+            setLoading(false);
+        } else {
+            setError(true);
+            setLoading(false);
+        }
     }
-  }, [activity, slug]);
+  }, [activity, slug, language]);
 
   // Carousel logic (only if postData exists)
   useEffect(() => {
@@ -64,8 +65,8 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
 
   const scrollTo = (index: number) => api?.scrollTo(index);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Activity...</div>;
-  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">Activity not found.</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">{t('common.loading')}</div>;
+  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">{language === 'th' ? 'ไม่พบกิจกรรม' : 'Activity not found.'}</div>;
 
   // Use gallery from postData or fallback to featured image
   const galleryImages = postData.gallery && postData.gallery.length > 0 
@@ -133,7 +134,10 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-medium font-sans">
-                    {backPage === 'archives' ? 'Back to Archives' : 'Back to Activities'}
+                    {backPage === 'archives' 
+                        ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
+                        : (language === 'th' ? 'กลับสู่กิจกรรม' : 'Back to Activities')
+                    }
                 </span>
             </button>
         </div>
@@ -146,21 +150,23 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
             <div className="md:col-span-5 flex flex-col gap-8">
                <Reveal>
                    <div className="flex flex-col gap-1">
-                       <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                       <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                           {postData.title}
                        </h1>
 
                        {postData.categories?.map((cat, idx) => (
-                           <p key={idx} className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">{cat}</p>
+                           <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
                        ))}
                        
                        {postData.date && (
-                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">{postData.date}</p>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
                        )}
 
                        <div className="mt-8">
-                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">Curated by</p>
-                           <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">Stefano Rabolli Pansera</p>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                               {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
+                           </p>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>Stefano Rabolli Pansera</p>
                        </div>
                    </div>
                </Reveal>
@@ -173,7 +179,9 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
 
                    {postData.acf?.schedule && (
                        <div>
-                         <h3 className="text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight">Filming Schedule</h3>
+                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                             {language === 'th' ? 'ตารางกิจกรรม' : 'Schedule'}
+                         </h3>
                          <div className="space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
                             {postData.acf.schedule.map((item: any, idx: number) => (
                                 <p key={idx}><span className="font-bold">{item.title}</span> {item.details}</p>

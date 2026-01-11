@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { ASSETS } from '../../utils/assets';
 import { ExpandingSearch } from '../search/ExpandingSearch';
+import { useLanguage } from '../../utils/languageContext';
 
 interface MenuOverlayProps {
   isOpen: boolean;
@@ -17,58 +18,9 @@ interface MenuItem {
     children?: MenuItem[];
 }
 
-const sitemap: MenuItem[] = [
-    { label: 'Home', page: 'home' },
-    { label: 'Visit', page: 'visit' },
-    { 
-      label: 'Exhibitions', 
-      page: 'exhibitions',
-      children: [
-          { label: 'Current Exhibitions', page: 'exhibitions' },
-          { label: 'Upcoming Exhibitions', page: 'exhibitions' },
-          { label: 'Moving Image Program', page: 'exhibitions' },
-      ]
-    },
-    {
-        label: 'Activities',
-        page: 'activities',
-        children: [
-            { label: 'Public Program', page: 'activities' },
-            { label: 'Screening Program', page: 'activities' },
-        ]
-    },
-    {
-        label: 'Residency',
-        page: 'residency',
-        children: [
-            { label: 'Artists in Residence', page: 'residency' },
-            { label: 'Previous Artists in Residence', page: 'residency' },
-        ]
-    },
-    { label: 'Blog', page: 'blog' },
-    { label: 'About us', page: 'about' },
-    { label: 'Team', page: 'team' },
-    {
-        label: 'Shop',
-        page: 'shop',
-        children: [
-            { label: 'Bookings', page: 'shop' },
-            { label: 'Products', page: 'shop' },
-        ]
-    },
-    {
-        label: 'Archives',
-        page: 'archives',
-        children: [
-            { label: 'Past Exhibitions', page: 'archives' },
-            { label: 'Past Activities', page: 'archives' },
-        ]
-    },
-    { label: 'Contact Us', page: 'contact' },
-];
-
 export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOverlayProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const { language, setLanguage, t } = useLanguage();
 
   const toggleExpand = (label: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -78,6 +30,57 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
         : [...prev, label]
     );
   };
+
+  // Dynamic sitemap based on current language
+  const sitemap: MenuItem[] = [
+    { label: t('nav.home'), page: 'home' },
+    { label: t('nav.visit'), page: 'visit' },
+    { 
+      label: t('nav.exhibitions'), 
+      page: 'exhibitions',
+      children: [
+          { label: t('exhibitions.current'), page: 'exhibitions' },
+          { label: t('exhibitions.upcoming'), page: 'exhibitions' },
+          { label: 'Moving Image Program', page: 'exhibitions' },
+      ]
+    },
+    {
+        label: t('nav.activities'),
+        page: 'activities',
+        children: [
+            { label: 'Public Program', page: 'activities' },
+            { label: t('activities.screenings'), page: 'activities' },
+        ]
+    },
+    {
+        label: t('nav.residency'),
+        page: 'residency',
+        children: [
+            { label: t('residency.currentArtists'), page: 'residency' },
+            { label: t('residency.pastArtists'), page: 'residency' },
+        ]
+    },
+    { label: t('nav.blog'), page: 'blog' },
+    { label: t('nav.aboutUs'), page: 'about' },
+    { label: t('nav.team'), page: 'team' },
+    {
+        label: t('nav.shop'),
+        page: 'shop',
+        children: [
+            { label: 'Bookings', page: 'shop' },
+            { label: 'Products', page: 'shop' },
+        ]
+    },
+    {
+        label: t('nav.archives'),
+        page: 'archives',
+        children: [
+            { label: t('exhibitions.past'), page: 'archives' },
+            { label: 'Past Activities', page: 'archives' },
+        ]
+    },
+    { label: t('nav.contact'), page: 'contact' },
+  ];
 
   return (
     <AnimatePresence>
@@ -181,18 +184,32 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                                             transition={{ duration: 0.3 }}
                                             className="overflow-hidden pl-4 md:pl-6 border-l border-white/10 ml-2 mt-2 space-y-2"
                                         >
-                                            {item.children!.map((child) => (
-                                                <button
-                                                    key={child.label}
-                                                    onClick={() => {
-                                                        onNavigate(child.page);
-                                                        onClose();
-                                                    }}
-                                                    className="block w-full text-left text-lg text-gray-500 hover:text-white transition-colors py-1"
-                                                >
-                                                    {child.label}
-                                                </button>
-                                            ))}
+                                            {item.children!.map((child) => {
+                                                // Translate specific child labels
+                                                let displayLabel = child.label;
+                                                if (language === 'th') {
+                                                    switch (child.label) {
+                                                        case 'Bookings': displayLabel = 'การจอง'; break;
+                                                        case 'Products': displayLabel = 'สินค้า'; break;
+                                                        case 'Moving Image Program': displayLabel = 'โปรแกรมภาพเคลื่อนไหว'; break;
+                                                        case 'Public Program': displayLabel = 'โปรแกรมสาธารณะ'; break;
+                                                        case 'Past Activities': displayLabel = 'กิจกรรมที่ผ่านมา'; break;
+                                                    }
+                                                }
+
+                                                return (
+                                                    <button
+                                                        key={child.label}
+                                                        onClick={() => {
+                                                            onNavigate(child.page);
+                                                            onClose();
+                                                        }}
+                                                        className="block w-full text-left text-lg text-gray-500 hover:text-white transition-colors py-1"
+                                                    >
+                                                        {displayLabel}
+                                                    </button>
+                                                );
+                                            })}
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -233,15 +250,15 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
 
                     <div className="text-xl md:text-2xl font-normal text-gray-500 select-none tracking-wide flex items-center">
                         <button 
-                            className="text-white cursor-pointer hover:text-gray-300 transition-colors"
-                            onClick={() => console.log('Switch to EN')}
+                            className={`cursor-pointer transition-colors ${language === 'en' ? 'text-white' : 'hover:text-white'}`}
+                            onClick={() => setLanguage('en')}
                         >
                             EN
                         </button>
                         <span className="mx-2">|</span>
                         <button 
-                            className="cursor-pointer hover:text-white transition-colors"
-                            onClick={() => console.log('Switch to TH')}
+                            className={`cursor-pointer transition-colors ${language === 'th' ? 'text-white' : 'hover:text-white'}`}
+                            onClick={() => setLanguage('th')}
                         >
                             TH
                         </button>

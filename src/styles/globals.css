@@ -17,7 +17,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-size: 16px;
+  --font-size: 12px;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -144,7 +144,7 @@
   --font-size-base: 1rem;       /* Size 2 (16px) */
   --font-size-lg: 1.25rem;      /* Size 3 (20px) */
   --font-size-xl: 1.75rem;      /* Size 4 (28px) */
-  --font-size-2xl: 2.25rem;     /* Size 5 (36px) */
+  --font-size-2xl: 1.75rem;     /* Size 5 (36px) */
   
   /* Map all larger sizes to Size 5 to enforce consistency */
   --font-size-3xl: 2.25rem;
@@ -212,13 +212,13 @@
     p {
       font-size: var(--font-size-base);
       font-weight: var(--font-weight-normal);
-      line-height: 1.6;
+      line-height: 2.2;
     }
 
     label {
       font-size: var(--font-size-base);
       font-weight: var(--font-weight-medium);
-      line-height: 1.5;
+      line-height: 1.8;
     }
 
     button {
@@ -237,4 +237,9 @@
 
 html {
   font-size: var(--font-size);
+}
+
+/* Thai text line height utility - 30% more than standard */
+.thai-text {
+  line-height: 1.82em;
 }

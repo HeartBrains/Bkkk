@@ -6,6 +6,8 @@ import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useLanguage } from '../../utils/languageContext';
+import { getMockPostsByType } from '../../utils/mockDataBilingual';
 
 interface ExhibitionsPageProps {
     onNavigate?: (page: string, slug?: string) => void;
@@ -13,79 +15,34 @@ interface ExhibitionsPageProps {
 
 type Category = 'current' | 'upcoming' | 'moving-image';
 
-const EXHIBITIONS_DATA = [
-    // Current
-    {
-        id: '1',
-        title: 'Description Without Place',
-        artist: 'Absalon',
-        date: '13 December 2025 – 31 May 2026',
-        image: 'https://images.unsplash.com/photo-1756889661455-38e4afd84815?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3aGl0ZSUyMG1pbmltYWxpc3QlMjBhYnN0cmFjdCUyMHNjdWxwdHVyZSUyMGZ1cm5pdHVyZSUyMGV4aGliaXRpb258ZW58MXx8fHwxNzY4MDM5MTg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'current',
-        slug: 'description-without-place'
-    },
-    {
-        id: '2',
-        title: 'Vernacular Objects',
-        artist: 'Mark Chearavanont',
-        date: '27 November 2025 – 15 March 2026',
-        image: 'https://images.unsplash.com/photo-1720842875537-961c36a16ec3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG9yZ2FuaWMlMjB5ZWxsb3clMjBzY3VscHR1cmUlMjBhYnN0cmFjdCUyMG9yZ2FuaWMlMjB5ZWxsb3clMjBzY3VscHR1cmV8ZW58MXx8fHwxNzY4MDM5MTg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'current',
-        slug: 'vernacular-objects'
-    },
-    {
-        id: '3',
-        title: 'Mitta del Santi',
-        artist: 'Ploenchun Vinyaratn',
-        date: '26 September 2025 – 8 February 2026',
-        image: 'https://images.unsplash.com/photo-1574240635388-2a6bdc8d3c3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGxhcmdlJTIwdGV4dGlsZSUyMGFydCUyMGluc3RhbGxhdGlvbnxlbnwxfHx8fDE3NjgwMzkxODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'current',
-        slug: 'mitta-del-santi'
-    },
-    // Upcoming
-    {
-        id: '4',
-        title: 'seeds',
-        artist: '',
-        date: '30 April – 22 June 2026',
-        image: 'https://images.unsplash.com/photo-1611923973164-e0e5f7f69872?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMGhvbGRpbmclMjB3aGl0ZSUyMGNlcmFtaWMlMjBiYWxscyUyMGFydHxlbnwxfHx8fDE3NjgwMzkxODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'upcoming',
-        slug: 'seeds'
-    },
-    {
-        id: '5',
-        title: 'we gather',
-        artist: '',
-        date: '28 February – 27 April 2026',
-        image: 'https://images.unsplash.com/photo-1747504858849-fde086e3680a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwY2luZW1hJTIwcm9vbSUyMHNjcmVlbmluZyUyMHZpZGVvJTIwYXJ0fGVufDF8fHx8MTc2ODAzOTE4N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'upcoming',
-        slug: 'we-gather'
-    },
-    {
-        id: '6',
-        title: 'Shapeshifting Spaces: stretched by the desires within them',
-        artist: '',
-        date: '17 January – 27 February 2026',
-        image: 'https://images.unsplash.com/photo-1761655072443-9dec151c3e60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnRlcmFjdGl2ZSUyMGFydCUyMGluc3RhbGxhdGlvbiUyMHllbGxvdyUyMHRhYmxlJTIwaGFuZHN8ZW58MXx8fHwxNzY4MDM5MTg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        category: 'upcoming',
-        slug: 'shapeshifting-spaces'
-    },
-    // Moving Image
-    {
-        id: '7',
-        title: 'Neon Reveries',
-        artist: 'Wong Kar-Wai Screening Series',
-        date: '01 Oct – 01 Nov 2025',
-        image: ASSETS.EVENT_HERO,
-        category: 'moving-image',
-        slug: 'neon-reveries'
-    }
-];
-
 export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
   const [activeCategory, setActiveCategory] = useState<Category>('current');
+  const { language, t } = useLanguage();
 
-  const filteredExhibitions = EXHIBITIONS_DATA.filter(item => item.category === activeCategory);
+  // Get all exhibitions in current language
+  const allExhibitions = getMockPostsByType('exhibition', language);
+  const allActivities = getMockPostsByType('activity', language);
+
+  // Categorize exhibitions
+  const currentExhibitions = allExhibitions.filter(ex => 
+    ['description-without-place', 'vernacular-objects', 'mitta-del-santi'].includes(ex.slug)
+  );
+  
+  const upcomingExhibitions = allExhibitions.filter(ex => 
+    ['seeds', 'we-gather', 'shapeshifting-spaces'].includes(ex.slug)
+  );
+
+  const movingImageProgram = allActivities.filter(act => 
+    act.slug === 'neon-reveries'
+  );
+
+  const getFilteredContent = () => {
+    if (activeCategory === 'current') return currentExhibitions;
+    if (activeCategory === 'upcoming') return upcomingExhibitions;
+    return movingImageProgram;
+  };
+
+  const filteredExhibitions = getFilteredContent();
 
   return (
     <div className="w-full bg-white min-h-screen pb-24">
@@ -106,27 +63,27 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
                 <div className="sticky top-32 flex flex-col items-start gap-4">
                     <button 
                         onClick={() => setActiveCategory('current')}
-                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${
+                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                             activeCategory === 'current' ? 'text-black font-medium' : 'text-gray-400 hover:text-gray-600'
                         }`}
                     >
-                        Current Exhibitions
+                        {t('exhibitions.current')}
                     </button>
                     <button 
                         onClick={() => setActiveCategory('upcoming')}
-                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${
+                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                             activeCategory === 'upcoming' ? 'text-black font-medium' : 'text-gray-400 hover:text-gray-600'
                         }`}
                     >
-                        Upcoming Exhibitions
+                        {t('exhibitions.upcoming')}
                     </button>
                     <button 
                         onClick={() => setActiveCategory('moving-image')}
-                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${
+                        className={`text-xl md:text-2xl font-sans text-left transition-colors duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                             activeCategory === 'moving-image' ? 'text-black font-medium' : 'text-gray-400 hover:text-gray-600'
                         }`}
                     >
-                        Moving Image Program
+                        {language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program'}
                     </button>
                 </div>
             </div>
@@ -139,12 +96,12 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
                             <Reveal key={item.id} delay={index * 0.1}>
                                 <div 
                                     className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group"
-                                    onClick={() => onNavigate && onNavigate(item.category === 'moving-image' ? 'activity-detail' : 'exhibition-detail', item.slug)}
+                                    onClick={() => onNavigate && onNavigate(activeCategory === 'moving-image' ? 'activity-detail' : 'exhibition-detail', item.slug)}
                                 >
                                     {/* Image */}
                                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                                         <ImageWithFallback 
-                                            src={`https://picsum.photos/seed/${index + 1}/600/800`}
+                                            src={item.featuredImage.sourceUrl}
                                             alt={item.title}
                                             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                         />
@@ -152,18 +109,18 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
 
                                     {/* Info */}
                                     <div className="flex flex-col gap-1">
-                                        <h3 className="text-lg md:text-xl font-normal leading-tight font-sans text-black">{item.title}</h3>
-                                        {item.artist && (
-                                            <p className="text-lg md:text-xl font-normal text-black leading-tight font-sans">{item.artist}</p>
+                                        <h3 className={`text-lg md:text-xl font-normal leading-tight font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
+                                        {item.acf?.artist && (
+                                            <p className={`text-lg md:text-xl font-normal text-black leading-tight font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf.artist}</p>
                                         )}
-                                        <p className="text-lg md:text-xl font-normal text-black leading-tight mt-2 font-sans">{item.date}</p>
+                                        <p className={`text-lg md:text-xl font-normal text-black leading-tight mt-2 font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
                                     </div>
                                 </div>
                             </Reveal>
                         ))
                     ) : (
                         <div className="py-20 text-gray-400 font-sans text-xl">
-                            No exhibitions found.
+                            {t('common.noResults')}
                         </div>
                     )}
                 </div>

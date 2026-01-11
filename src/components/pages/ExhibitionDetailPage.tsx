@@ -11,9 +11,10 @@ import {
 } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { WPPost } from '../../utils/types';
-import { fetchPostBySlug } from '../../utils/api';
 import { Reveal } from '../ui/Reveal';
 import { VisitInfo } from './sections/VisitInfo';
+import { useLanguage } from '../../utils/languageContext';
+import { getMockPost } from '../../utils/mockDataBilingual';
 
 interface ExhibitionDetailPageProps {
   onNavigate: (page: string) => void;
@@ -23,6 +24,7 @@ interface ExhibitionDetailPageProps {
 }
 
 export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }: ExhibitionDetailPageProps) {
+  const { language, t } = useLanguage();
   const [postData, setPostData] = useState<WPPost | undefined>(exhibition);
   const [loading, setLoading] = useState(!exhibition && !!slug);
   const [error, setError] = useState(false);
@@ -42,18 +44,17 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
     
     if (slug) {
         setLoading(true);
-        fetchPostBySlug(slug, 'exhibition')
-            .then(data => {
-                if (data) {
-                    setPostData(data);
-                } else {
-                    setError(true);
-                }
-            })
-            .catch(() => setError(true))
-            .finally(() => setLoading(false));
+        // Use bilingual mock data instead of API
+        const data = getMockPost(slug, language);
+        if (data) {
+            setPostData(data);
+            setLoading(false);
+        } else {
+            setError(true);
+            setLoading(false);
+        }
     }
-  }, [exhibition, slug]);
+  }, [exhibition, slug, language]);
 
   // Carousel logic
   useEffect(() => {
@@ -64,8 +65,8 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
 
   const scrollTo = (index: number) => api?.scrollTo(index);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Exhibition...</div>;
-  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">Exhibition not found.</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">{t('common.loading')}</div>;
+  if (error || !postData) return <div className="min-h-screen flex items-center justify-center font-sans text-red-500">{language === 'th' ? 'ไม่พบนิทรรศการ' : 'Exhibition not found.'}</div>;
 
   // Use gallery from postData or fallback to featured image
   const baseGallery = postData.gallery && postData.gallery.length > 0 
@@ -111,7 +112,9 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
              </Carousel>
          ) : (
              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-400">No images available</span>
+                <span className="text-gray-400">
+                    {language === 'th' ? 'ไม่มีรูปภาพ' : 'No images available'}
+                </span>
              </div>
          )}
 
@@ -146,7 +149,10 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-medium font-sans">
-                    {backPage === 'archives' ? 'Back to Archives' : 'Back to Exhibitions'}
+                    {backPage === 'archives' 
+                        ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives') 
+                        : (language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions')
+                    }
                 </span>
             </button>
         </div>
@@ -160,18 +166,18 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
             <div className="md:col-span-6 flex flex-col gap-8">
                 <Reveal>
                     <div className="flex flex-col gap-1">
-                        <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.title}
                         </h1>
                         
                         {postData.acf?.artist && (
-                            <p className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                            <p className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                 {postData.acf.artist}
                             </p>
                         )}
 
                         {postData.date && (
-                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">{postData.date}</p>
+                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
                         )}
                     </div>
                 </Reveal>
@@ -179,17 +185,19 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                 {postData.acf?.curator && (
                      <Reveal delay={0.2}>
                         <div className="flex flex-col gap-1 mt-6">
-                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">Curated by</p>
-                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">{postData.acf.curator}</p>
+                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
+                            </p>
+                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.acf.curator}</p>
                         </div>
                      </Reveal>
                 )}
             </div>
 
             {/* Right Column - Text Content */}
-            <div className="md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
+            <div className={`md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                 <Reveal delay={0.2}>
-                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
+                    <div className={language === 'th' ? 'leading-[1.82em]' : undefined} dangerouslySetInnerHTML={{ __html: postData.content }} />
                 </Reveal>
             </div>
         </div>

@@ -3,94 +3,13 @@ import { motion } from 'motion/react';
 import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
 import { ASSETS } from '../../utils/assets';
+import { useLanguage } from '../../utils/languageContext';
+import { getTranslation } from '../../utils/translations';
+import { FOUNDER, DIRECTORS, TEAM_GROUPS } from '../../utils/teamDataBilingual';
 import founderImage from "figma:asset/63583d51ce120d2667a025955b831543df17fc5f.png";
 import stefanoImage from "figma:asset/53a86972f0147a364bd78a4ba6e4e6c9bfcf4267.png";
 
-type Section = 'founder' | 'team' | string; // 'founder', 'team', or director name
-
-interface Director {
-    name: string;
-    role: string; // Used for sidebar list grouping? No, just Directors
-    bio: string[];
-    image?: string;
-}
-
-const DIRECTORS: Director[] = [
-    {
-        name: 'Stefano Rabolli Pansera',
-        role: 'Director',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdCUyMHByb2Zlc3Npb25hbCUyMGdsYXNzZXN8ZW58MXx8fHwxNzY1MDA1MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral', // Placeholder
-        bio: [
-            "Stefano Rabolli Pansera is an architect and curator. He studied at the Architectural Association in London where he graduated with Honours in 2005. He taught at the Architectural Association as Unit Master from 2007 to 2011.",
-            "In 2013, he founded Beyond Entropy Ltd, a curatorial agency operating at the threshold of art, architecture and geopolitics. He curated the Angolan Pavilion at the 55th Venice Biennale (Golden Lion for Best National Participation).",
-            "He has been the director of Hauser & Wirth in London and St. Moritz. He is currently the Director of Bangkok Kunsthalle."
-        ]
-    },
-    {
-        name: 'Luckana Kunavichayanont',
-        role: 'Director',
-        bio: [
-             "Luckana Kunavichayanont is a prominent figure in the Thai art scene, known for her leadership and curatorial work. She served as the Director of the Bangkok Art and Culture Centre (BACC) for many years, steering it to become a central hub for contemporary art in Thailand."
-        ]
-    },
-    {
-        name: 'Poonperm Paitayawat',
-        role: 'Food & Gastronomy',
-        bio: [
-            "Poonperm Paitayawat oversees the Food & Gastronomy sector of Bangkok Kunsthalle, bridging the gap between culinary arts and contemporary culture."
-        ]
-    },
-    {
-        name: 'Claudia Ko',
-        role: 'Financial Sustainability & Donor Relations',
-        bio: [
-            "Claudia Ko manages Financial Sustainability & Donor Relations, ensuring the long-term viability and growth of the institution through strategic partnerships and donor engagement."
-        ]
-    }
-];
-
-const TEAM_GROUPS = [
-    {
-        role: 'Curators',
-        members: ['Mark Chearavanont', 'Gemmica Sinthawalai']
-    },
-    {
-        role: 'Moving Image Curator',
-        members: ['Rosalia Namsai Engchuan']
-    },
-    {
-        role: 'Education and Public Program Co-ordinator',
-        members: ['Thanchanok Benjajinda']
-    },
-    {
-        role: 'Artist Residency Program Co-ordinator',
-        members: ['Pompavee Ritticongkhajorn']
-    },
-    {
-        role: 'Gallery Co-ordinator',
-        members: ['Pornrama Laopiyasakul']
-    },
-    {
-        role: 'Graphic Designers',
-        members: ['Kawisara Vacharaprucks', 'Kevin Niran Bondoerffer']
-    },
-    {
-        role: 'Operation Team',
-        members: ['Charisara Nuknaw', 'Sulawan Wongthong']
-    },
-    {
-        role: 'Financial Sustainability and Donor Relations',
-        members: ['Siripat Rojnirun']
-    },
-    {
-        role: 'Accountant Team',
-        members: ['Kamitta Pimparcha', 'Kanpitcha Namwimolwut']
-    },
-    {
-        role: 'Publication Editor',
-        members: ['Korn Kazaxa']
-    }
-];
+type Section = 'founder' | 'team' | string;
 
 interface TeamPageProps {
     activePage?: 'founder' | 'team';
@@ -98,6 +17,7 @@ interface TeamPageProps {
 }
 
 export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
+  const { language } = useLanguage();
   const [activeSection, setActiveSection] = useState<string>('founder');
   
   const getDirectorId = (name: string) => name.replace(/\s+/g, '-').toLowerCase();
@@ -193,7 +113,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                         : 'text-gray-400 hover:text-black'
                     }`}
                 >
-                    Founder
+                    {getTranslation(language, 'team.founder')}
                 </button>
 
                 {/* Directors Group */}
@@ -206,7 +126,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                             : 'text-gray-400 hover:text-black'
                         }`}
                     >
-                        Directors
+                        {getTranslation(language, 'team.directors')}
                     </button>
                     <div className="pl-0 flex flex-col space-y-2">
                         {DIRECTORS.map(director => {
@@ -237,7 +157,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                         : 'text-gray-400 hover:text-black'
                     }`}
                 >
-                    Team
+                    {getTranslation(language, 'team.team')}
                 </button>
 
             </nav>
@@ -258,17 +178,14 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 </Reveal>
                 <Reveal delay={0.1}>
                     <h2 className="text-xl md:text-2xl font-sans text-black font-normal mb-6">
-                        Marisa Chearavanont
+                        {FOUNDER.name}
                     </h2>
                 </Reveal>
                 <Reveal delay={0.2}>
                     <div className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight flex flex-col gap-6">
-                        <p>
-                            Born in South Korea and later naturalised Thai, Ms. Marisa Chearavanont is a philanthropist, art collector and patron. With her primary focus in art, education and gastronomy – the three elements that are helping connect Thai culture to the world – Ms. Chearavanont founded Thai Art Initiative (ThAI) in 2022 and Bangkok Kunsthalle in 2024 with the mission of making Thailand the Southeast Asian hub for contemporary art.
-                        </p>
-                        <p>
-                            Ms. Chearavanont is noted for her contributions to the contemporary art scene. She serves as Asia-Pacific Acquisition Committee for Tate Modern (London) and International Leadership Council for New Museum (New York City). In 2022, Ms. Chearavanont was the first recipient of RINASCIMENTO+ Award for her role as an art collector. In Asia, she is a Founding Patron for M+ Museum (Hong Kong) and member of BACC Foundation committee (Bangkok) as well as being appointed senior expert by Thailand's Ministry of Culture and Office of The Prime Minister to advise and oversee the development of contemporary art, culture and national identity in Thailand.
-                        </p>
+                        {(language === 'th' ? FOUNDER.bioTH : FOUNDER.bio).map((para, i) => (
+                            <p key={i} className={language === 'th' ? 'leading-[1.82em]' : undefined}>{para}</p>
+                        ))}
                     </div>
                 </Reveal>
             </div>
@@ -293,8 +210,8 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                     </Reveal>
                     <Reveal delay={0.2}>
                         <div className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight flex flex-col gap-6">
-                            {director.bio.map((para, i) => (
-                                <p key={i}>{para}</p>
+                            {(language === 'th' ? director.bioTH : director.bio).map((para, i) => (
+                                <p key={i} className={language === 'th' ? 'leading-[1.82em]' : undefined}>{para}</p>
                             ))}
                         </div>
                     </Reveal>
@@ -308,10 +225,10 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                         <Reveal key={group.role} delay={index * 0.05}>
                             <div className="flex flex-col gap-2">
                                 <h3 className="text-xl md:text-2xl font-sans text-black font-medium leading-tight tracking-tight">
-                                    {group.role}
+                                    {language === 'th' ? group.roleTH : group.role}
                                 </h3>
                                 <div className="flex flex-col gap-1">
-                                    {group.members.map(member => (
+                                    {(language === 'th' && group.membersTH ? group.membersTH : group.members).map(member => (
                                         <p key={member} className="text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight">
                                             {member}
                                         </p>

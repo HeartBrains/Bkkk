@@ -2,9 +2,13 @@ import { ASSETS } from '../../utils/assets';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Reveal } from '../ui/Reveal';
 import { motion } from 'motion/react';
+import { useLanguage } from '../../utils/languageContext';
+import { getTranslation } from '../../utils/translations';
 import khaoYaiHero from "figma:asset/9dae9d1894230d3eec6cdcd7ad979b5b951fc060.png";
 
 export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => void }) {
+  const { language } = useLanguage();
+
   return (
     <motion.div 
       initial={{ opacity: 0 }} 
@@ -23,7 +27,7 @@ export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => voi
         >
             <ImageWithFallback 
               src={khaoYaiHero} 
-              alt="Khao Yai Art Forest" 
+              alt={getTranslation(language, 'khaoyai.title')}
               className="absolute inset-0 w-full h-full object-cover"
             />
         </motion.div>
@@ -32,8 +36,12 @@ export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => voi
         
         <div className="absolute inset-0 flex items-center justify-center">
             <Reveal>
-                <h1 className="text-4xl md:text-6xl lg:text-8xl font-sans text-white text-center">
-                    Khao Yai<br />Art Forest
+                <h1 className={`text-4xl md:text-6xl lg:text-8xl font-sans text-white text-center ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                    {language === 'th' ? (
+                        <>เขาใหญ่<br />อาร์ต ฟอเรสต์</>
+                    ) : (
+                        <>Khao Yai<br />Art Forest</>
+                    )}
                 </h1>
             </Reveal>
         </div>
@@ -43,7 +51,7 @@ export function KhaoYaiPage({ onNavigate }: { onNavigate?: (page: string) => voi
       <div className="w-full px-6 py-12 md:py-20 space-y-4">
         <Reveal>
             <div className="text-center py-20">
-                <p className="text-xl text-gray-500 font-sans">Coming Soon</p>
+                <p className={`text-xl text-gray-500 font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{getTranslation(language, 'khaoyai.comingSoon')}</p>
             </div>
         </Reveal>
       </div>

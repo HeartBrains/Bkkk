@@ -1,24 +1,39 @@
 import { Reveal } from '../../ui/Reveal';
+import { useLanguage } from '../../../utils/languageContext';
 
 export function VisitInfo() {
+  const { language } = useLanguage();
+  
   return (
     <div className="flex flex-col gap-12 md:gap-16">
       {/* Location */}
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Location</span>
+                <span className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                  {language === 'th' ? 'สถานที่' : 'Location'}
+                </span>
             </div>
             <div className="md:col-span-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl md:text-2xl font-sans text-black">Bangkok Kunsthalle</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">599 Pantachit Alley,</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">Pom Prap, Bangkok</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'บางกอก คุนซ์ฮาลเล่' : 'Bangkok Kunsthalle'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? '599 ซอย พันธจิตต์' : '599 Pantachit Alley,'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'แขวงป้อมปราบ กรุงเทพฯ' : 'Pom Prap, Bangkok'}
+                    </p>
                 </div>
                 
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl md:text-2xl font-sans text-black">Opening Hours</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">Wednesday - Sunday</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'เวลาทำการ' : 'Opening Hours'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'วันพุธ - วันอาทิตย์' : 'Wednesday - Sunday'}
+                    </p>
                     <p className="text-xl md:text-2xl font-sans text-black">14:00 - 20:00</p>
                 </div>
                 
@@ -43,11 +58,22 @@ export function VisitInfo() {
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Admission</span>
+                <span className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                  {language === 'th' ? 'ค่าเข้าชม' : 'Admission'}
+                </span>
             </div>
             <div className="md:col-span-6">
-                <p className="text-xl md:text-2xl font-sans text-black">Entry to exhibitions is free, except for</p>
-                <p className="text-xl md:text-2xl font-sans text-black">special events, charges will vary.</p>
+                {language === 'th' ? (
+                  <>
+                    <p className="text-xl md:text-2xl font-sans text-black leading-[1.82em]">เข้าชมนิทรรศการฟรี ยกเว้น</p>
+                    <p className="text-xl md:text-2xl font-sans text-black leading-[1.82em]">กิจกรรมพิเศษที่อาจมีค่าใช้จ่ายแตกต่างกัน</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xl md:text-2xl font-sans text-black">Entry to exhibitions is free, except for</p>
+                    <p className="text-xl md:text-2xl font-sans text-black">special events, charges will vary.</p>
+                  </>
+                )}
             </div>
         </div>
       </Reveal>
@@ -56,53 +82,98 @@ export function VisitInfo() {
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Getting Here</span>
+                <span className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                  {language === 'th' ? 'การเดินทาง' : 'Getting Here'}
+                </span>
             </div>
             <div className="md:col-span-6 flex flex-col gap-8">
                 {/* MRT */}
                 <div className="flex flex-col gap-4">
-                    <p className="text-xl md:text-2xl font-sans text-black">MRT</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'รถไฟฟ้าใต้ดิน' : 'MRT'}
+                    </p>
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col">
-                            <p className="text-xl md:text-2xl font-sans text-black">Hua Lamphong Station</p>
-                            <p className="text-xl md:text-2xl font-sans text-gray-500">6-7 minute walk.</p>
+                            <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'สถานีหัวลำโพง' : 'Hua Lamphong Station'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-sans text-gray-500 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'เดิน 6-7 นาที' : '6-7 minute walk.'}
+                            </p>
                         </div>
                         <div className="flex flex-col">
-                            <p className="text-xl md:text-2xl font-sans text-black">Wat Mangkon Station</p>
-                            <p className="text-xl md:text-2xl font-sans text-gray-500">10-12 minute walk.</p>
+                            <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'สถานีวัดมังกร' : 'Wat Mangkon Station'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-sans text-gray-500 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'เดิน 10-12 นาที' : '10-12 minute walk.'}
+                            </p>
                         </div>
                         <div className="flex flex-col">
-                            <p className="text-xl md:text-2xl font-sans text-black">Sam Yot Station</p>
-                            <p className="text-xl md:text-2xl font-sans text-gray-500">12-15 minute walk.</p>
+                            <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'สถานีสามยอด' : 'Sam Yot Station'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-sans text-gray-500 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                              {language === 'th' ? 'เดิน 12-15 นาที' : '12-15 minute walk.'}
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 {/* Taxi or Grab */}
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl md:text-2xl font-sans text-black">Taxi or Grab</p>
-                    <p className="text-xl md:text-2xl font-sans text-black mt-2">Search for "Bangkok Kunsthalle"</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">or show the driver this address in Thai:</p>
-                    <p className="text-xl md:text-2xl font-sans text-black mt-2">599 ซอย พันธจิตต์ แขวงป้อมปราบ</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">เขตป้อมปราบศัตรูพ่าย กรุงเทพมหานคร</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'แท็กซี่หรือแกร็บ' : 'Taxi or Grab'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'ค้นหา "บางกอก คุนซ์ฮาลเล่"' : 'Search for "Bangkok Kunsthalle"'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'หรือแสดงที่อยู่นี้ให้คนขับ:' : 'or show the driver this address in Thai:'}
+                    </p>
+                    <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">599 ซอย พันธจิตต์ แขวงป้อมปราบ</p>
+                    <p className="text-xl md:text-2xl font-sans text-black leading-[1.82em]">เขตป้อมปราบศัตรูพาย กรุงเทพมหานคร</p>
                 </div>
 
                 {/* Boat */}
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl md:text-2xl font-sans text-black">Boat</p>
-                    <p className="text-xl md:text-2xl font-sans text-black mt-2">For a more scenic route:</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">Take the Chao Phraya Express Boat</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">to Ratchawong Pier (N5)</p>
-                    <p className="text-xl md:text-2xl font-sans text-gray-500">20 minute walk.</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'เรือ' : 'Boat'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'สำหรับเส้นทางที่สวยงามกว่า:' : 'For a more scenic route:'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'นั่งเรือด่วนเจ้าพระยา' : 'Take the Chao Phraya Express Boat'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'ไปที่ท่าราชวงศ์ (N5)' : 'to Ratchawong Pier (N5)'}
+                    </p>
+                    <p className={`text-xl md:text-2xl font-sans text-gray-500 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'เดิน 20 นาที' : '20 minute walk.'}
+                    </p>
                 </div>
 
                 {/* Car & Parking */}
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl md:text-2xl font-sans text-black">Car & Parking</p>
-                    <p className="text-xl md:text-2xl font-sans text-black mt-2">On-site parking is extremely limited</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">due to our location in a narrow alley.</p>
-                    <p className="text-xl md:text-2xl font-sans text-black mt-4">It is highly recommended to park</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">at nearby commercial lots in Chinatown</p>
+                    <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'รถยนต์และที่จอดรถ' : 'Car & Parking'}
+                    </p>
+                    {language === 'th' ? (
+                      <>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">ที่จอดรถในสถานที่มีจำกัดมาก</p>
+                        <p className="text-xl md:text-2xl font-sans text-black leading-[1.82em]">เนื่องจากตั้งอยู่ในซอยแคบ</p>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-4 leading-[1.82em]">แนะนำอย่างยิ่งให้จอดรถ</p>
+                        <p className="text-xl md:text-2xl font-sans text-black leading-[1.82em]">ที่ลานจอดรถในย่านไชน่าทาวน์ใกล้เคียง</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-2">On-site parking is extremely limited</p>
+                        <p className="text-xl md:text-2xl font-sans text-black">due to our location in a narrow alley.</p>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-4">It is highly recommended to park</p>
+                        <p className="text-xl md:text-2xl font-sans text-black">at nearby commercial lots in Chinatown</p>
+                      </>
+                    )}
                 </div>
             </div>
         </div>
@@ -112,7 +183,9 @@ export function VisitInfo() {
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Directory</span>
+                <span className="text-xl md:text-2xl font-sans text-black">
+                  {language === 'th' ? 'ไดเรกทอรี' : 'Directory'}
+                </span>
             </div>
             <div className="md:col-span-6">
                 {/* Empty content as per screenshot */}
@@ -124,7 +197,9 @@ export function VisitInfo() {
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Accessibility</span>
+                <span className="text-xl md:text-2xl font-sans text-black">
+                  {language === 'th' ? 'การเข้าถึง' : 'Accessibility'}
+                </span>
             </div>
             <div className="md:col-span-6">
                 {/* Empty content as per screenshot */}
@@ -136,7 +211,9 @@ export function VisitInfo() {
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
-                <span className="text-xl md:text-2xl font-sans text-black">Group Visit</span>
+                <span className="text-xl md:text-2xl font-sans text-black">
+                  {language === 'th' ? 'การเยี่ยมชมหมู่คณะ' : 'Group Visit'}
+                </span>
             </div>
             <div className="md:col-span-6">
                 {/* Empty content as per screenshot */}
