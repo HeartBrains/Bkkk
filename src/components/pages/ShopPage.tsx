@@ -102,11 +102,11 @@ export function ShopPage({ onNavigate }: ShopPageProps) {
                     products.map((product, index) => (
                         <Reveal key={product.id} delay={index * 0.1}>
                             <div 
-                                className="group cursor-pointer max-w-md"
+                                className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
                                 onClick={() => onNavigate?.('contact')}
                             >
                                 {/* Placeholder Image */}
-                                <div className="aspect-[4/5] w-full bg-gray-300 mb-6" />
+                                <div className="aspect-[3/4] w-full bg-gray-300" />
                                 
                                 {/* Info */}
                                 <h3 className={`text-xl md:text-2xl font-normal font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? product.nameTH : product.name}</h3>
@@ -116,9 +116,9 @@ export function ShopPage({ onNavigate }: ShopPageProps) {
                 ) : (
                     bookings.map((booking, index) => (
                         <Reveal key={booking.id} delay={index * 0.1}>
-                            <div className="group max-w-md">
+                            <div className="flex flex-col gap-6 w-full md:w-[45vw] group">
                                 {/* Placeholder Image */}
-                                <div className="aspect-[4/5] w-full bg-gray-300 mb-6" />
+                                <div className="aspect-[3/4] w-full bg-gray-300" />
                                 
                                 {/* Info */}
                                 <div className="flex justify-between items-start mb-4">

@@ -86,7 +86,7 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
                     {filteredData.map((item, idx) => (
                         <Reveal key={item.id} delay={idx * 0.1}>
                             <div 
-                                className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group"
+                                className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
                                 onClick={() => onNavigate('activity-detail', item.slug)}
                             >
                                 <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden">
@@ -97,9 +97,14 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <h3 className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight whitespace-pre-wrap ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                    <h3 className={`text-lg md:text-xl font-normal text-black leading-tight whitespace-pre-wrap ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                         {item.title}
                                     </h3>
+                                    {item.date && (
+                                        <p className={`text-lg md:text-xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                            {item.date}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </Reveal>

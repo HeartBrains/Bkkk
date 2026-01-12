@@ -90,7 +90,6 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
-    --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
@@ -800,10 +799,6 @@
     aspect-ratio: 3 / 4;
   }
 
-  .aspect-\[4\/5\] {
-    aspect-ratio: 4 / 5;
-  }
-
   .aspect-square {
     aspect-ratio: 1;
   }
@@ -989,10 +984,6 @@
 
   .max-w-lg {
     max-width: var(--container-lg);
-  }
-
-  .max-w-md {
-    max-width: var(--container-md);
   }
 
   .min-w-0 {
@@ -1716,6 +1707,10 @@
 
   .text-\[10px\] {
     font-size: 10px;
+  }
+
+  .text-\[24px\] {
+    font-size: 24px;
   }
 
   .leading-\[1\.82em\] {
@@ -2615,6 +2610,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:w-\[45vw\] {
+      width: 45vw;
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:max-w-2xl {
       max-width: var(--container-2xl);
     }
@@ -2819,6 +2820,12 @@
     .md\:text-xl {
       font-size: var(--text-xl);
       line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:text-\[2\.4vw\] {
+      font-size: 2.4vw;
     }
   }
 

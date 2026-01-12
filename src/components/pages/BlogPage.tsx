@@ -92,11 +92,11 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
                             {yearGroup.posts.map((post) => (
                                 <Reveal key={post.id}>
                                     <div 
-                                        className="flex flex-col gap-6 cursor-pointer group w-full md:max-w-2xl"
+                                        className="flex flex-col gap-6 cursor-pointer group w-full md:w-[45vw]"
                                         onClick={() => onNavigate('blog-detail', post.slug)}
                                     >
                                         {/* Image */}
-                                        <div className="aspect-[4/5] w-full bg-gray-200 overflow-hidden">
+                                        <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden">
                                             <ImageWithFallback 
                                                 src={post.featuredImage.sourceUrl} 
                                                 alt={post.title}

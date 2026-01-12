@@ -54,7 +54,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12 md:gap-16">
              {currentExhibitions.map((item) => (
-                <div key={item!.id} className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
+                <div key={item!.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback 
                             src={item!.featuredImage.sourceUrl} 
@@ -78,7 +78,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
              <h2 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('exhibitions.upcoming')}</h2>
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12">
-             <div className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group" onClick={() => onNavigate?.('exhibitions')}>
+             <div className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibitions')}>
                  <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
                     {/* Placeholder Gray Box */}
                  </div>
@@ -98,7 +98,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12">
              {liminalSignals && (
-                <div className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group" onClick={() => onNavigate?.('activity-detail', liminalSignals.slug)}>
+                <div className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('activity-detail', liminalSignals.slug)}>
                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback 
                             src={liminalSignals.featuredImage.sourceUrl} 

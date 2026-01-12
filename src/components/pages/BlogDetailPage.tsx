@@ -49,7 +49,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
       {postData.featuredImage ? (
          <ParallaxHero 
             image={postData.featuredImage.sourceUrl} 
-            height="h-[80vh]"
+            height="h-[35vh] md:h-[80vh]"
          >
              <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
              <div className="absolute bottom-8 left-6 md:left-12 z-20">

@@ -95,7 +95,7 @@ export function ExhibitionsPage({ onNavigate }: ExhibitionsPageProps) {
                         filteredExhibitions.map((item, index) => (
                             <Reveal key={item.id} delay={index * 0.1}>
                                 <div 
-                                    className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group"
+                                    className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
                                     onClick={() => onNavigate && onNavigate(activeCategory === 'moving-image' ? 'activity-detail' : 'exhibition-detail', item.slug)}
                                 >
                                     {/* Image */}

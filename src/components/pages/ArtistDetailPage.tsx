@@ -59,7 +59,7 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
        {/* Hero Section */}
-       <div className="h-[80vh] w-full relative overflow-hidden group bg-black">
+       <div className="h-[35vh] md:h-[80vh] w-full relative overflow-hidden group bg-black">
           <Carousel
             setApi={setApi}
             plugins={[plugin.current]}
