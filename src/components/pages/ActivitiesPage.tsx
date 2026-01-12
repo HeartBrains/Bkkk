@@ -86,7 +86,7 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
                     {filteredData.map((item, idx) => (
                         <Reveal key={item.id} delay={idx * 0.1}>
                             <div 
-                                className="flex flex-col gap-6 cursor-pointer group"
+                                className="flex flex-col gap-6 w-full md:max-w-2xl cursor-pointer group"
                                 onClick={() => onNavigate('activity-detail', item.slug)}
                             >
                                 <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden">

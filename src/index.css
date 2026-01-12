@@ -871,6 +871,10 @@
     height: 20vh;
   }
 
+  .h-\[35vh\] {
+    height: 35vh;
+  }
+
   .h-\[60vh\] {
     height: 60vh;
   }
