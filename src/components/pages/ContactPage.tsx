@@ -25,7 +25,7 @@ export function ContactPage() {
              {/* Left Column */}
             <div className="w-full md:w-1/2 mb-12 md:mb-0">
                 <Reveal>
-                    <h1 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                    <h1 className={`text-xl md:text-2xl font-normal sticky top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'ติดต่อเรา' : 'Contact Us'}
                     </h1>
                 </Reveal>
@@ -35,7 +35,7 @@ export function ContactPage() {
             <div className="w-full md:w-1/2 flex flex-col gap-8">
                 <Reveal delay={0.1}>
                     <div className="flex flex-col gap-4">
-                        <p className={`text-xl md:text-2xl font-normal tracking-tight ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                        <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
                             {language === 'th' ? (
                               <>
                                 ติดต่อบางกอก คุนซ์ฮาลเล่<br />
@@ -52,7 +52,7 @@ export function ContactPage() {
                               </>
                             )}
                         </p>
-                        <p className={`text-xl md:text-2xl font-normal leading-tight tracking-tight mt-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        <p className={`text-xl md:text-2xl font-normal leading-tight mt-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {language === 'th' ? 'กรุณาฝากข้อความด้านล่าง' : 'Please leave a message below.'}
                         </p>
                     </div>
@@ -62,15 +62,15 @@ export function ContactPage() {
                     <form className="flex flex-col gap-6 w-full max-w-lg" onSubmit={(e) => e.preventDefault()}>
                         <Input 
                             placeholder={language === 'th' ? 'อีเมล' : 'Email'}
-                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans tracking-tight"
+                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans"
                         />
                         <Textarea 
                             placeholder={language === 'th' ? 'ข้อความสอบถาม' : 'Inquiry Box'}
-                            className={`rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}
+                            className={`rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}
                         />
                         <Button 
                             type="submit"
-                            className="rounded-none bg-[#1A1A1A] hover:bg-black text-white px-8 py-6 text-lg w-fit font-sans tracking-tight"
+                            className="rounded-none bg-[#1A1A1A] hover:bg-black text-white px-8 py-6 text-lg w-fit font-sans"
                         >
                             {language === 'th' ? 'ส่ง' : 'Submit'}
                         </Button>

@@ -106,15 +106,15 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
 
                                         {/* Text Content */}
                                         <div className="flex flex-col gap-1">
-                                            <h3 className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                            <h3 className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                                 {post.title}
                                             </h3>
                                             {post.categories && post.categories[0] && (
-                                                <p className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                                <p className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                                     {post.categories[0]}
                                                 </p>
                                             )}
-                                            <p className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                            <p className={`text-xl md:text-2xl font-sans text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                                 {post.date}
                                             </p>
                                         </div>

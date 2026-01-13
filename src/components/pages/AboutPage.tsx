@@ -42,14 +42,14 @@ export function AboutPage({ onNavigate, activePage = 'about' }: AboutPageProps) 
             <section id="about" className="flex flex-col md:flex-row">
                 <div className="w-full md:w-1/2 mb-8 md:mb-0">
                     <Reveal>
-                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight tracking-tight">
+                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight">
                           {language === 'th' ? 'เกี่ยวกับเรา' : 'About Us'}
                         </h2>
                     </Reveal>
                 </div>
                 <div className="w-full md:w-1/2">
                     <Reveal delay={0.1}>
-                        <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                        <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight">
                             {language === 'th' ? (
                               <>
                                 <p className="leading-[1.82em]">
@@ -90,14 +90,14 @@ export function AboutPage({ onNavigate, activePage = 'about' }: AboutPageProps) 
             <section id="vision" className="flex flex-col md:flex-row">
                 <div className="w-full md:w-1/2 mb-8 md:mb-0">
                     <Reveal>
-                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight tracking-tight">
+                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight">
                           {language === 'th' ? 'วิสัยทัศน์และพันธกิจ' : 'Vision & Mission'}
                         </h2>
                     </Reveal>
                 </div>
                 <div className="w-full md:w-1/2">
                     <Reveal delay={0.1}>
-                        <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                        <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight">
                             <p className={language === 'th' ? 'leading-[1.82em]' : undefined}>
                               {language === 'th' 
                                 ? 'บางกอก คุนซ์ฮาลเล่ มีวิสัยทัศน์ในการเป็นศูนย์กลางแห่งการสนทนาสร้างสรรค์และการแลกเปลี่ยนทางวัฒนธรรม โดยมีพันธกิจในการนำเสนอศิลปะร่วมสมัยที่ท้าทาย กระตุ้นความคิด และเข้าถึงได้สำหรับทุกคน เรามุ่งมั่นที่จะสร้างสะพานเชื่อมระหว่างศิลปินท้องถิ่นและนานาชาติ และส่งเสริมความเข้าใจที่ลึกซึ้งยิ่งขึ้นเกี่ยวกับแนวปฏิบัติทางศิลปะร่วมสมัยในภูมิภาคเอเชียตะวันออกเฉียงใต้'
@@ -112,14 +112,14 @@ export function AboutPage({ onNavigate, activePage = 'about' }: AboutPageProps) 
             <section id="history" className="flex flex-col md:flex-row">
                 <div className="w-full md:w-1/2 mb-8 md:mb-0">
                     <Reveal>
-                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight tracking-tight">
+                        <h2 className="text-xl md:text-2xl font-normal font-sans text-black leading-tight">
                           {language === 'th' ? 'ประวัติ' : 'History'}
                         </h2>
                     </Reveal>
                 </div>
                 <div className="w-full md:w-1/2">
                     <Reveal delay={0.1}>
-                         <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight">
+                         <div className="flex flex-col gap-6 text-xl md:text-2xl text-black font-normal leading-tight">
                             <p className={language === 'th' ? 'leading-[1.82em]' : undefined}>
                               {language === 'th'
                                 ? 'สถาบันทางเลือกนี้ตั้งอยู่ในอาคารไทยวัฒนาพาณิชย์ที่ถูกทิ้งร้าง ซึ่งเป็นโรงพิมพ์ชั้นนำที่ถูกไฟไหม้ในปี พ.ศ. 2544 พื้นที่ดิบๆ สไตล์อุตสาหกรรมนำเสนอแพลตฟอร์มใหม่และเป็นผู้บุกเบิกที่สะท้อนคุณภาพของงานศิลปะที่ถูกเลือกมาจัดแสดงที่นั่น'

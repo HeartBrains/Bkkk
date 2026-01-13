@@ -1225,6 +1225,10 @@
     overflow: hidden;
   }
 
+  .overflow-visible {
+    overflow: visible;
+  }
+
   .overflow-y-auto {
     overflow-y: auto;
   }
@@ -1503,6 +1507,10 @@
 
   .p-8 {
     padding: calc(var(--spacing) * 8);
+  }
+
+  .p-\[0px\] {
+    padding: 0;
   }
 
   .p-\[48px\] {
@@ -2945,7 +2953,7 @@
 
 @font-face {
   font-family: Forestype;
-  src: url("https://irp.cdn-website.com/5516674f/files/uploaded/Forestype-Regular.otf") format("opentype");
+  src: url("https://www.khaoyaiart.com/_next/static/media/29297acd61a237bc-s.p.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -2953,7 +2961,15 @@
 
 @font-face {
   font-family: Forestype;
-  src: url("https://irp.cdn-website.com/5516674f/files/uploaded/Forestype-bold.otf") format("opentype");
+  src: url("https://www.khaoyaiart.com/_next/static/media/3e5c1db3e9b8afef-s.p.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Forestype;
+  src: url("https://www.khaoyaiart.com/_next/static/media/f852c1d99c32745d-s.p.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

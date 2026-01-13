@@ -33,15 +33,15 @@ export function PostPage({ onNavigate }: PostPageProps) {
                      {/* Left Column - Meta */}
                      <div className="md:col-span-5 flex flex-col gap-8">
                         <div className="flex flex-col gap-1">
-                            <h1 className="text-xl md:text-2xl font-normal text-black leading-tight tracking-tight">
+                            <h1 className="text-xl md:text-2xl font-normal text-black leading-tight">
                                 Which mirrors quality of artworks chosen to be exhibited there.
                             </h1>
-                            <p className="text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2">Posted: 01 Oct 2025</p>
+                            <p className="text-xl md:text-2xl text-black font-normal leading-tight mt-2">Posted: 01 Oct 2025</p>
                         </div>
                      </div>
 
                      {/* Right Column - Body */}
-                     <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6">
+                     <div className="md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus efficitur in est eu ullamcorper. Nam aliquet, ligula sit amet ullamcorper venenatis, leo dolor lacinia magna, sodales convallis tortor augue viverra est. Nulla facilisi. Phasellus id justo eu metus pretium posuere ut viverra nibh. Phasellus elementum nisl nec erat volutpat, id porta lacus iaculis. Phasellus et ullamcorper turpis, eget porttitor tellus.
                         </p>

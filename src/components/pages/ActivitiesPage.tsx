@@ -56,21 +56,21 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
             {/* Activities Label - Col 1-2 */}
             <div className="md:col-span-2">
                  <div className="md:sticky md:top-32">
-                    <h2 className={`text-xl md:text-2xl font-normal text-black tracking-tight md:sticky md:top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('nav.activities')}</h2>
+                    <h2 className={`text-xl md:text-2xl font-normal text-black md:sticky md:top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('nav.activities')}</h2>
                  </div>
             </div>
 
             {/* Tags Filter - Col 3-4 */}
             <div className="md:col-span-3">
                 <div className="md:sticky md:top-32 flex flex-col gap-2 items-end">
-                    <h3 className={`text-xl md:text-2xl font-normal text-black text-right tracking-tight mb-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                    <h3 className={`text-xl md:text-2xl font-normal text-black text-right mb-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'เรียงตามหมวดหมู่' : 'Sort by Tags'}
                     </h3>
                     {tags.map((tag) => (
                         <button
                             key={tag}
                             onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                            className={`text-right text-xl md:text-2xl font-normal tracking-tight leading-tight transition-colors duration-200 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                            className={`text-right text-xl md:text-2xl font-normal leading-tight transition-colors duration-200 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeTag === tag ? 'text-black' : 'text-gray-400 hover:text-black'
                             }`}
                         >

@@ -150,39 +150,39 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
             <div className="md:col-span-5 flex flex-col gap-8">
                <Reveal>
                    <div className="flex flex-col gap-1">
-                       <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                       <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                           {postData.title}
                        </h1>
 
                        {postData.categories?.map((cat, idx) => (
-                           <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
+                           <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
                        ))}
                        
                        {postData.date && (
-                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
                        )}
 
                        <div className="mt-8">
-                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
                            </p>
-                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>Stefano Rabolli Pansera</p>
+                           <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>Stefano Rabolli Pansera</p>
                        </div>
                    </div>
                </Reveal>
             </div>
 
             {/* Right Column */}
-            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                <Reveal delay={0.2}>
                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
                    {postData.acf?.schedule && (
                        <div>
-                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                              {language === 'th' ? 'ตารางกิจกรรม' : 'Schedule'}
                          </h3>
-                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.acf.schedule.map((item: any, idx: number) => (
                                 <p key={idx}><span className="font-bold">{item.title}</span> {item.details}</p>
                             ))}

@@ -50,7 +50,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
         {/* Current Exhibitions */}
         <section className="flex flex-col md:flex-row mb-32 md:mb-40">
           <div className="w-full md:w-1/2 mb-12 md:mb-0">
-             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('exhibitions.current')}</h2>
+             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('exhibitions.current')}</h2>
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12 md:gap-16">
              {currentExhibitions.map((item) => (
@@ -75,7 +75,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
         {/* Upcoming Exhibitions */}
         <section className="flex flex-col md:flex-row mb-32 md:mb-40">
           <div className="w-full md:w-1/2 mb-12 md:mb-0">
-             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('exhibitions.upcoming')}</h2>
+             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('exhibitions.upcoming')}</h2>
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12">
              <div className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibitions')}>
@@ -94,7 +94,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
         {/* Upcoming Public Program */}
         <section className="flex flex-col md:flex-row mb-12">
           <div className="w-full md:w-1/2 mb-12 md:mb-0">
-             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? 'โปรแกรมสาธารณะที่จะมาถึง' : 'Upcoming Public Program'}</h2>
+             <h2 className={`text-xl md:text-2xl font-normal sticky top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? 'โปรแกรมสาธารณะที่จะมาถึง' : 'Upcoming Public Program'}</h2>
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-12">
              {liminalSignals && (

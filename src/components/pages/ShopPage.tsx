@@ -80,12 +80,12 @@ export function ShopPage({ onNavigate }: ShopPageProps) {
             <div className="md:col-span-3">
                 {activeTab === 'bookings' && (
                     <div className="sticky top-32 flex flex-col gap-2 items-end">
-                        <h3 className="text-xl md:text-2xl font-normal text-black text-right tracking-tight mb-2">{getTranslation(language, 'shop.sortBy')}</h3>
+                        <h3 className="text-xl md:text-2xl font-normal text-black text-right mb-2">{getTranslation(language, 'shop.sortBy')}</h3>
                         {sortOptions.map((option) => (
                             <button
                                 key={option.value}
                                 onClick={() => setSortBy(option.value)}
-                                className={`text-right text-xl md:text-2xl font-normal tracking-tight leading-tight transition-colors duration-200 ${
+                                className={`text-right text-xl md:text-2xl font-normal leading-tight transition-colors duration-200 ${
                                     sortBy === option.value ? 'text-black' : 'text-gray-400 hover:text-black'
                                 }`}
                             >

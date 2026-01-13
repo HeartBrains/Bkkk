@@ -16,7 +16,7 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false }: Head
     >
       <div 
         onClick={onLogoClick}
-        className="text-3xl md:text-[2.4vw] font-bold tracking-tight leading-none font-sans cursor-pointer mt-[0px] mr-[0px] mb-[0px] ml-0 md:ml-[24px]"
+        className="text-3xl md:text-[2.4vw] font-bold leading-tight font-sans cursor-pointer mt-[0px] mr-[0px] mb-[0px] ml-0 md:ml-[24px] p-[0px] overflow-visible"
       >
         Bangkok
         <br />

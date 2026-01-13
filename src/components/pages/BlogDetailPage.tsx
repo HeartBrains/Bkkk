@@ -83,27 +83,27 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
             <div className="md:col-span-5 flex flex-col gap-8">
                <Reveal>
                     <div className="flex flex-col gap-1">
-                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.title}
                         </h1>
 
                         {postData.categories && (
                             <>
                                 {postData.categories.map((cat, idx) => (
-                                    <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
+                                    <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
                                 ))}
                             </>
                         )}
 
                         {postData.date && (
-                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight tracking-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
                         )}
                     </div>
                </Reveal>
             </div>
 
             {/* Right Column */}
-            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                <Reveal delay={0.2}>
                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
                </Reveal>
@@ -111,10 +111,10 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
                {postData.acf?.keyThemes && (
                    <Reveal delay={0.3}>
                        <div>
-                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {language === 'th' ? 'หัวข้อหลัก' : 'Key Themes'}
                          </h3>
-                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.acf.keyThemes.map((item: any, idx: number) => (
                                  <p key={idx}><span className="font-bold">{item.title}:</span> {item.desc}</p>
                             ))}
@@ -124,7 +124,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
                )}
 
                <Reveal delay={0.4}>
-                   <p className={`text-xl md:text-2xl text-gray-500 font-normal leading-tight tracking-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                   <p className={`text-xl md:text-2xl text-gray-500 font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                      {language === 'th' 
                         ? 'เข้าร่วมการเสวนาและเวิร์คช็อปประจำเดือนของเราเพื่อเจาะลึกหัวข้อเหล่านี้กับศิลปินและภัณฑารักษ์ที่โดดเด่นของเรา'
                         : 'Join us for our monthly talks and workshops to dive deeper into these topics with our featured artists and curators.'
