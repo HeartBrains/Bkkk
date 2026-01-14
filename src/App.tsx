@@ -73,26 +73,8 @@ export default function App() {
     }
   };
 
-  // Header is transparent on Home and Exhibitions page when at the top
-  const isTransparent = (
-    currentPage === 'home' || 
-    currentPage === 'khaoyai' ||
-    currentPage === 'exhibitions' || 
-    currentPage === 'activities' || 
-    currentPage === 'activity-detail' || 
-    currentPage === 'blog' ||
-    currentPage === 'blog-detail' ||
-    currentPage === 'visit' ||
-    currentPage === 'about' ||
-    currentPage === 'founder' ||
-    currentPage === 'team' ||
-    currentPage === 'support' ||
-    currentPage === 'archives' ||
-    currentPage === 'vision' ||
-    currentPage === 'history' ||
-    currentPage === 'contact' ||
-    currentPage === 'shop'
-  ) && !scrolled;
+  // Header is transparent on all pages when at the top
+  const isTransparent = !scrolled;
 
   return (
     <LanguageProvider>
