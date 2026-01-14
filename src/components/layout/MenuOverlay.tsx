@@ -159,7 +159,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                                             onClose();
                                         }}
                                         className={`text-left text-xl md:text-2xl font-normal transition-colors duration-300 tracking-wide ${
-                                            isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'
+                                            isActive ? 'text-gray-300' : 'text-white group-hover:text-gray-300'
                                         }`}
                                     >
                                         {item.label}

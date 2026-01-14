@@ -108,7 +108,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 <button
                     onClick={() => scrollToSection('founder')}
                     className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 cursor-pointer ${
-                        activeSection === 'founder'
+                        activeSection === 'founder' || !activeSection
                         ? 'text-black font-medium'
                         : 'text-gray-400 hover:text-black'
                     }`}
@@ -153,7 +153,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                     onClick={() => scrollToSection('team')}
                     className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
                         activeSection === 'team'
-                        ? 'text-black font-medium'
+                        ? 'text-gray-400 font-medium'
                         : 'text-gray-400 hover:text-black'
                     }`}
                 >

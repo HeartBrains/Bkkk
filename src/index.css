@@ -688,10 +688,6 @@
     margin-top: calc(var(--spacing) * 8);
   }
 
-  .mt-24 {
-    margin-top: calc(var(--spacing) * 24);
-  }
-
   .mt-\[0px\] {
     margin-top: 0;
   }
@@ -1105,10 +1101,6 @@
 
   .items-start {
     align-items: flex-start;
-  }
-
-  .justify-around {
-    justify-content: space-around;
   }
 
   .justify-between {
@@ -1653,6 +1645,10 @@
     padding-left: 0;
   }
 
+  .pl-\[24px\] {
+    padding-left: 24px;
+  }
+
   .text-center {
     text-align: center;
   }
@@ -2016,14 +2012,14 @@
   }
 
   @media (hover: hover) {
-    .group-hover\:text-red-600:is(:where(.group):hover *) {
-      color: var(--color-red-600);
+    .group-hover\:text-gray-300:is(:where(.group):hover *) {
+      color: var(--color-gray-300);
     }
   }
 
   @media (hover: hover) {
-    .group-hover\:text-white:is(:where(.group):hover *) {
-      color: var(--color-white);
+    .group-hover\:text-red-600:is(:where(.group):hover *) {
+      color: var(--color-red-600);
     }
   }
 
@@ -2406,6 +2402,12 @@
   }
 
   @media (width >= 40rem) {
+    .sm\:w-\[40\%\] {
+      width: 40%;
+    }
+  }
+
+  @media (width >= 40rem) {
     .sm\:max-w-lg {
       max-width: var(--container-lg);
     }
@@ -2434,6 +2436,12 @@
       --tw-space-x-reverse: 0;
       margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
       margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
+    }
+  }
+
+  @media (width >= 40rem) {
+    .sm\:p-\[24px\] {
+      padding: 24px;
     }
   }
 
@@ -2486,6 +2494,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:col-span-4 {
+      grid-column: span 4 / span 4;
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:col-span-5 {
       grid-column: span 5 / span 5;
     }
@@ -2506,12 +2520,6 @@
   @media (width >= 48rem) {
     .md\:col-start-6 {
       grid-column-start: 6;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:mt-32 {
-      margin-top: calc(var(--spacing) * 32);
     }
   }
 
@@ -2606,6 +2614,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:w-2\/3 {
+      width: 66.6667%;
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:w-40 {
       width: calc(var(--spacing) * 40);
     }
@@ -2662,6 +2676,12 @@
   @media (width >= 48rem) {
     .md\:items-end {
       align-items: flex-end;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:justify-around {
+      justify-content: space-around;
     }
   }
 
@@ -2838,6 +2858,12 @@
   }
 
   @media (width >= 64rem) {
+    .lg\:w-1\/2 {
+      width: 50%;
+    }
+  }
+
+  @media (width >= 64rem) {
     .lg\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -2976,7 +3002,7 @@
 }
 
 :root {
-  --font-size: 12px;
+  --font-size: 80%;
   --background: #fff;
   --foreground: oklch(.145 0 0);
   --card: #fff;

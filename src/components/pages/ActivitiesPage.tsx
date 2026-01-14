@@ -61,7 +61,7 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
             </div>
 
             {/* Tags Filter - Col 3-4 */}
-            <div className="md:col-span-3">
+            <div className="md:col-span-4">
                 <div className="md:sticky md:top-32 flex flex-col gap-2 items-end">
                     <h3 className={`text-xl md:text-2xl font-normal text-black text-right mb-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'เรียงตามหมวดหมู่' : 'Sort by Tags'}
@@ -81,7 +81,7 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
             </div>
 
             {/* Activities Grid - Col 5-12 */}
-            <div className="md:col-span-7">
+            <div className="md:col-span-6">
                 <div className="grid grid-cols-1 gap-16">
                     {filteredData.map((item, idx) => (
                         <Reveal key={item.id} delay={idx * 0.1}>

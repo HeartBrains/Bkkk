@@ -25,7 +25,11 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false }: Head
       <Button 
         variant="ghost" 
         onClick={onMenuClick}
-        className={`w-[9vw] h-[9vw] min-w-[9vw] min-h-[9vw] md:w-[6vw] md:h-[6vw] md:min-w-[6vw] md:min-h-[6vw] !p-0 ${isTransparent ? "text-white hover:bg-white/20 hover:text-white" : "text-black hover:bg-black/10"}`}
+        className={`w-[9vw] h-[9vw] min-w-[9vw] min-h-[9vw] md:w-[6vw] md:h-[6vw] md:min-w-[6vw] md:min-h-[6vw] !p-0 transition-colors ${
+          isTransparent 
+            ? 'text-white hover:bg-white/20 hover:text-white' 
+            : 'text-black hover:bg-black/10 hover:text-black'
+        }`}
       >
         <Menu className="!w-[82%] !h-[82%] md:!w-[45%] md:!h-[45%]" strokeWidth={1.5} />
       </Button>
