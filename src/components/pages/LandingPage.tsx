@@ -61,7 +61,13 @@ export function LandingPage({ onEnter }: LandingPageProps) {
         onMouseLeave={() => setHovered(null)}
       >
         <h1 className={`text-3xl md:text-5xl lg:text-6xl font-bold text-white text-right leading-tight select-none transition-all duration-700 whitespace-pre-line ${hovered === 'bangkok' ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-          {khaoYaiTitle}
+          <a 
+            href="https://kyaf.thaicms.com" 
+            onClick={(e) => e.stopPropagation()}
+            className="hover:text-gray-300 transition-colors"
+          >
+            {khaoYaiTitle}
+          </a>
         </h1>
       </div>
 

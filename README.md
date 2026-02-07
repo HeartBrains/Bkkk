@@ -1,7 +1,7 @@
 
-  # Website Design from Upload
+  # Bkkk web design Live
 
-  This is a code bundle for Website Design from Upload. The original project is available at https://www.figma.com/design/ZRiNPul1SLoFcIl9PpS9zz/Website-Design-from-Upload.
+  This is a code bundle for Bkkk web design Live. The original project is available at https://www.figma.com/design/ZRiNPul1SLoFcIl9PpS9zz/Bkkk-web-design-Live.
 
   ## Running the code
 
