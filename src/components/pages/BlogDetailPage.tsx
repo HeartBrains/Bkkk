@@ -58,7 +58,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
                     className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
                 >
                     <ArrowLeft className="w-5 h-5" />
-                    <span className="text-sm font-medium font-sans">{language === 'th' ? 'กลับไปบล็อก' : 'Back to Blog'}</span>
+                    <span className="text-sm font-normal font-sans">{language === 'th' ? 'กลับไปบล็อก' : 'Back to Blog'}</span>
                 </button>
             </div>
          </ParallaxHero>
@@ -70,7 +70,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
                     className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-black hover:text-gray-600 transition-colors bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm"
                 >
                     <ArrowLeft className="w-5 h-5" />
-                    <span className="text-sm font-medium font-sans">{language === 'th' ? 'กลับไปบล็อก' : 'Back to Blog'}</span>
+                    <span className="text-sm font-normal font-sans">{language === 'th' ? 'กลับไปบล็อก' : 'Back to Blog'}</span>
                 </button>
             </div>
          </div>
@@ -81,56 +81,48 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
          <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
             <div className="md:col-span-5 flex flex-col gap-8">
-               <Reveal>
-                    <div className="flex flex-col gap-1">
-                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {postData.title}
-                        </h1>
+                <div className="flex flex-col gap-1 px-[28px] py-[0px]">
+                    <h1 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {postData.title}
+                    </h1>
 
-                        {postData.categories && (
-                            <>
-                                {postData.categories.map((cat, idx) => (
-                                    <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
-                                ))}
-                            </>
-                        )}
+                    {postData.categories && (
+                        <>
+                            {postData.categories.map((cat, idx) => (
+                                <p key={idx} className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
+                            ))}
+                        </>
+                    )}
 
-                        {postData.date && (
-                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
-                        )}
-                    </div>
-               </Reveal>
+                    {postData.date && (
+                        <p className={`text-xl md:text-2xl text-black font-normal mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                    )}
+                </div>
             </div>
 
             {/* Right Column */}
             <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-               <Reveal delay={0.2}>
-                   <div dangerouslySetInnerHTML={{ __html: postData.content }} />
-               </Reveal>
+               <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
                {postData.acf?.keyThemes && (
-                   <Reveal delay={0.3}>
-                       <div>
-                         <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {language === 'th' ? 'หัวข้อหลัก' : 'Key Themes'}
-                         </h3>
-                         <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {postData.acf.keyThemes.map((item: any, idx: number) => (
-                                 <p key={idx}><span className="font-bold">{item.title}:</span> {item.desc}</p>
-                            ))}
-                         </div>
-                       </div>
-                   </Reveal>
+                   <div>
+                     <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {language === 'th' ? 'หัวข้อหลัก' : 'Key Themes'}
+                     </h3>
+                     <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {postData.acf.keyThemes.map((item: any, idx: number) => (
+                             <p key={idx}><span className="font-normal">{item.title}:</span> {item.desc}</p>
+                        ))}
+                     </div>
+                   </div>
                )}
 
-               <Reveal delay={0.4}>
-                   <p className={`text-xl md:text-2xl text-gray-500 font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                     {language === 'th' 
-                        ? 'เข้าร่วมการเสวนาและเวิร์คช็อปประจำเดือนของเราเพื่อเจาะลึกหัวข้อเหล่านี้กับศิลปินและภัณฑารักษ์ที่โดดเด่นของเรา'
-                        : 'Join us for our monthly talks and workshops to dive deeper into these topics with our featured artists and curators.'
-                     }
-                   </p>
-               </Reveal>
+               <p className={`text-xl md:text-2xl text-gray-500 font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                 {language === 'th' 
+                    ? 'เข้าร่วมการเสวนาและเวิร์คช็อปประจำเดือนของเราเพื่อเจาะลึกหัวข้อเหล่านี้กับศิลปินและภัณฑารักษ์ที่โดดเด่นของเรา'
+                    : 'Join us for our monthly talks and workshops to dive deeper into these topics with our featured artists and curators.'
+                 }
+               </p>
             </div>
          </div>
       </div>

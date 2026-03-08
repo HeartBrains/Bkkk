@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import blogHero from 'figma:asset/2a1347ddbd36462f89f4337de2853a02223550a0.png';
-import { ASSETS } from '../../utils/assets';
+import { useState, useMemo } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
@@ -54,7 +54,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
     <div className="w-full min-h-screen bg-white pb-24">
        {/* Hero Section */}
        <ParallaxHero 
-          image={blogHero}
+          image="https://images.unsplash.com/photo-1698881826220-a4fc847a0493?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc3RpYyUyMGJsb2clMjBwaG90b2dyYXBoeXxlbnwxfHx8fDE3NzI5NzY2ODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
           height="h-[80vh]"
        >
           <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
@@ -62,11 +62,11 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
 
       {/* Content Section */}
       <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col">
             
             {/* Sidebar - Shows only years that are currently loaded/visible */}
-            <aside className="w-full md:w-1/2 shrink-0 md:sticky md:top-32 h-fit mb-12 md:mb-0">
-                <nav className="flex flex-col space-y-2">
+            <aside className="w-full shrink-0 h-fit mb-12">
+                <nav className="flex flex-col items-start gap-2">
                     <h2 className="text-xl md:text-2xl font-sans font-medium text-black mb-4">Blog</h2>
                     {years.map((year) => (
                         <button
@@ -74,7 +74,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
                             onClick={() => setSelectedYear(year)}
                             className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
                                 selectedYear === year
-                                ? 'text-gray-400 font-medium' 
+                                ? 'text-black font-medium' 
                                 : 'text-gray-400 hover:text-black font-normal'
                             }`}
                         >
@@ -85,14 +85,14 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
             </aside>
 
             {/* Main Content */}
-            <main className="w-full md:w-1/2 min-h-[50vh]">
+            <main className="w-full min-h-[50vh]">
                 {filteredBlogs.map((yearGroup) => (
                     <div key={yearGroup.year} id={`year-${yearGroup.year}`} className="mb-24 scroll-mt-32">
-                        <div className="flex flex-col gap-24">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-24">
                             {yearGroup.posts.map((post) => (
                                 <Reveal key={post.id}>
                                     <div 
-                                        className="flex flex-col gap-6 cursor-pointer group w-full md:w-[45vw]"
+                                        className="flex flex-col gap-6 cursor-pointer group w-full"
                                         onClick={() => onNavigate('blog-detail', post.slug)}
                                     >
                                         {/* Image */}

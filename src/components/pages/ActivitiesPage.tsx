@@ -1,18 +1,18 @@
-import activitiesHero from "figma:asset/0071ef88c5b70f64f427c978c8989d4f2ff57cb1.png";
+import { useState, useEffect } from 'react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
-import { useState } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMockPostsByType } from '../../utils/mockDataBilingual';
 
 interface ActivitiesPageProps {
   onNavigate: (page: string, slug?: string) => void;
+  targetSectionId?: string;
 }
 
-export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
+export function ActivitiesPage({ onNavigate, targetSectionId }: ActivitiesPageProps) {
   const { language, t } = useLanguage();
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Get all activities in current language
   const allActivities = getMockPostsByType('activity', language);
@@ -23,27 +23,63 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
     tags: activity.categories || ['Performance'] // Use categories as tags
   }));
 
-  const filteredData = activeTag 
-    ? activitiesWithTags.filter(item => item.tags.includes(activeTag))
-    : activitiesWithTags;
-
   const tags = language === 'th' 
     ? ['การแสดง', 'การฉายภาพยนตร์', 'การบรรยาย', 'เวิร์คช็อป', 'เสียง']
     : ['Performance', 'Screening', 'Talk / Lectures', 'Workshop', 'Sound'];
 
-  const tagMapping: Record<string, string> = {
-    'Performance': 'การแสดง',
-    'Screening': 'การฉายภาพยนตร์',
-    'Talk / Lectures': 'การบรรยาย',
-    'Workshop': 'เวิร์คช็อป',
-    'Sound': 'เสียง'
+  // Handle tag click
+  const handleTagClick = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      // Remove tag if already selected
+      const filtered = selectedTags.filter(t => t !== tag);
+      setSelectedTags(filtered);
+    } else {
+      // Add tag
+      setSelectedTags([...selectedTags, tag]);
+    }
   };
+
+  // Filter activities based on selected tags
+  const filteredActivities = selectedTags.length === 0 
+    ? activitiesWithTags 
+    : activitiesWithTags.filter(item => {
+        // English mapping for filtering if language is TH
+        let filterTags = selectedTags;
+        if (language === 'th') {
+          const mapping: Record<string, string> = {
+            'การแสดง': 'Performance',
+            'การฉายภาพยนตร์': 'Screening',
+            'การบรรยาย': 'Talk / Lectures',
+            'เวิร์คช็อป': 'Workshop',
+            'เสียง': 'Sound'
+          };
+          filterTags = selectedTags.map(tag => mapping[tag] || tag);
+        }
+        
+        return item.tags.some(tag => filterTags.includes(tag));
+      });
+
+  useEffect(() => {
+    if (targetSectionId) {
+      // Map section IDs to tag selections
+      if (targetSectionId === 'public-program') {
+        setSelectedTags(language === 'th' ? ['การแสดง', 'การบรรยาย', 'เวิร์คช็อป'] : ['Performance', 'Talk / Lectures', 'Workshop']);
+      } else if (targetSectionId === 'screenings') {
+        setSelectedTags(language === 'th' ? ['การฉายภาพยนตร์'] : ['Screening']);
+      }
+      
+      const element = document.getElementById(targetSectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [targetSectionId, language]);
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen font-sans text-black">
       {/* Hero */}
       <ParallaxHero 
-        image={activitiesHero}
+        image="https://images.unsplash.com/photo-1761403757058-e3c95b662a89?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcnQlMjBtdXNldW0lMjB3aGl0ZSUyMHdhbGxzfGVufDF8fHx8MTc3Mjk3NjY4OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
         height="h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
@@ -51,67 +87,63 @@ export function ActivitiesPage({ onNavigate }: ActivitiesPageProps) {
 
       {/* Main Content */}
       <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
-            
-            {/* Activities Label - Col 1-2 */}
-            <div className="md:col-span-2">
-                 <div className="md:sticky md:top-32">
-                    <h2 className={`text-xl md:text-2xl font-normal text-black md:sticky md:top-32 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{t('nav.activities')}</h2>
-                 </div>
-            </div>
+        <div className="flex flex-col md:flex-row gap-12 md:gap-0">
+          {/* Left Sidebar - Fixed */}
+          <aside className="w-full md:w-1/2 shrink-0">
+            <nav className="md:sticky md:top-32 flex flex-col items-start gap-2">
+              <h2 className="text-xl md:text-2xl font-sans font-medium text-black mb-4">
+                {t('nav.activities')}
+              </h2>
+              <h3 className="text-xl md:text-2xl font-sans font-normal text-gray-400 mb-4 mt-8">
+                {language === 'th' ? 'จัดเรียงตามแท็ก' : 'Sort by Tags'}
+              </h3>
+              
+              {/* Tag filters */}
+              {tags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => handleTagClick(tag)}
+                  className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
+                    selectedTags.includes(tag)
+                      ? 'text-black font-medium'
+                      : 'text-gray-400 hover:text-black font-normal'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </nav>
+          </aside>
 
-            {/* Tags Filter - Col 3-4 */}
-            <div className="md:col-span-4">
-                <div className="md:sticky md:top-32 flex flex-col gap-2 items-end">
-                    <h3 className={`text-xl md:text-2xl font-normal text-black text-right mb-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'เรียงตามหมวดหมู่' : 'Sort by Tags'}
+          {/* Right Content - Activities List */}
+          <main className="w-full md:w-1/2 flex flex-col gap-16">
+            {filteredActivities.map((item, itemIdx) => (
+              <Reveal key={item.id} delay={itemIdx * 0.1}>
+                <div 
+                  className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
+                  onClick={() => onNavigate('activity-detail', item.slug)}
+                >
+                  <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden">
+                    <ImageWithFallback 
+                      src={item.featuredImage.sourceUrl} 
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h3 className={`text-xl md:text-2xl font-normal text-black leading-tight whitespace-pre-wrap ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {item.title}
                     </h3>
-                    {tags.map((tag) => (
-                        <button
-                            key={tag}
-                            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                            className={`text-right text-xl md:text-2xl font-normal leading-tight transition-colors duration-200 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
-                                activeTag === tag ? 'text-black' : 'text-gray-400 hover:text-black'
-                            }`}
-                        >
-                            {tag}
-                        </button>
-                    ))}
+                    {item.date && (
+                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {item.date}
+                      </p>
+                    )}
+                  </div>
                 </div>
-            </div>
-
-            {/* Activities Grid - Col 5-12 */}
-            <div className="md:col-span-6">
-                <div className="grid grid-cols-1 gap-16">
-                    {filteredData.map((item, idx) => (
-                        <Reveal key={item.id} delay={idx * 0.1}>
-                            <div 
-                                className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
-                                onClick={() => onNavigate('activity-detail', item.slug)}
-                            >
-                                <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden">
-                                    <ImageWithFallback 
-                                        src={item.featuredImage.sourceUrl} 
-                                        alt={item.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <h3 className={`text-lg md:text-xl font-normal text-black leading-tight whitespace-pre-wrap ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                        {item.title}
-                                    </h3>
-                                    {item.date && (
-                                        <p className={`text-lg md:text-xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                            {item.date}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        </Reveal>
-                    ))}
-                </div>
-            </div>
-
+              </Reveal>
+            ))}
+          </main>
         </div>
       </div>
     </div>

@@ -33,16 +33,15 @@ export const DIRECTORS: Director[] = [
         name: 'Stefano Rabolli Pansera',
         role: 'Director',
         roleTH: 'ผู้อำนวยการ',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdCUyMHByb2Zlc3Npb25hbCUyMGdsYXNzZXN8ZW58MXx8fHwxNzY1MDA1MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
         bio: [
             "Stefano Rabolli Pansera is an architect and curator. He studied at the Architectural Association in London where he graduated with Honours in 2005. He taught at the Architectural Association as Unit Master from 2007 to 2011.",
             "In 2013, he founded Beyond Entropy Ltd, a curatorial agency operating at the threshold of art, architecture and geopolitics. He curated the Angolan Pavilion at the 55th Venice Biennale (Golden Lion for Best National Participation).",
             "He has been the director of Hauser & Wirth in London and St. Moritz. He is currently the Director of Bangkok Kunsthalle."
         ],
         bioTH: [
-            "สเตฟาโน ราโบลลี พันเซรา เป็นสถาปนิกและภัณฑารักษ์ศิลปะ สำเร็จการศึกษาจาก Architectural Association ในลอนดอนด้วยเกียรตินิยม ปี พ.ศ. 2548 และเคยเป็นอาจารย์ประจำหลักสูตร Unit Master ที่สถาบันเดียวกันระหว่างปี พ.ศ. 2550-2554",
-            "ในปี พ.ศ. 2556 ได้ก่อตั้ง Beyond Entropy Ltd องค์กรภัณฑารักษ์ที่ดำเนินงานในพื้นที่บรรจบของศิลปะ สถาปัตยกรรม และภูมิรัฐศาสตร์ ดำรงตำแหน่งภัณฑารักษ์ศาลาประเทศแองโกลาในงาน Venice Biennale ครั้งที่ 55 ซึ่งได้รับรางวัลสิงโตทองคำสำหรับศาลาประเทศยอดเยี่ยม",
-            "เคยดำรงตำแหน่งผู้อำนวยการของ Hauser & Wirth ในลอนดอนและเซนต์มอริตซ์ ปัจจุบันดำรงตำแหน่งผู้อำนวยการของบางกอก คุนสท์ฮัลเล่"
+            "สเตฟาโน ราบอลลี ปันเซรา เป็นสถาปนิกและภัณฑารักษ์ เขาศึกษาที่ Architectural Association ในลอนดอนและสำเร็จการศึกษาด้วยเกียรตินิยมในปี พ.ศ. 2548 เขาสอนที่ Architectural Association ในตำแหน่ง Unit Master ตั้งแต่ปี พ.ศ. 2550 ถึง 2554",
+            "ในปี พ.ศ. 2556 เขาได้ก่อตั้ง Beyond Entropy Ltd องค์กรภัณฑารักษ์ที่ดำเนินงานในจุดตัดของศิลปะ สถาปัตยกรรม และภูมิรัฐศาสตร์ เขาเป็นภัณฑารักษ์ให้กับศาลาแองโกลาในงาน Venice Biennale ครั้งที่ 55 (ได้รับรางวัล Golden Lion สำหรับการมีส่วนร่วมระดับชาติที่ดีที่สุด)",
+            "เขาเคยเป็นผู้อำนวยการของ Hauser & Wirth ในลอนดอนและเซนต์มอริตซ์ ปัจจุบันดำรงตำแหน่งผู้อำนวยการของบางกอก คุนสท์ฮัลเล่"
         ]
     },
     {
@@ -50,21 +49,21 @@ export const DIRECTORS: Director[] = [
         role: 'Director',
         roleTH: 'ผู้อำนวยการ',
         bio: [
-             "Luckana Kunavichayanont is a prominent figure in the Thai art scene, known for her leadership and curatorial work. She served as the Director of the Bangkok Art and Culture Centre (BACC) for many years, steering it to become a central hub for contemporary art in Thailand."
+            "Luckana Kunavichayanont is a prominent figure in the Thai art scene, known for her leadership and curatorial work. She served as the Director of the Bangkok Art and Culture Centre (BACC) for many years, steering it to become a central hub for contemporary art in Thailand."
         ],
         bioTH: [
-            "ลักขณา คุณวิชยานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและการทำงานด้านภัณฑารักษ์ศิลปะ เคยดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นระยะเวลาหลายปี และมีส่วนสำคัญในการพัฒนาให้เป็นศูนย์กลางศิลปะร่วมสมัยของประเทศไทย"
+            "ลักขณา กุลนาวิชญานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและงานภัณฑารักษ์ เธอดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นเวลาหลายปี นำพาให้กลายเป็นศูนย์กลางสำคัญของศิลปะร่วมสมัยในประเทศไทย"
         ]
     },
     {
         name: 'Poonperm Paitayawat',
         role: 'Food & Gastronomy',
-        roleTH: 'อาหารและศาสตร์การทำอาหาร',
+        roleTH: 'อาหารและแกสโทรโนมี',
         bio: [
             "Poonperm Paitayawat oversees the Food & Gastronomy sector of Bangkok Kunsthalle, bridging the gap between culinary arts and contemporary culture."
         ],
         bioTH: [
-            "พูนเพิ่ม ไพทยวัฒน์ รับผิดชอบงานด้านอาหารและศิลปะการทำอาหารของบางกอก คุนสท์ฮัลเล่ โดยเชื่อมโยงศิลปะการทำอาหารเข้ากับวัฒนธรรมร่วมสมัย"
+            "พูนเพิ่ม ไพทยวัฒน์ ดูแลภาคส่วนอาหารและแกสโทรโนมีของบางกอก คุนสท์ฮัลเล่ เชื่อมโยงช่องว่างระหว่างศิลปะการทำอาหารและวัฒนธรรมร่วมสมัย"
         ]
     },
     {
@@ -75,7 +74,7 @@ export const DIRECTORS: Director[] = [
             "Claudia Ko manages Financial Sustainability & Donor Relations, ensuring the long-term viability and growth of the institution through strategic partnerships and donor engagement."
         ],
         bioTH: [
-            "คลอเดีย โก ดูแลด้านความยั่งยืนทางการเงินและการสร้างความสัมพันธ์กับผู้สนับสนุน เพื่อสร้างความมั่นคงและการเติบโตอย่างยั่งยืนให้แก่สถาบัน ผ่านพันธมิตรเชิงกลยุทธ์และการมีส่วนร่วมของผู้สนับสนุน"
+            "คลอเดีย โก บริหารจัดการความยั่งยืนทางการเงินและความสัมพันธ์กับผู้บริจาค รับประกันความมั่นคงและการเติบโตระยะยาวของสถาบันผ่านความร่วมมือเชิงกลยุทธ์และการมีส่วนร่วมของผู้บริจาค"
         ]
     }
 ];

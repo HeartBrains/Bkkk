@@ -1,20 +1,12 @@
-import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { ArrowLeft } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "../ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { WPPost } from '../../utils/types';
-import { Reveal } from '../ui/Reveal';
-import { VisitInfo } from './sections/VisitInfo';
+import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMockPost } from '../../utils/mockDataBilingual';
+import { getExhibition } from '../../utils/exhibitionsData';
+import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '../ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { WPPost } from '../../utils/types';
+import { ArrowLeft } from 'lucide-react';
 
 interface ExhibitionDetailPageProps {
   onNavigate: (page: string) => void;
@@ -44,8 +36,12 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
     
     if (slug) {
         setLoading(true);
-        // Use bilingual mock data instead of API
-        const data = getMockPost(slug, language);
+        // Try to get exhibition from the new exhibitions data first
+        let data = getExhibition(slug, language);
+        // Fallback to mock data if not found
+        if (!data) {
+            data = getMockPost(slug, language);
+        }
         if (data) {
             setPostData(data);
             setLoading(false);
@@ -148,7 +144,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                 className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium font-sans">
+                <span className="text-sm font-normal font-sans">
                     {backPage === 'archives' 
                         ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives') 
                         : (language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions')
@@ -163,68 +159,57 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Left Column - Meta Data */}
-            <div className="md:col-span-6 flex flex-col gap-8">
-                <Reveal>
-                    <div className="flex flex-col gap-1">
-                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {postData.title}
-                        </h1>
-                        
-                        {postData.acf?.artist && (
-                            <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                {postData.acf.artist}
-                            </p>
-                        )}
+            <div className="md:col-span-5 flex flex-col gap-8">
+                <div className="flex flex-col gap-0 px-[28px] py-[0px]">
+                    <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {postData.title}
+                    </h1>
+                    
+                    {postData.acf?.artist && (
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                            {postData.acf.artist}
+                        </p>
+                    )}
 
-                        {postData.date && (
-                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
-                        )}
-                    </div>
-                </Reveal>
+                    {postData.date && (
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                    )}
+                </div>
 
                 {postData.acf?.curator && (
-                     <Reveal delay={0.2}>
-                        <div className="flex flex-col gap-1 mt-6">
-                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
-                            </p>
-                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.acf.curator}</p>
-                        </div>
-                     </Reveal>
+                    <div className="flex flex-col gap-0 px-[28px] py-[0px]">
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                            {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
+                        </p>
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.acf.curator}</p>
+                    </div>
                 )}
             </div>
 
             {/* Right Column - Text Content */}
-            <div className={`md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                <Reveal delay={0.2}>
-                    <div className="flex flex-col gap-6">
-                        {language === 'th' ? (
-                            <>
-                                <p className="leading-[1.82em]">
-                                    Description Without Place (2025) นำเสนอนิทรรศการครั้งแรกในเอเชียของผลงาน Cells ทั้งหกชิ้นที่สร้างสรรค์โดย Absalon ศิลปินชาวฝรั่งเศส-อิสราเอล นิทรรศการนี้ขยายผลการวิจัยหลักสามประการของบางกอก คุนสท์ฮัลเลอ: การศึกษาการอยู่อาศัยในเมือง ผ่านการสำรวจวัตถุพื้นบ้านในเยาวราชที่กลายเป็นเครื่องเรือนบอกอาณาเขตผ่านการใช้งานในชีวิตประจำวันและการดัดแปลง; การตรวจสอบความซ้ำในฐานะกระบวนการทางศิลปะ ซึ่งปรากฏในชุดผลงานอักษรวิจิตรของ จาง แซ่ตั้ง; และการสำรวจสตูดิโอของศิลปินในฐานะพื้นที่แห่งการปลีกตัว การแสดงตัวตน และการทดลองอย่างถึงราก ดังที่พัฒนาผ่านการปฏิบัติของ Spencer Sweeney
-                                </p>
-                                <p className="leading-[1.82em]">
-                                    แบบจำลองนิทรรศการทั้งหกของ Cells ของ Absalon นำเสนอการวิพากษ์วิจารณ์เชิงรากฐานต่อความเป็นบ้านและการเป็นเจ้าของ Cell แต่ละหลังเป็นที่อยู่อาศัยขนาด 1:1 ที่ปรับแต่งให้พอดีกับร่างกายของศิลปินและถูกคิดค้นให้ดำรงอยู่พร้อมกันในปารีส ซูริก แฟรงก์เฟิร์ต นิวยอร์ก เทลอาวีฟ และโตเกียว โดยไม่ยึดติดกับพื้นที่ทางกายภาพใดๆ เรขาคณิตของพวกมันทำหน้าที่เป็นภาษาสากลที่ปราศจากการอ้างอิงทางวัฒนธรรม การประดับตกแต่ง หรืออัตลักษณ์ท้องถิ่น Cell แต่ละหลังคือบ้านที่ไร้บริบท ดินแดนที่ไร้ผืนดิน Absalon อธิบายพวกมันว่าเป็น "ไวรัสในเมือง": การดำรงอยู่ที่อิสระซึ่งขัดจังหวะแนวคิดดั้งเดิมเกี่ยวกับบ้าน ทรัพย์สิน และอัตลักษณ์ ไม่มีสิ่งใดเกินความจำเป็น ทุกพื้นผิว ปริมาตร และช่องเปิดถูกปรับเทียบให้เข้ากับขนาดของกิริยาในชีวิตประจำวัน ผ่านความแม่นยำขั้นสูงสุดนี้ Cells เสนอรูปแบบของความเป็นบ้านที่หลุดพ้นจากการสะสมและการครอบครอง—ที่อยู่อาศัยที่ลดทอนลงเหลือเพียงการกระทำของการใช้ชีวิต
-                                </p>
-                                <p className="leading-[1.82em]">
-                                    สำหรับ Absalon แล้ว Cell ไม่ใช่การหลบหนีจากโลก แต่เป็นวิธีการในการเปลี่ยนแปลง มันแสดงให้เห็นสิ่งที่ Michel Foucault เรียกว่า "เทคโนโลยีแห่งตัวตน"—วิธีการที่บุคคลปรับเปลี่ยนชีวิตของตนโดยการปรับเปลี่ยนเงื่อนไขของการใช้ชีวิต Cells ไม่ใช่การวิพากษ์วิจารณ์สังคมในเชิงสั่งสอน แต่เป็นเครื่องมือในการสร้างตัวตนใหม่ ในความชัดเจนแบบนักพรต ความโดดเดี่ยวกลายเป็นรูปแบบหนึ่งของความเป็นผู้กระทำ การบำเพ็ญตบะถูกยอมรับไม่ใช่ในฐานะการละเว้น แต่เป็นรูปแบบหนึ่งของการเยียวยา การต่อต้านข้อเรียกร้องของการหมุนเวียน ผลิตภาพ และการสะสม การอาศัยอยู่ใน Cell คือการเปลี่ยนชีวิตประจำวันให้เป็นการปฏิบัติที่ถูกออกแบบท่าทาง เพื่อทำให้การอยู่อาศัยกลายเป็นงานศิลปะเอง
-                                </p>
-                            </>
-                        ) : (
-                            <>
-                                <p>
-                                    Description Without Place (2025) presents the first exhibition in Asia of the six Cells conceived by the French-Israeli artist Absalon. The exhibition extends three central lines of research at Bangkok Kunsthalle: the study of urban inhabitation, pursued through investigations of the vernacular objects of Yaowarat that become territorial furniture through daily use and improvisation; the examination of repetition as artistic process, which manifested in Tang Chang’s series of calligraphic works; and the exploration of the artist’s studio as a site of withdrawal, self-enactment, and radical experimentation, as developed through the practices of Spencer Sweeney.
-                                </p>
-                                <p>
-                                    The six exhibition copies of Absalon’s Cells articulate a fundamental critique of domesticity and belonging. Each Cell is a 1:1 dwelling tailored precisely to the artist’s own body and conceived to exist simultaneously in Paris, Zurich, Frankfurt, New York, Tel Aviv, and Tokyo—without anchoring itself to any territorial ground. Their geometry functions as a universal language, stripped of cultural reference, ornament, or local identity. Each Cell is a house without context, a territory without land. Absalon described them as “viruses in the city”: autonomous presences that interrupt established notions of home, property, and identity. Nothing is superfluous; every surface, volume, and opening is calibrated to the scale of daily gesture. Through this extreme precision, the Cells propose a form of domesticity freed from accumulation and possession—a dwelling reduced to the act of living itself.
-                                </p>
-                                <p>
-                                    For Absalon, the Cell was not a retreat from the world, but a method of transformation. It enacts what Michel Foucault termed a “technology of the self”—a means by which one reshapes one’s life by reshaping the conditions of living. The Cells are not social critiques in the didactic sense; they are instruments of self-reconstruction. In their ascetic clarity, solitude becomes a mode of agency. Asceticism is embraced not as renunciation, but as a form of healing, a resistance to the demands of circulation, productivity, and accumulation. To inhabit a Cell is to transform daily life into a choreographed practice, to make dwelling itself a work of art.
-                                </p>
-                            </>
-                        )}
+            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                {postData.content && (
+                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
+                )}
+
+                {postData.acf?.biography && (
+                    <>
+                        <div className="mt-12 pt-8 border-t border-gray-200">
+                            <h3 className={`text-xl md:text-2xl font-normal text-black mb-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                {language === 'th' ? 'ประวัติศิลปิน' : 'Artist Biography'}
+                            </h3>
+                            <div dangerouslySetInnerHTML={{ __html: postData.acf.biography }} />
+                        </div>
+                    </>
+                )}
+
+                {postData.acf?.imageCredits && (
+                    <div className="mt-8 pt-6 border-t border-gray-200">
+                        <p className="text-sm text-gray-500">
+                            {postData.acf.imageCredits}
+                        </p>
                     </div>
-                </Reveal>
+                )}
             </div>
         </div>
       </div>

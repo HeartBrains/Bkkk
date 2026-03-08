@@ -254,6 +254,46 @@ export const MOCK_POSTS_BILINGUAL = {
     ['การแสดง', 'การเต้นรำ', 'ร่วมสมัย']
   ),
 
+  // Archive Activities
+  'sound-space-workshop': createBilingualMockPost(
+    'sound-space-workshop',
+    'activity',
+    'Sound & Space Workshop',
+    'เวิร์คช็ปเสียงและพื้นที่',
+    '05 Mar 2025',
+    '05 มีนาคม 2568',
+    ASSETS.BLOG_2,
+    undefined, undefined,
+    ['Workshop', 'Sound', 'Interactive'],
+    ['เวิร์คช็อป', 'เสียง', 'อินเทอร์แอคทีฟ']
+  ),
+
+  'annual-gala-2024': createBilingualMockPost(
+    'annual-gala-2024',
+    'activity',
+    'Annual Gala 2024',
+    'งานเลี้ยงประจำปี 2024',
+    '20 Dec 2024',
+    '20 ธันวาคม 2567',
+    ASSETS.EVENT_HERO,
+    undefined, undefined,
+    ['Event', 'Fundraising', 'Gala'],
+    ['งานอีเว้นท์', 'ระดมทุน', 'งานเลี้ยง']
+  ),
+
+  'traditional-dance': createBilingualMockPost(
+    'traditional-dance',
+    'activity',
+    'Traditional Dance Performance',
+    'การแสดงระบำพื้นเมือง',
+    '12 Aug 2024',
+    '12 สิงหาคม 2567',
+    ASSETS.BLOG_5,
+    undefined, undefined,
+    ['Performance', 'Dance', 'Cultural'],
+    ['การแสดง', 'การเต้นรำ', 'วัฒนธรรม']
+  ),
+
   // --- Exhibitions ---
   'unwinding-architecture': {
     en: {
@@ -307,8 +347,8 @@ export const MOCK_POSTS_BILINGUAL = {
     'exhibition',
     'Description Without Place',
     'คำอธิบายโดยไม่มีสถานที่',
-    '13 December 2025 – 31 May 2026',
-    '13 ธันวาคม 2568 – 31 พฤษภาคม 2569',
+    '13 December 2025 - 31 May 2026',
+    '13 ธันวาคม 2568 - 31 พฤษภาคม 2569',
     'https://images.unsplash.com/photo-1747100934541-22fd3a57fea1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3aGl0ZSUyMG1pbmltYWwlMjBpbnN0YWxsYXRpb24lMjBhcnQlMjBhYnN0cmFjdCUyMHNjdWxwdHVyZXxlbnwxfHx8fDE3NjgwMjkwMjR8MA&ixlib=rb-4.1.0&q=80&w=1080',
     'Absalon',
     'แอบซาลอน',
@@ -321,8 +361,8 @@ export const MOCK_POSTS_BILINGUAL = {
     'exhibition',
     'Vernacular Objects',
     'วัตถุพื้นบ้าน',
-    '27 November 2025 – 15 March 2026',
-    '27 พฤศจิกายน 2568 – 15 มีนาคม 2569',
+    '27 November 2025 - 15 March 2026',
+    '27 พฤศจิกายน 2568 - 15 มีนาคม 2569',
     'https://images.unsplash.com/photo-1766792235402-2496867ea9e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5ZWxsb3clMjBhYnN0cmFjdCUyMGNvbnRlbXBvcmFyeSUyMHNjdWxwdHVyZXxlbnwxfHx8fDE3NjgwMjkwMjh8MA&ixlib=rb-4.1.0&q=80&w=1080',
     'Mark Chearavanont',
     'มาร์ค เจียรวนนท์',
@@ -335,13 +375,13 @@ export const MOCK_POSTS_BILINGUAL = {
     'exhibition',
     'Mitta del Santi',
     'มิตตา เดล ซันติ',
-    '26 September 2025 – 8 February 2026',
-    '26 กันยายน 2568 – 8 กุมภาพันธ์ 2569',
+    '26 September 2025 - 8 February 2026',
+    '26 กันยายน 2568 - 8 กุมภาพันธ์ 2569',
     'https://images.unsplash.com/photo-1574240635388-2a6bdc8d3c3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGxhcmdlJTIwdGV4dGlsZSUyMGFydCUyMGluc3RhbGxhdGlvbnxlbnwxfHx8fDE3NjgwMjkwMzF8MA&ixlib=rb-4.1.0&q=80&w=1080',
     'Ploenchun Vinyaratn',
     'เปลื้อนชื่น วินยารัตน์',
     ['Exhibition', 'Textile', 'Installation'],
-    ['นิทรรศการ', 'สิ่งทอ', 'ศิลปะจัดวาง']
+    ['นิทรรศการ', 'สิ่งทอ', 'ศิลปะจัด��าง']
   ),
 
   'seeds': createBilingualMockPost('seeds', 'exhibition', 'Seeds', 'เมล็ดพันธุ์', '30 April – 22 June 2026', '30 เมษายน – 22 มิถุนายน 2569', 'https://images.unsplash.com/photo-1611923973164-e0e5f7f69872?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxoYW5kcyUyMGhvbGRpbmclMjB3aGl0ZSUyMGNlcmFtaWMlMjBiYWxscyUyMGFydHxlbnwxfHx8fDE3NjgwMzkxODd8MA&ixlib=rb-4.1.0&q=80&w=1080', undefined, undefined, ['Exhibition', 'Ceramics', 'Nature'], ['นิทรรศการ', 'เซรามิก', 'ธรรมชาติ']),
@@ -349,6 +389,20 @@ export const MOCK_POSTS_BILINGUAL = {
   'we-gather': createBilingualMockPost('we-gather', 'exhibition', 'We Gather', 'เรารวมตัวกัน', '28 February – 27 April 2026', '28 กุมภาพันธ์ – 27 เมษายน 2569', 'https://images.unsplash.com/photo-1747504858849-fde086e3680a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxkYXJrJTIwY2luZW1hJTIwcm9vbSUyMHNjcmVlbmluZyUyMHZpZGVvJTIwYXJ0fGVufDF8fHx8MTc2ODAzOTE4N3ww&ixlib=rb-4.1.0&q=80&w=1080', undefined, undefined, ['Exhibition', 'Video Art', 'Community'], ['นิทรรศการ', 'วิดีโออาร์ต', 'ชุมชน']),
 
   'shapeshifting-spaces': createBilingualMockPost('shapeshifting-spaces', 'exhibition', 'Shapeshifting Spaces', 'พื้นที่เปลี่ยนรูป', '17 January – 27 February 2026', '17 มกราคม – 27 กุมภาพันธ์ 2569', 'https://images.unsplash.com/photo-1761655072443-9dec151c3e60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxpbnRlcmFjdGl2ZSUyMGFydCUyMGluc3RhbGxhdGlvbiUyMHllbGxvdyUyMHRhYmxlJTIwaGFuZHN8ZW58MXx8fHwxNzY4MDM5MTg3fDA&ixlib=rb-4.1.0&q=80&w=1080', undefined, undefined, ['Exhibition', 'Interactive', 'Space'], ['นิทรรศการ', 'อินเทอร์แอคทีฟ', 'พื้นที่']),
+
+  // Archive Exhibitions
+  'digital-horizons': createBilingualMockPost(
+    'digital-horizons',
+    'exhibition',
+    'Digital Horizons',
+    'ขอบฟ้าดิจิทัล',
+    '15 Aug - 15 Oct 2024',
+    '15 สิงหาคม - 15 ตุลาคม 2567',
+    ASSETS.BLOG_4,
+    undefined, undefined,
+    ['Exhibition', 'New Media', 'Digital Art'],
+    ['นิทรรศการ', 'นิวมีเดีย', 'ศิลปะดิจิทัล']
+  ),
 
   // Blog posts
   'art-as-reflection': {
@@ -384,9 +438,9 @@ export const MOCK_POSTS_BILINGUAL = {
       date: '01 ธันวาคม 2568',
       categories: ['ศิลปะร่วมสมัย', 'วัฒนธรรม', 'ความเข้าใจเชิงลึก'],
       content: `
-    <p>ศิลปะเป็นกระจกสะท้อนสังคมมาโดยตลอด สะท้อนความสำเร็จ การต่อสู้ และอัตลักษณ์ที่พัฒนาไป ในภูมิทัศน์ร่วมสมัย ความสัมพันธ์นี้กลายเป็นเรื่องที่ซับซ้อนยิ่งขึ้น ศิลปินไม่ได้เป็นเพียงผู้สังเกตการณ์ แต่เป็นผู้มีส่วนร่วมอย่างแข็งขันในบทสนทนาทางวัฒนธรรม ท้าทายบรรทัดฐานและจินตนาการถึงอนาคตใหม่</p>
+    <p>ศิลปะเป็นกระจกสะท้อนสังคมมาโดยตลอด สะท้อนความสำเร็จ การต่อสู้ และอัตลักษณ์ที่พัฒนาไป ในภูมิทัศน์ร่วมสมัย ความสัมพันธ์นี้กลายเป็นเรื่องที่ซับซ้อนยิ่งขึ้น ศิลปินไม่ได้เป็นเพียงผู้สังเกตการณ์ แต่เป็นผู้มีส่วนร่วมอย่���งแข็งขันในบทสนทนาทางวัฒนธรรม ท้าทายบรรทัดฐานและจินตนาการถึงอนาคตใหม่</p>
     <p>บทบาทของสถาบันสาธารณะเช่นบางกอก คุนสท์ฮัลเล่คือการอำนวยความสะดวกในการสนทนานี้ ด้วยการจัดหาพื้นที่ที่เสียงที่หลากหลายสามารถได้ยิน เราส่งเสริมชุมชนที่ให้คุณค่ากับความคิดสร้างสรรค์และการคิดเชิงวิพากษ์ นิทรรศการที่จะมาถึงของเรามีเป้าหมายที่จะสำรวจประเด็นเหล่านี้อย่างลึกซึ้ง เชิญชวนผู้เยี่ยมชมให้มีส่วนร่วมกับศิลปะที่พูดโดยตรงกับภาวะของมนุษย์ในศตวรรษที่ 21</p>
-    <p>จากถนนในกรุงเทพฯ สู่เวทีระดับโลก ศิลปินไทยกำลังสร้างกระแสด้วยมุมมองที่เป็นเอกลักษณ์ พวกเขาผสมผสานเทคนิคดั้งเดิมกับสื่อสมัยใหม่ สร้างผลงานที่มีรากฐานมาจากมรดกแต่มองไปข้างหน้า การสังเคราะห์ระหว่างของเก่าและของใหม่นี้เป็นเครื่องพิสูจน์ถึงความยืดหยุ่นและความสามารถในการปรับตัวของวัฒนธรรมไทย</p>
+    <p>จากถนนในกรุงเทพฯ สู่เวทีระดับโลก ศิลปินไทยกำลังสร้างกระ莎ด้วยมุมมองที่เป็นเอกลักษณ์ พวกเขาผสมผสานเทคนิคดั้งเดิมกับสื่อสมัยใหม่ สร้างผลงานที่มีรากฐานมาจากมรดกแต่มองไปข้างหน้า การสังเคราะห์ระหว่างของเก่าและของใหม่นี้เป็นเครื่องพิสูจน์ถึงความยืดหยุ่นและความสามารถในการปรับตัวของวัฒนธรรมไทย</p>
   `,
       featuredImage: {
         sourceUrl: ASSETS.BLOG_1,
@@ -411,7 +465,7 @@ export const MOCK_POSTS_BILINGUAL = {
   'abstract-expressionism': createBilingualMockPost('abstract-expressionism', 'post', 'Abstract Expressionism Today', 'ศิลปะแสดงออกแบบนามธรรมวันนี้', '22 September 2024', '22 กันยายน 2567', ASSETS.BLOG_5, undefined, undefined, ['Review', 'Painting', 'Modern'], ['รีวิว', 'จิตรกรรม', 'สมัยใหม่']),
   'minimalist-architecture': createBilingualMockPost('minimalist-architecture', 'post', 'Minimalist Architecture', 'สถาปัตยกรรมมินิมัลลิสต์', '14 August 2024', '14 สิงหาคม 2567', ASSETS.BLOG_6, undefined, undefined, ['Insight', 'Architecture', 'Design'], ['บทความเชิงลึก', 'สถาปัตยกรรม', 'การออกแบบ']),
   'sound-of-art': createBilingualMockPost('sound-of-art', 'post', 'The Sound of Art', 'เสียงของศิลปะ', '30 June 2024', '30 มิถุนายน 2567', ASSETS.BLOG_1, undefined, undefined, ['Review', 'Sound Art', 'Music'], ['รีวิว', 'ศิลปะเสียง', 'ดนตรี']),
-  'traditional-dance': createBilingualMockPost('traditional-dance', 'post', 'Traditional Dance in Modern Times', 'การเต้นรำแบบดั้งเดิมในยุคสมัยใหม่', '05 December 2023', '05 ธันวาคม 2566', ASSETS.BLOG_5, undefined, undefined, ['Culture', 'Dance', 'Tradition'], ['วัฒนธรรม', 'การเต้นรำ', 'ประเพณี']),
+  'traditional-dance-blog': createBilingualMockPost('traditional-dance-blog', 'post', 'Traditional Dance in Modern Times', 'การเต้นรำแบบดั้งเดิมในยุคสมัยใหม่', '05 December 2023', '05 ธันวาคม 2566', ASSETS.BLOG_5, undefined, undefined, ['Culture', 'Dance', 'Tradition'], ['วัฒนธรรม', 'การเต้นรำ', 'ประเพณี']),
   'ceramics-and-culture': createBilingualMockPost('ceramics-and-culture', 'post', 'Ceramics and Culture', 'เซรามิกและวัฒนธรรม', '12 October 2023', '12 ตุลาคม 2566', ASSETS.BLOG_2, undefined, undefined, ['Culture', 'Craft', 'Ceramics'], ['วัฒนธรรม', 'งานฝีมือ', 'เซรามิก']),
   'street-art': createBilingualMockPost('street-art', 'post', 'Street Art Revolution', 'การปฏิวัติศิลปะบนถนน', '18 August 2023', '18 สิงหาคม 2566', ASSETS.BLOG_3, undefined, undefined, ['News', 'Street Art', 'Urban'], ['ข่าวสาร', 'สตรีทอาร์ต', 'เมือง']),
   'textile-narratives': createBilingualMockPost('textile-narratives', 'post', 'Textile Narratives', 'เรื่องเล่าจากสิ่งทอ', '05 June 2023', '05 มิถุนายน 2566', ASSETS.BLOG_4, undefined, undefined, ['Insight', 'Textile', 'Storytelling'], ['บทความเชิงลึก', 'สิ่งทอ', 'การเล่าเรื่อง']),
@@ -420,8 +474,7 @@ export const MOCK_POSTS_BILINGUAL = {
   'photography-digital': createBilingualMockPost('photography-digital', 'post', 'Photography in the Digital Age', 'การถ่ายภาพในยุคดิจิทัล', '15 October 2022', '15 ตุลาคม 2565', ASSETS.BLOG_1, undefined, undefined, ['Insight', 'Photography', 'Technology'], ['บทความเชิงลึก', 'การถ่ายภาพ', 'เทคโนโลยี']),
   'installation-basics': createBilingualMockPost('installation-basics', 'post', 'Installation Art Basics', 'พื้นฐานศิลปะการติดตั้ง', '20 August 2022', '20 สิงหาคม 2565', ASSETS.BLOG_2, undefined, undefined, ['Education', 'Installation', 'Art Theory'], ['การศึกษา', 'ศิลปะจัดวาง', 'ทฤษฎีศิลปะ']),
   'color-theory': createBilingualMockPost('color-theory', 'post', 'Color Theory in Practice', 'ทฤษฎีสีในการปฏิบัติ', '10 June 2022', '10 มิถุนายน 2565', ASSETS.BLOG_3, undefined, undefined, ['Education', 'Color', 'Painting'], ['การศึกษา', 'สี', 'จิตรกรรม']),
-  'origins-bauhaus': createBilingualMockPost('origins-bauhaus', 'post', 'The Origins of Bauhaus', 'ต้นกำเนิดของเบาเฮาส์', '12 December 2021', '12 ธันวาคม 2564', ASSETS.BLOG_4, undefined, undefined, ['History', 'Design', 'Architecture'], ['ประวัติศาสตร์', 'การออกแบบ', 'สถาปัตยกรรม']),
-  'art-deco-revival': createBilingualMockPost('art-deco-revival', 'post', 'Art Deco Revival', 'การฟื้นฟูอาร์ตเดโค', '05 October 2021', '05 ตุลาคม 2564', ASSETS.BLOG_5, undefined, undefined, ['History', 'Design', 'Style'], ['ประวัติศาสตร์', 'การออกแบบ', 'สไตล์']),
+  'contemporary-spaces': createBilingualMockPost('contemporary-spaces', 'post', 'Contemporary Art Spaces', 'พื้นที่ศิลปะร่วมสมัย', '10 March 2026', '10 มีนาคม 2569', ASSETS.BLOG_6, undefined, undefined, ['Insight', 'Contemporary', 'Space'], ['บทความเชิงลึก', 'ร่วมสมัย', 'พื้นที่']),
 };
 
 // Helper function to get post by slug and language

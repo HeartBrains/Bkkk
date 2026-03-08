@@ -1,7 +1,5 @@
-import { ReactNode, useEffect, useState, useRef } from 'react';
-import { motion } from 'motion/react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { ASSETS } from '../../utils/assets';
 import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
 import aboutHero from 'figma:asset/2e3a0e5af1e1e13f82c48787eed213758894268f.png';
@@ -83,7 +81,7 @@ export function AboutLayout({ children, activePage, onNavigate }: AboutLayoutPro
     <div className="w-full min-h-screen bg-white">
       {/* Hero Section */}
       <ParallaxHero 
-        image={aboutHero}
+        image="https://images.unsplash.com/photo-1764922168474-8048361bc764?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwbWluaW1hbGlzdCUyMGludGVyaW9yfGVufDF8fHx8MTc3Mjk3NjY4OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
         height="h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
@@ -92,7 +90,7 @@ export function AboutLayout({ children, activePage, onNavigate }: AboutLayoutPro
       <div className="w-full px-6 py-12 md:py-16">
         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
           {/* Sidebar Navigation */}
-          <aside className="w-full md:w-1/4 shrink-0 sticky top-32 h-fit hidden md:block">
+          <aside className="w-full md:w-1/4 shrink-0 h-fit hidden md:block">
             <nav className="flex flex-col space-y-2">
               {MENU_ITEMS.map((item, index) => {
                 const isActive = currentSection === item.page;

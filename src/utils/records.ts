@@ -1,6 +1,7 @@
 import { ASSETS } from './assets';
+import { movingImagePrograms } from './movingImageData';
 
-export type RecordCategory = 'exhibition' | 'activity' | 'event';
+export type RecordCategory = 'exhibition' | 'activity' | 'event' | 'moving-image';
 export type RecordStatus = 'current' | 'upcoming' | 'past';
 
 export interface RecordItem {
@@ -120,11 +121,44 @@ export const RECORDS: RecordItem[] = [
 ];
 
 // Mock API function
-export async function fetchRecords(params?: { category?: RecordCategory | 'all', status?: RecordStatus | 'all' }): Promise<RecordItem[]> {
+export async function fetchRecords(params?: { category?: RecordCategory | 'all', status?: RecordStatus | 'all', language?: 'en' | 'th' }): Promise<RecordItem[]> {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
   let results = [...RECORDS];
+  
+  // Add moving image programs dynamically
+  const language = params?.language || 'en';
+  const today = new Date();
+  
+  const movingImageRecords: RecordItem[] = movingImagePrograms.map(program => {
+    const startDate = new Date(program.fromDate);
+    const endDate = new Date(program.toDate);
+    
+    let status: RecordStatus;
+    if (today < startDate) {
+      status = 'upcoming';
+    } else if (today > endDate) {
+      status = 'past';
+    } else {
+      status = 'current';
+    }
+    
+    return {
+      id: `moving-image-${program.id}`,
+      title: program.title[language],
+      category: 'moving-image' as RecordCategory,
+      status,
+      date: program.dateDisplay[language],
+      startDate: program.fromDate,
+      endDate: program.toDate,
+      image: '', // Placeholder gray box
+      description: `${language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}${program.curator[language]}`,
+      slug: program.slug
+    };
+  });
+  
+  results = [...results, ...movingImageRecords];
 
   if (params?.category && params.category !== 'all') {
     results = results.filter(r => r.category === params.category);

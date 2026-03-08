@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Forestype';
   src: url('https://www.khaoyaiart.com/_next/static/media/29297acd61a237bc-s.p.woff2') format('woff2');
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -9,7 +9,7 @@
 @font-face {
   font-family: 'Forestype';
   src: url('https://www.khaoyaiart.com/_next/static/media/3e5c1db3e9b8afef-s.p.woff2') format('woff2');
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -168,7 +168,7 @@
   --font-weight-extralight: 300; /* Weight 1 */
   --font-weight-light: 300;      /* Weight 1 */
   --font-weight-normal: 400;     /* Weight 2 (Normal) */
-  --font-weight-medium: 500;     /* Weight 3 (Medium) */
+  --font-weight-medium: 400;     /* Weight 3 (Medium) */
   --font-weight-semibold: 500;   /* Weight 3 */
   --font-weight-bold: 700;       /* Weight 4 (Bold) */
   --font-weight-extrabold: 700;  /* Weight 4 */

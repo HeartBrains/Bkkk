@@ -133,7 +133,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
                 className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium font-sans">
+                <span className="text-sm font-normal font-sans">
                     {backPage === 'archives' 
                         ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
                         : (language === 'th' ? 'กลับสู่กิจกรรม' : 'Back to Activities')
@@ -144,60 +144,54 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
       </div>
 
       {/* Content */}
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-24 md:pl-[48px]">
-         <div className="flex flex-col md:flex-row">
+      <div className="w-full px-6 py-12 md:py-16">
+         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
-            <div className="w-full md:w-1/2 mb-12 md:mb-0">
-               <div className="md:sticky md:top-32">
-                   <Reveal>
-                       <div className="flex flex-col gap-1">
-                           <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                              {postData.title}
-                           </h1>
+            <div className="md:col-span-5 flex flex-col gap-8">
+                <div>
+                    <div className="flex flex-col gap-0 px-[28px] py-[0px]">
+                        <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                           {postData.title}
+                        </h1>
 
-                           {postData.categories?.map((cat, idx) => (
-                               <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
-                           ))}
-                           
-                           {postData.date && (
-                               <p className={`text-xl md:text-2xl text-black font-normal leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
-                           )}
+                        {postData.categories?.map((cat, idx) => (
+                            <p key={idx} className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{cat}</p>
+                        ))}
+                        
+                        {postData.date && (
+                            <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                        )}
+                    </div>
 
-                           <div className="mt-8">
-                               <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                   {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
-                               </p>
-                               <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>Stefano Rabolli Pansera</p>
-                           </div>
-                       </div>
-                   </Reveal>
-               </div>
+                    <div className="flex flex-col gap-0 px-[28px] py-[0px] mt-8">
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                            {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
+                        </p>
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>Stefano Rabolli Pansera</p>
+                    </div>
+                </div>
             </div>
 
             {/* Right Column */}
-            <div className="w-full md:w-1/2">
-                <div className={`text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                   <Reveal delay={0.2}>
-                       <div dangerouslySetInnerHTML={{ __html: postData.content }} />
+            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
-                       {postData.acf?.schedule && (
-                           <div>
-                             <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                 {language === 'th' ? 'ตารางกิจกรรม' : 'Schedule'}
-                             </h3>
-                             <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                                {postData.acf.schedule.map((item: any, idx: number) => (
-                                    <p key={idx}><span className="font-bold">{item.title}</span> {item.details}</p>
-                                ))}
-                                {postData.acf.additionalContent && (
-                                    <p className="mt-4 text-black">{postData.acf.additionalContent}</p>
-                                )}
-                             </div>
-                           </div>
-                       )}
-                   </Reveal>
-                </div>
-            </div>
+                {postData.acf?.schedule && (
+                    <div>
+                      <h3 className={`text-xl md:text-2xl font-normal mb-4 text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {language === 'th' ? 'ตารางกิจกรรม' : 'Schedule'}
+                      </h3>
+                      <div className={`space-y-2 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                         {postData.acf.schedule.map((item: any, idx: number) => (
+                             <p key={idx}><span className="font-normal">{item.title}</span> {item.details}</p>
+                         ))}
+                         {postData.acf.additionalContent && (
+                             <p className="mt-4 text-black">{postData.acf.additionalContent}</p>
+                         )}
+                      </div>
+                    </div>
+                )}
+             </div>
          </div>
       </div>
     </div>

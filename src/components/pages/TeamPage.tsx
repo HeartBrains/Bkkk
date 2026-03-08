@@ -98,63 +98,47 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
       </ParallaxHero>
 
       <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row pl-[0px] pr-[10px] py-[0px]">
           
           {/* Sidebar */}
-          <aside className="w-full md:w-1/2 shrink-0 relative md:sticky md:top-32 h-fit mb-12 md:mb-0">
-            <nav className="flex flex-col space-y-6">
+          <aside className="w-full md:w-1/2 shrink-0 relative h-fit mb-12 md:mb-0">
+            <nav className="flex flex-col items-start gap-2">
                 
                 {/* Founder */}
                 <button
                     onClick={() => scrollToSection('founder')}
-                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 cursor-pointer ${
+                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 cursor-pointer ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                         activeSection === 'founder' || !activeSection
                         ? 'text-black font-medium'
-                        : 'text-gray-400 hover:text-black'
+                        : 'text-gray-400 hover:text-black font-normal'
                     }`}
                 >
                     {getTranslation(language, 'team.founder')}
                 </button>
 
                 {/* Directors Group */}
-                <div className="flex flex-col space-y-2">
+                {DIRECTORS && DIRECTORS.length > 0 && (
+                <div className="flex flex-col gap-2">
                     <button 
                         onClick={() => scrollToSection(getDirectorId(DIRECTORS[0].name))}
-                        className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
+                        className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                             DIRECTORS.some(d => activeSection === getDirectorId(d.name))
                             ? 'text-black font-medium'
-                            : 'text-gray-400 hover:text-black'
+                            : 'text-gray-400 hover:text-black font-normal'
                         }`}
                     >
                         {getTranslation(language, 'team.directors')}
                     </button>
-                    <div className="pl-0 flex flex-col space-y-2">
-                        {DIRECTORS.map(director => {
-                             const id = getDirectorId(director.name);
-                             return (
-                                <button
-                                    key={director.name}
-                                    onClick={() => scrollToSection(id)}
-                                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
-                                        activeSection === id
-                                        ? 'text-black font-medium'
-                                        : 'text-gray-400 hover:text-black'
-                                    }`}
-                                >
-                                    {director.name}
-                                </button>
-                             );
-                        })}
-                    </div>
                 </div>
+                )}
 
                 {/* Team */}
                 <button
                     onClick={() => scrollToSection('team')}
-                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
+                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                         activeSection === 'team'
-                        ? 'text-gray-400 font-medium'
-                        : 'text-gray-400 hover:text-black'
+                        ? 'text-black font-medium'
+                        : 'text-gray-400 hover:text-black font-normal'
                     }`}
                 >
                     {getTranslation(language, 'team.team')}
@@ -171,7 +155,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 <Reveal>
                      <div className="aspect-[2/3] w-full bg-gray-100 mb-6">
                         <div 
-                            className="w-full h-full bg-cover bg-center"
+                            className="w-full h-full bg-cover bg-right p-[0px] m-[0px]"
                             style={{ backgroundImage: `url(${founderImage})` }}
                         />
                     </div>
@@ -222,20 +206,18 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
             <div id="team" className="w-full md:max-w-2xl pb-24 scroll-mt-32">
                 <div className="space-y-12">
                     {TEAM_GROUPS.map((group, index) => (
-                        <Reveal key={group.role} delay={index * 0.05}>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-xl md:text-2xl font-sans text-black font-medium leading-tight tracking-tight">
-                                    {language === 'th' ? group.roleTH : group.role}
-                                </h3>
-                                <div className="flex flex-col gap-1">
-                                    {(language === 'th' && group.membersTH ? group.membersTH : group.members).map(member => (
-                                        <p key={member} className="text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight">
-                                            {member}
-                                        </p>
-                                    ))}
-                                </div>
+                        <div key={group.role} className="flex flex-col gap-2">
+                            <h3 className="text-xl md:text-2xl font-sans text-black font-medium leading-tight tracking-tight">
+                                {language === 'th' ? group.roleTH : group.role}
+                            </h3>
+                            <div className="flex flex-col gap-1">
+                                {(language === 'th' && group.membersTH ? group.membersTH : group.members).map(member => (
+                                    <p key={member} className="text-xl md:text-2xl font-sans text-black font-normal leading-tight tracking-tight">
+                                        {member}
+                                    </p>
+                                ))}
                             </div>
-                        </Reveal>
+                        </div>
                     ))}
                 </div>
             </div>

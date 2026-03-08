@@ -8,13 +8,14 @@ import { useLanguage } from '../../utils/languageContext';
 interface MenuOverlayProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, slug?: string, sectionId?: string) => void;
   activePage: string;
 }
 
 interface MenuItem {
     label: string;
     page: string;
+    sectionId?: string;
     children?: MenuItem[];
 }
 
@@ -39,25 +40,25 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
       label: t('nav.exhibitions'), 
       page: 'exhibitions',
       children: [
-          { label: t('exhibitions.current'), page: 'exhibitions' },
-          { label: t('exhibitions.upcoming'), page: 'exhibitions' },
-          { label: 'Moving Image Program', page: 'exhibitions' },
+          { label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' },
+          { label: t('exhibitions.upcoming'), page: 'exhibitions', sectionId: 'upcoming-exhibitions' },
+          { label: 'Moving Image Program', page: 'exhibitions', sectionId: 'moving-image-program' },
       ]
     },
     {
         label: t('nav.activities'),
         page: 'activities',
         children: [
-            { label: 'Public Program', page: 'activities' },
-            { label: t('activities.screenings'), page: 'activities' },
+            { label: 'Public Program', page: 'activities', sectionId: 'public-program' },
+            { label: t('activities.screenings'), page: 'activities', sectionId: 'screenings' },
         ]
     },
     {
         label: t('nav.residency'),
         page: 'residency',
         children: [
-            { label: t('residency.currentArtists'), page: 'residency' },
-            { label: t('residency.pastArtists'), page: 'residency' },
+            { label: t('residency.currentArtists'), page: 'residency', sectionId: 'current-artists' },
+            { label: t('residency.pastArtists'), page: 'residency', sectionId: 'past-artists' },
         ]
     },
     { label: t('nav.blog'), page: 'blog' },
@@ -67,20 +68,31 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
         label: t('nav.shop'),
         page: 'shop',
         children: [
-            { label: 'Bookings', page: 'shop' },
-            { label: 'Products', page: 'shop' },
+            { label: 'Bookings', page: 'shop', sectionId: 'bookings' },
+            { label: 'Products', page: 'shop', sectionId: 'products' },
         ]
     },
     {
         label: t('nav.archives'),
         page: 'archives',
         children: [
-            { label: t('exhibitions.past'), page: 'archives' },
-            { label: 'Past Activities', page: 'archives' },
+            { label: t('exhibitions.past'), page: 'archives', sectionId: 'past-exhibitions' },
+            { label: 'Past Activities', page: 'archives', sectionId: 'past-activities' },
         ]
     },
     { label: t('nav.contact'), page: 'contact' },
   ];
+
+  const isItemActive = (itemPage: string, currentPage: string) => {
+    if (itemPage === currentPage) return true;
+    if (itemPage === 'exhibitions' && currentPage === 'exhibition-detail') return true;
+    if (itemPage === 'activities' && currentPage === 'activity-detail') return true;
+    if (itemPage === 'blog' && (currentPage === 'blog-detail' || currentPage === 'news' || currentPage === 'post')) return true;
+    if (itemPage === 'residency' && currentPage === 'artist-detail') return true;
+    if (itemPage === 'about' && (currentPage === 'vision' || currentPage === 'history')) return true;
+    if (itemPage === 'team' && currentPage === 'founder') return true;
+    return false;
+  };
 
   return (
     <AnimatePresence>
@@ -115,7 +127,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
             className="w-full md:w-1/2 h-full bg-black flex flex-col relative overflow-y-auto"
           >
              {/* Close Button */}
-             <div className="absolute top-6 right-6 z-20">
+             <div className="absolute top-[8vh] right-[6vw] z-20">
                 <button onClick={onClose} className="hover:opacity-70 transition-opacity duration-300">
                     <X className="w-6 h-6 text-white" />
                 </button>
@@ -123,7 +135,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
 
              {/* Navigation Links Container */}
              <motion.div 
-                className="flex-1 flex flex-col px-8 md:px-16 pt-20 pb-8"
+                className="flex-1 flex flex-col px-[6vw] pt-[8vh] pb-[8vh] w-full"
                 initial="hidden"
                 animate="show"
                 variants={{
@@ -137,11 +149,11 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                     }
                 }}
              >
-                <div className="flex flex-col gap-2 -mt-14 px-[0px] py-[0.18px] pt-[15px] pr-[0px] pb-[0px] pl-[0px]">
+                <div className="flex flex-col gap-1 w-full">
                     {sitemap.map((item) => {
                         const isExpanded = expandedItems.includes(item.label);
                         const hasChildren = item.children && item.children.length > 0;
-                        const isActive = activePage === item.page;
+                        const isActive = isItemActive(item.page, activePage);
 
                         return (
                             <motion.div 
@@ -158,7 +170,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                                             onNavigate(item.page);
                                             onClose();
                                         }}
-                                        className={`text-left text-xl md:text-2xl font-normal transition-colors duration-300 tracking-wide ${
+                                        className={`text-left text-[18px] font-normal transition-colors duration-300 tracking-wide ${
                                             isActive ? 'text-gray-300' : 'text-white group-hover:text-gray-300'
                                         }`}
                                     >
@@ -182,7 +194,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                                             animate={{ height: 'auto', opacity: 1 }}
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.3 }}
-                                            className="overflow-hidden pl-4 md:pl-6 border-l border-white/10 ml-2 mt-2 space-y-2"
+                                            className="overflow-hidden pl-[4vw] mt-1 mb-2 space-y-2"
                                         >
                                             {item.children!.map((child) => {
                                                 // Translate specific child labels
@@ -201,10 +213,10 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                                                     <button
                                                         key={child.label}
                                                         onClick={() => {
-                                                            onNavigate(child.page);
+                                                            onNavigate(child.page, undefined, child.sectionId);
                                                             onClose();
                                                         }}
-                                                        className="block w-full text-left text-lg text-gray-500 hover:text-white transition-colors py-1"
+                                                        className={`block w-full text-left text-[18px] text-white hover:text-gray-300 transition-colors py-1 ${language === 'th' ? 'leading-[1.82em]' : 'leading-snug'}`}
                                                     >
                                                         {displayLabel}
                                                     </button>
@@ -221,7 +233,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                 </div>
 
                 <motion.div 
-                    className="mt-auto flex justify-between items-end w-full pt-8"
+                    className="mt-auto flex justify-between items-center w-full h-[10vh]"
                     variants={{
                         hidden: { opacity: 0, y: 20 },
                         show: { opacity: 1, y: 0 }
@@ -235,17 +247,17 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                             }}
                             className="gap-2"
                             iconClassName="w-6 h-6 text-white"
-                            inputClassName="w-40 text-lg text-white placeholder:text-gray-500"
+                            inputClassName="w-40 text-[18px] text-white placeholder:text-gray-500"
                         />
                         <a 
                             href="https://kyaf.thaicms.com"
-                            className="text-xl md:text-2xl text-white font-normal hover:text-gray-300 transition-colors uppercase tracking-wide"
+                            className="text-[18px] text-white font-normal hover:text-gray-300 transition-colors uppercase tracking-wide"
                         >
                             KYAF
                         </a>
                     </div>
 
-                    <div className="text-xl md:text-2xl font-normal text-gray-500 select-none tracking-wide flex items-center">
+                    <div className="text-[18px] font-normal text-gray-500 select-none tracking-wide flex items-center">
                         <button 
                             className={`cursor-pointer transition-colors ${language === 'en' ? 'text-white' : 'hover:text-white'}`}
                             onClick={() => setLanguage('en')}

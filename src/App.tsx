@@ -25,8 +25,9 @@ import { PressPage } from './components/pages/PressPage';
 import { ContactPage } from './components/pages/ContactPage';
 import { HiddenAssetsPage } from './components/pages/HiddenAssetsPage';
 import { ArtistDetailPage } from './components/pages/ArtistDetailPage';
+import { MovingImageDetailPage } from './components/pages/MovingImageDetailPage';
 
-export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'artist-detail' | 'shop' | 'press' | 'contact' | 'hidden-assets';
+export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'artist-detail' | 'shop' | 'press' | 'contact' | 'hidden-assets' | 'moving-image-detail';
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false); // New state for Landing Page
@@ -37,6 +38,7 @@ export default function App() {
   // New state for navigation history and detail pages
   const [selectedSlug, setSelectedSlug] = useState<string | undefined>();
   const [backPage, setBackPage] = useState<Page | undefined>();
+  const [targetSectionId, setTargetSectionId] = useState<string | undefined>();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,17 +48,24 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (page: string, slug?: string, backTo?: Page) => {
+  const handleNavigate = (page: string, slug?: string, sectionId?: string) => {
       // If navigating to a detail page, set the slug and back reference
       if (slug) {
           setSelectedSlug(slug);
       }
-      if (backTo) {
-          setBackPage(backTo);
+      
+      // Set backPage based on which detail page we're navigating to
+      const detailPages = ['exhibition-detail', 'activity-detail', 'blog-detail', 'artist-detail', 'moving-image-detail'];
+      if (detailPages.includes(page)) {
+          // Store the current page as the back page
+          setBackPage(currentPage);
+      }
+      
+      // Handle section navigation
+      if (sectionId) {
+          setTargetSectionId(sectionId);
       } else {
-          // If simply navigating top-level, reset backPage unless we want to keep history?
-          // Usually we want to reset it so default "Back" works.
-          setBackPage(undefined);
+          setTargetSectionId(undefined);
       }
 
       setCurrentPage(page as Page);
@@ -73,7 +82,7 @@ export default function App() {
     }
   };
 
-  // Header is transparent on all pages when at the top
+  // Header is transparent when at the top, on all pages now
   const isTransparent = !scrolled;
 
   return (
@@ -87,6 +96,7 @@ export default function App() {
             onMenuClick={() => setIsMenuOpen(true)} 
             onLogoClick={() => handleNavigate('home')}
             isTransparent={isTransparent}
+            isScrolled={scrolled}
           />
 
           <MenuOverlay 
@@ -109,19 +119,20 @@ export default function App() {
             {currentPage === 'support' && <SupportPage />}
             {currentPage === 'visit' && <VisitPage />}
             {currentPage === 'news' && <PostPage onNavigate={handleNavigate} />}
-            {currentPage === 'activities' && <ActivitiesPage onNavigate={handleNavigate} />}
+            {currentPage === 'activities' && <ActivitiesPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'activity-detail' && <ActivityDetailPage onNavigate={handleNavigate} slug={selectedSlug || "neon-reveries"} backPage={backPage} />}
             {currentPage === 'blog' && <BlogPage onNavigate={handleNavigate} />}
             {currentPage === 'blog-detail' && <BlogDetailPage onNavigate={handleNavigate} slug={selectedSlug || "art-as-reflection"} />}
-            {currentPage === 'exhibitions' && <ExhibitionsPage onNavigate={handleNavigate} />}
+            {currentPage === 'exhibitions' && <ExhibitionsPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'exhibition-detail' && <ExhibitionDetailPage onNavigate={handleNavigate} slug={selectedSlug || "unwinding-architecture"} backPage={backPage} />}
-            {currentPage === 'archives' && <ArchivesPage onNavigate={handleNavigate} />}
-            {currentPage === 'residency' && <ResidencyPage onNavigate={handleNavigate} />}
+            {currentPage === 'archives' && <ArchivesPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
+            {currentPage === 'residency' && <ResidencyPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'artist-detail' && <ArtistDetailPage onNavigate={handleNavigate} slug={selectedSlug} backPage={backPage} />}
-            {currentPage === 'shop' && <ShopPage onNavigate={handleNavigate} />}
+            {currentPage === 'shop' && <ShopPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'press' && <PressPage />}
             {currentPage === 'contact' && <ContactPage />}
             {currentPage === 'hidden-assets' && <HiddenAssetsPage />}
+            {currentPage === 'moving-image-detail' && <MovingImageDetailPage onNavigate={handleNavigate} slug={selectedSlug || 'inviting-you-to-die-with-me'} backPage={backPage} />}
           </main>
 
           <Footer onNavigate={handleNavigate} />

@@ -1,5 +1,4 @@
-import archivesHero from 'figma:asset/2a1347ddbd36462f89f4337de2853a02223550a0.png';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { fetchRecords, RecordItem, RecordCategory } from '../../utils/records';
 import { Reveal } from '../ui/Reveal';
@@ -17,9 +16,10 @@ const getYearFromDate = (dateStr: string): string => {
 
 interface ArchivesPageProps {
   onNavigate: (page: string, slug?: string, backTo?: string) => void;
+  targetSectionId?: string;
 }
 
-export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
+export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps) {
   const { language, t } = useLanguage();
   const [allRecords, setAllRecords] = useState<RecordItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,9 +46,31 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
     loadRecords();
   }, [language]);
 
+  // Handle section scrolling when navigating from menu
+  useEffect(() => {
+    if (targetSectionId) {
+      // Map section IDs to categories
+      const sectionMapping: Record<string, { category: RecordCategory; year: string | 'all' }> = {
+        'past-exhibitions': { category: 'exhibition', year: 'all' },
+        'past-activities': { category: 'activity', year: 'all' }
+      };
+
+      const mapping = sectionMapping[targetSectionId];
+      if (mapping) {
+        setActiveFilter(mapping);
+      }
+
+      // Scroll to top of content after filter is applied
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [targetSectionId]);
+
   const availableFilters = useMemo(() => {
       const exhibitions = new Set<string>();
       const activities = new Set<string>();
+      const movingImages = new Set<string>();
 
       allRecords.forEach(record => {
           const year = getYearFromDate(record.date);
@@ -57,13 +79,16 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                   exhibitions.add(year);
               } else if (record.category === 'activity') {
                   activities.add(year);
+              } else if (record.category === 'moving-image') {
+                  movingImages.add(year);
               }
           }
       });
 
       return {
           exhibitions: Array.from(exhibitions).sort((a, b) => b.localeCompare(a)), 
-          activities: Array.from(activities).sort((a, b) => b.localeCompare(a))
+          activities: Array.from(activities).sort((a, b) => b.localeCompare(a)),
+          movingImages: Array.from(movingImages).sort((a, b) => b.localeCompare(a))
       };
   }, [allRecords]);
 
@@ -92,18 +117,17 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
           onNavigate('exhibition-detail', item.slug || item.id, 'archives');
       } else if (item.category === 'activity') {
           onNavigate('activity-detail', item.slug || item.id, 'archives');
-      }
-      // 'event' category might not have a detail page, or maps to activity?
-      // Assuming 'event' -> 'activity-detail' or ignore for now.
-      else if (item.category === 'event') {
+      } else if (item.category === 'event') {
           onNavigate('activity-detail', item.slug || item.id, 'archives');
+      } else if (item.category === 'moving-image') {
+          onNavigate('moving-image-detail', item.slug || item.id, 'archives');
       }
   };
 
   return (
     <div className="w-full bg-white min-h-screen pb-24">
       <ParallaxHero 
-        image={archivesHero}
+        image="https://images.unsplash.com/photo-1758782362535-3aeb1808e56d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBhcmNoaXZlJTIwZG9jdW1lbnRzfGVufDF8fHx8MTc3Mjk3NjY4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
         height="h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
@@ -111,10 +135,10 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
 
       <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-0">
             
             {/* Sidebar */}
-            <div className="w-full md:w-1/2 mb-12 md:mb-0">
+            <aside className="w-full md:w-1/2 shrink-0">
                 <div className="md:sticky md:top-32 flex flex-col gap-12">
                     
                     {/* Past Exhibition */}
@@ -183,14 +207,49 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                         </div>
                     </div>
 
+                    {/* Past Moving Image Programs */}
+                    <div className="flex flex-col gap-4">
+                        <h3 
+                            onClick={() => handleFilterClick('moving-image', 'all')}
+                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                                activeFilter.category === 'moving-image' && activeFilter.year === 'all'
+                                ? 'text-black font-medium'
+                                : 'text-black font-medium hover:text-gray-600'
+                            }`}
+                        >
+                            {language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Programs'}
+                        </h3>
+                        <div className="flex flex-col gap-2">
+                            {availableFilters.movingImages.length > 0 ? (
+                                availableFilters.movingImages.map(year => (
+                                    <button 
+                                        key={`mi-${year}`}
+                                        onClick={() => handleFilterClick('moving-image', year)}
+                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                                            activeFilter.category === 'moving-image' && activeFilter.year === year
+                                            ? 'text-black font-medium'
+                                            : 'text-gray-400 font-normal hover:text-gray-600'
+                                        }`}
+                                    >
+                                        {year}
+                                    </button>
+                                ))
+                            ) : (
+                                <span className={`text-gray-300 font-sans text-lg ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                                    {language === 'th' ? 'ไม่มีโปรแกรมที่ผ่านมา' : 'No past programs'}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            </aside>
 
             {/* Content */}
             <div className="w-full md:w-1/2">
                 <div className="space-y-16 md:space-y-24">
                     {loading ? (
-                        <div className="py-20 text-gray-400 font-sans text-xl">Loading archives...</div>
+                        <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">Loading archives...</div>
                     ) : displayedRecords.length > 0 ? (
                         displayedRecords.map((item, index) => (
                             <Reveal key={item.id} delay={index * 0.1}>
@@ -200,26 +259,30 @@ export function ArchivesPage({ onNavigate }: ArchivesPageProps) {
                                 >
                                     {/* Image */}
                                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                                        <ImageWithFallback 
-                                            src={item.image} 
-                                            alt={item.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                        />
+                                        {item.category === 'moving-image' ? (
+                                            <div className="w-full h-full bg-gray-200 group-hover:bg-gray-300 transition-colors duration-300" />
+                                        ) : (
+                                            <ImageWithFallback 
+                                                src={item.image} 
+                                                alt={item.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                            />
+                                        )}
                                     </div>
 
                                     {/* Info */}
                                     <div className="flex flex-col gap-1">
-                                        <h3 className={`text-lg md:text-xl font-normal leading-tight font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
+                                        <h3 className={`text-xl md:text-2xl font-normal leading-tight font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
                                         {item.description && (
-                                            <p className={`text-lg md:text-xl font-normal text-black leading-tight font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.description}</p>
+                                            <p className={`text-xl md:text-2xl font-normal text-black leading-tight font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.description}</p>
                                         )}
-                                        <p className={`text-lg md:text-xl font-normal text-black leading-tight mt-2 font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
+                                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
                                     </div>
                                 </div>
                             </Reveal>
                         ))
                     ) : (
-                        <div className="py-20 text-gray-400 font-sans text-xl">
+                        <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
                             No archives found for this selection.
                         </div>
                     )}
