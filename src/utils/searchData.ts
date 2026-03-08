@@ -2,6 +2,8 @@ import { MOCK_POSTS_BILINGUAL } from './mockDataBilingual';
 import { RECORDS } from './records';
 import { ARTISTS_DATA } from './residencyData';
 import { translations } from './translations';
+import { EXHIBITIONS_DATA_BILINGUAL } from './exhibitionsData';
+import { movingImagePrograms } from './movingImageData';
 
 export interface SearchDocument {
   id: string;
@@ -27,9 +29,6 @@ const STATIC_PAGES_CONFIG = [
   { id: 'founder', page: 'founder', titleKey: 'nav.founder', contentKey: 'about.foundingDirector', keywords: 'biography leadership owner director profile ผู้ก่อตั้ง ผู้อำนวยการ' },
   { id: 'team', page: 'team', titleKey: 'nav.team', contentKey: 'team.team', keywords: 'staff curators management jobs careers hiring ทีมงาน ภัณฑารักษ์' },
   { id: 'residency', page: 'residency', titleKey: 'nav.residency', contentKey: 'residency.description', keywords: 'artist-in-residence studio program development exchange housing ศิลปินพำนัก' },
-  { id: 'archives', page: 'archives', titleKey: 'nav.archives', content: { en: 'Explore our digital archives of past events and exhibitions.', th: 'สำรวจคลังข้อมูลดิจิทัลของกิจกรรมและนิทรรศการที่ผ่านมาของเรา' }, keywords: 'history past events database records library collection ประวัติ คลังข้อมูล' },
-  { id: 'khaoyai', page: 'khaoyai', titleKey: 'nav.khaoyai', contentKey: 'khaoyai.title', keywords: 'kyaf khao yai art film festival nature เขาใหญ่ ศิลปะ ภาพยนตร์' },
-  { id: 'shop', page: 'shop', titleKey: 'nav.shop', contentKey: 'shop.title', keywords: 'store merchandise books gifts buy ร้านค้า สินค้า หนังสือ' },
 ];
 
 function stripHtml(html: string): string {
@@ -148,30 +147,76 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       }
   });
 
-  // 4. Artists
+  // 4. Artists (Residency)
   ARTISTS_DATA.forEach(artist => {
       // EN
       data.push({
           id: `artist-${artist.slug}-en`,
           title: artist.name,
           content: stripHtml(artist.bio + " " + artist.statement),
-          keywords: `artist resident residency ${artist.period} ${artist.category}`,
+          keywords: `artist resident residency ${artist.period} ${artist.category} ศิลปิน`,
           page: 'artist-detail',
           slug: artist.slug,
           lang: 'en'
       });
-       // TH (Fallback)
+      // TH (Using proper Thai fields)
       data.push({
           id: `artist-${artist.slug}-th`,
-          title: artist.name,
-          content: stripHtml(artist.bio + " " + artist.statement),
-          keywords: `artist resident residency ${artist.period} ${artist.category}`,
+          title: artist.nameTH || artist.name,
+          content: stripHtml((artist.bioTH || artist.bio) + " " + (artist.statementTH || artist.statement)),
+          keywords: `artist resident residency ${artist.periodTH || artist.period} ${artist.category} ศิลปิน พำนัก`,
           page: 'artist-detail',
           slug: artist.slug,
           lang: 'th'
       });
   });
 
+  // 5. Exhibitions from CSV Data (Bangkok Kunsthalle exhibitions)
+  Object.values(EXHIBITIONS_DATA_BILINGUAL).forEach(exhibition => {
+    (['en', 'th'] as const).forEach(lang => {
+      const e = exhibition[lang];
+      if (!e) return;
+
+      // Add exhibition to search index with full bilingual support
+      data.push({
+        id: `exhibition-csv-${e.slug}-${lang}`,
+        title: e.title,
+        content: stripHtml(e.content + ' ' + (e.acf?.artist || '') + ' ' + (e.acf?.biography || '')),
+        keywords: `exhibition art show ${e.acf?.artist || ''} ${e.date} นิทรรศการ ศิลปะ`,
+        page: 'exhibition-detail',
+        slug: e.slug,
+        lang: lang
+      });
+    });
+  });
+
+  // 6. Moving Image Programs
+  movingImagePrograms.forEach(program => {
+    // Get film artists for keywords
+    const filmArtists = program.films.map(f => f.artist).join(' ');
+    
+    // EN
+    data.push({
+      id: `moving-image-${program.id}-en`,
+      title: program.title.en,
+      content: stripHtml(program.statement.en),
+      keywords: `moving image film video cinema ${program.curator.en} ${filmArtists} ภาพยนตร์ วิดีโอ`,
+      page: 'moving-image-detail',
+      slug: program.slug,
+      lang: 'en'
+    });
+
+    // TH
+    data.push({
+      id: `moving-image-${program.id}-th`,
+      title: program.title.th,
+      content: stripHtml(program.statement.th),
+      keywords: `moving image film video cinema ${program.curator.th} ${filmArtists} ภาพยนตร์ วิดีโอ ภาพเคลื่อนไหว`,
+      page: 'moving-image-detail',
+      slug: program.slug,
+      lang: 'th'
+    });
+  });
+
   return data;
 }
-
