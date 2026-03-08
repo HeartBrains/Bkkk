@@ -64,13 +64,15 @@ export default function App() {
       // Handle section navigation
       if (sectionId) {
           setTargetSectionId(sectionId);
+          setCurrentPage(page as Page);
+          // Don't scroll to top when navigating to a section
+          setIsMenuOpen(false);
       } else {
           setTargetSectionId(undefined);
+          setCurrentPage(page as Page);
+          window.scrollTo(0, 0);
+          setIsMenuOpen(false);
       }
-
-      setCurrentPage(page as Page);
-      window.scrollTo(0, 0);
-      setIsMenuOpen(false);
   };
 
   const handleEnter = (destination: 'bangkok' | 'khaoyai') => {
