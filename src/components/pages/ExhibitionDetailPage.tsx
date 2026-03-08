@@ -189,7 +189,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
             {/* Right Column - Text Content */}
             <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                 {postData.content && (
-                    <div dangerouslySetInnerHTML={{ __html: postData.content }} />
+                    <div className="[&>p]:mb-8" dangerouslySetInnerHTML={{ __html: postData.content }} />
                 )}
 
                 {postData.acf?.biography && (
@@ -198,7 +198,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                             <h3 className={`text-xl md:text-2xl font-normal text-black mb-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                                 {language === 'th' ? 'ประวัติศิลปิน' : 'Artist Biography'}
                             </h3>
-                            <div dangerouslySetInnerHTML={{ __html: postData.acf.biography }} />
+                            <div className="[&>p]:mb-8" dangerouslySetInnerHTML={{ __html: postData.acf.biography }} />
                         </div>
                     </>
                 )}
