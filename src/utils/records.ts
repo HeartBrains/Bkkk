@@ -1,5 +1,6 @@
 import { ASSETS } from './assets';
 import { movingImagePrograms } from './movingImageData';
+import { movingImageGalleries } from './movingImageGalleryData';
 
 export type RecordCategory = 'exhibition' | 'activity' | 'event' | 'moving-image';
 export type RecordStatus = 'current' | 'upcoming' | 'past';
@@ -144,6 +145,10 @@ export async function fetchRecords(params?: { category?: RecordCategory | 'all',
       status = 'current';
     }
     
+    // Get first gallery image from program.gallery or movingImageGalleries
+    const gallery = program.gallery || movingImageGalleries[program.slug as keyof typeof movingImageGalleries];
+    const firstImage = gallery && gallery.length > 0 ? gallery[0] : '';
+    
     return {
       id: `moving-image-${program.id}`,
       title: program.title[language],
@@ -152,7 +157,7 @@ export async function fetchRecords(params?: { category?: RecordCategory | 'all',
       date: program.dateDisplay[language],
       startDate: program.fromDate,
       endDate: program.toDate,
-      image: '', // Placeholder gray box
+      image: firstImage,
       description: `${language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}${program.curator[language]}`,
       slug: program.slug
     };

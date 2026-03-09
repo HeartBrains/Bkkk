@@ -253,14 +253,19 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
                     className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
                     onClick={() => onNavigate?.('moving-image-detail', record.slug)}
                   >
-                    <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
-                      {/* Placeholder Gray Box */}
-                    </div>
+                    {record.image && (
+                      <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
+                        <ImageWithFallback
+                          src={record.image}
+                          alt={record.title}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                      </div>
+                    )}
                     <div className="flex flex-col gap-1">
                       <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
                       <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                        {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}
-                        {record.curator}
+                        {record.description}
                       </p>
                       <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
                     </div>

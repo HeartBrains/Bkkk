@@ -251,3 +251,13 @@ html {
 .thai-text {
   line-height: 1.82em;
 }
+
+/* Hide scrollbar for thumbnail carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
