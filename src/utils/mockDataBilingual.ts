@@ -45,66 +45,7 @@ export const MOCK_POSTS_BILINGUAL = {
   // --- Activities ---
   
   // Screening
-  'neon-reveries': {
-    en: {
-      id: 'activity-1',
-      slug: 'neon-reveries',
-      type: 'activity' as const,
-      title: 'Neon Reveries',
-      date: '01 Oct – 01 Nov 2025',
-      categories: ['Screening', 'Wong Kar-Wai'],
-      content: `<p>This August and September, Bangkok Kunsthalle screens four Wong Kar Wai classics on Saturday nights, beginning with 'In the Mood for Love' (2000) on August 22—filmed partly in the Yaowarat neighborhood of the Kunsthalle. The series continues with 'Happy Together' (1997) on August 23, 'Chungking Express' (1994) on August 30, and 'Fallen Angels' (1995) on September 6. Moving from quiet longing to restless encounters and neon-lit nights, the films capture Wong's unforgettable vision of love, loneliness, and fleeting connection.</p>`,
-      featuredImage: {
-        sourceUrl: ASSETS.EVENT_HERO,
-        altText: 'Neon Reveries'
-      },
-      gallery: [
-        ASSETS.EVENT_HERO,
-        "https://images.unsplash.com/photo-1726591466875-8868a42b4e10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwY2l0eSUyMG5pZ2h0JTIwaG9uZyUyMGtvbmclMjBjaW5lbWF0aWN8ZW58MXx8fHwxNzY2MTMxMzIzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1752769479345-36628bb26d97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjByZWQlMjBtb29kJTIwbGlnaHRpbmclMjBwb3J0cmFpdCUyMGJsdXJyZWR8ZW58MXx8fHwxNzY2MTMxMzI2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1604060800795-80a563440fb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b25nJTIwa2FyJTIwd2FpJTIwc3R5bGUlMjBzdHJlZXQlMjByYWluJTIwbmlnaHR8ZW58MXx8fHwxNzY2MTMxMzMwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1764649841560-eebc51d76dd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwc2lnbiUyMGNoaW5lc2UlMjBjaGFyYWN0ZXJzJTIwbmlnaHR8ZW58MXx8fHwxNzY2MTMxMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-      ],
-      acf: {
-        schedule: [
-          { title: "'In the Mood for Love' (2000)", details: "on August 22 19.00 (one round only)" },
-          { title: "'Happy Together' (1997)", details: "on August 23 Round 1 at 17.00 Round 2 at 19.00" },
-          { title: "'Chungking Express' (1994)", details: "on August 30 Round 1 at 17.00 Round 2 at 19.00" },
-          { title: "'Fallen Angels' (1995)", details: "on September 6 Round 1 at 17.00 Round 2 at 19.00" }
-        ],
-        additionalContent: `We encourage you to arrive at Bangkok Kunsthalle 15-30 minutes before the screening begins. Seats not claimed by the start of the film may be released to visitors in the standby line.`
-      }
-    },
-    th: {
-      id: 'activity-1',
-      slug: 'neon-reveries',
-      type: 'activity' as const,
-      title: 'ความฝันนีออน',
-      date: '01 ตุลาคม – 01 พฤศจิกายน 2568',
-      categories: ['การฉายภาพยนตร์', 'หว่อง กา ไว'],
-      content: `<p>เดือนสิงหาคมและกันยายนนี้ บางกอก คุนสท์ฮัลเล่ ฉายภาพยนตร์คลาสสิกสี่เรื่องของหว่อง กา ไว ในคืนวันเสาร์ เริ่มต้นด้วย 'In the Mood for Love' (2543) ในวันที่ 22 สิงหาคม ซึ่งถ่ายทำบางส่วนในย่านเยาวราชของคุนสท์ฮัลเล่ ซีรีส์ต่อเนื่องด้วย 'Happy Together' (2540) ในวันที่ 23 สิงหาคม 'Chungking Express' (2537) ในวันที่ 30 สิงหาคม และ 'Fallen Angels' (2538) ในวันที่ 6 กันยายน ตั้งแต่ความปรารถนาอันเงียบงันไปจนถึงการพบปะที่ไม่สงบและคืนที่สว่างไสวด้วยนีออน ภาพยนตร์เหล่านี้จับภาพวิสัยทัศน์อันน่าจดจำของหว่องเกี่ยวกับความรัก ความเหงา และความเชื่อมโยงที่หายไปอย่างรวดเร็ว</p>`,
-      featuredImage: {
-        sourceUrl: ASSETS.EVENT_HERO,
-        altText: 'ความฝันนีออน'
-      },
-      gallery: [
-        ASSETS.EVENT_HERO,
-        "https://images.unsplash.com/photo-1726591466875-8868a42b4e10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwY2l0eSUyMG5pZ2h0JTIwaG9uZyUyMGtvbmclMjBjaW5lbWF0aWN8ZW58MXx8fHwxNzY2MTMxMzIzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1752769479345-36628bb26d97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjByZWQlMjBtb29kJTIwbGlnaHRpbmclMjBwb3J0cmFpdCUyMGJsdXJyZWR8ZW58MXx8fHwxNzY2MTMxMzI2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1604060800795-80a563440fb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b25nJTIwa2FyJTIwd2FpJTIwc3R5bGUlMjBzdHJlZXQlMjByYWluJTIwbmlnaHR8ZW58MXx8fHwxNzY2MTMxMzMwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1764649841560-eebc51d76dd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxuZW9uJTIwc2lnbiUyMGNoaW5lc2UlMjBjaGFyYWN0ZXJzJTIwbmlnaHR8ZW58MXx8fHwxNzY2MTMxMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-      ],
-      acf: {
-        schedule: [
-          { title: "'In the Mood for Love' (2543)", details: "วันที่ 22 สิงหาคม เวลา 19.00 น. (รอบเดียวเท่านั้น)" },
-          { title: "'Happy Together' (2540)", details: "วันที่ 23 สิงหาคม รอบที่ 1 เวลา 17.00 น. รอบที่ 2 เวลา 19.00 น." },
-          { title: "'Chungking Express' (2537)", details: "วันที่ 30 สิงหาคม รอบที่ 1 เวลา 17.00 น. รอบที่ 2 เวลา 19.00 น." },
-          { title: "'Fallen Angels' (2538)", details: "วันที่ 6 กันยายน รอบที่ 1 เวลา 17.00 น. รอบที่ 2 เวลา 19.00 น." }
-        ],
-        additionalContent: `เราแนะนำให้คุณมาถึงบางกอก คุนสท์ฮัลเล่ 15-30 นาทีก่อนการฉายเริ่มต้น ที่นั่งที่ไม่ได้รับการยืนยันก่อนภาพยนตร์เริ่มอาจถูกปล่อยให้กับผู้เยี่ยมชมในแถวสำรอง`
-      }
-    }
-  },
+  // Removed: Neon Reveries
 
   'a-very-long-gif': createBilingualMockPost(
     'a-very-long-gif',
@@ -381,7 +322,7 @@ export const MOCK_POSTS_BILINGUAL = {
     'Ploenchun Vinyaratn',
     'เปลื้อนชื่น วินยารัตน์',
     ['Exhibition', 'Textile', 'Installation'],
-    ['นิทรรศการ', 'สิ่งทอ', 'ศิลปะจัด��าง']
+    ['นิทรรศการ', 'สิ่งทอ', 'ศิลปะจัดาง']
   ),
 
   'seeds': createBilingualMockPost('seeds', 'exhibition', 'Seeds', 'เมล็ดพันธุ์', '30 April – 22 June 2026', '30 เมษายน – 22 มิถุนายน 2569', 'https://images.unsplash.com/photo-1611923973164-e0e5f7f69872?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxoYW5kcyUyMGhvbGRpbmclMjB3aGl0ZSUyMGNlcmFtaWMlMjBiYWxscyUyMGFydHxlbnwxfHx8fDE3NjgwMzkxODd8MA&ixlib=rb-4.1.0&q=80&w=1080', undefined, undefined, ['Exhibition', 'Ceramics', 'Nature'], ['นิทรรศการ', 'เซรามิก', 'ธรรมชาติ']),
@@ -438,7 +379,7 @@ export const MOCK_POSTS_BILINGUAL = {
       date: '01 ธันวาคม 2568',
       categories: ['ศิลปะร่วมสมัย', 'วัฒนธรรม', 'ความเข้าใจเชิงลึก'],
       content: `
-    <p>ศิลปะเป็นกระจกสะท้อนสังคมมาโดยตลอด สะท้อนความสำเร็จ การต่อสู้ และอัตลักษณ์ที่พัฒนาไป ในภูมิทัศน์ร่วมสมัย ความสัมพันธ์นี้กลายเป็นเรื่องที่ซับซ้อนยิ่งขึ้น ศิลปินไม่ได้เป็นเพียงผู้สังเกตการณ์ แต่เป็นผู้มีส่วนร่วมอย่���งแข็งขันในบทสนทนาทางวัฒนธรรม ท้าทายบรรทัดฐานและจินตนาการถึงอนาคตใหม่</p>
+    <p>ศิลปะเป็นกระจกสะท้อนสังคมมาโดยตลอด สะท้อนความสำเร็จ การต่อสู้ และอัตลักษณ์ที่พัฒนาไป ในภูมิทัศน์ร่วมสมัย ความสัมพันธ์นี้กลายเป็นเรื่องที่ซับซ้อนยิ่งขึ้น ศิลปินไม่ได้เป็นเพียงผู้สังเกตการณ์ แต่เป็นผู้มีส่วนร่วมอย่างแข็งขันในบทสนทนาทางวัฒนธรรม ท้าทายบรรทัดฐานและจินตนาการถึงอนาคตใหม่</p>
     <p>บทบาทของสถาบันสาธารณะเช่นบางกอก คุนสท์ฮัลเล่คือการอำนวยความสะดวกในการสนทนานี้ ด้วยการจัดหาพื้นที่ที่เสียงที่หลากหลายสามารถได้ยิน เราส่งเสริมชุมชนที่ให้คุณค่ากับความคิดสร้างสรรค์และการคิดเชิงวิพากษ์ นิทรรศการที่จะมาถึงของเรามีเป้าหมายที่จะสำรวจประเด็นเหล่านี้อย่างลึกซึ้ง เชิญชวนผู้เยี่ยมชมให้มีส่วนร่วมกับศิลปะที่พูดโดยตรงกับภาวะของมนุษย์ในศตวรรษที่ 21</p>
     <p>จากถนนในกรุงเทพฯ สู่เวทีระดับโลก ศิลปินไทยกำลังสร้างกระ莎ด้วยมุมมองที่เป็นเอกลักษณ์ พวกเขาผสมผสานเทคนิคดั้งเดิมกับสื่อสมัยใหม่ สร้างผลงานที่มีรากฐานมาจากมรดกแต่มองไปข้างหน้า การสังเคราะห์ระหว่างของเก่าและของใหม่นี้เป็นเครื่องพิสูจน์ถึงความยืดหยุ่นและความสามารถในการปรับตัวของวัฒนธรรมไทย</p>
   `,
@@ -497,6 +438,6 @@ export const MOCK_POSTS: Record<string, WPPost> = Object.keys(MOCK_POSTS_BILINGU
   return acc;
 }, {} as Record<string, WPPost>);
 
-export const MOCK_ACTIVITY = MOCK_POSTS_BILINGUAL['neon-reveries'].en;
+export const MOCK_ACTIVITY = MOCK_POSTS_BILINGUAL['liminal-signals'].en;
 export const MOCK_EXHIBITION = MOCK_POSTS_BILINGUAL['unwinding-architecture'].en;
 export const MOCK_POST = MOCK_POSTS_BILINGUAL['art-as-reflection'].en;

@@ -45,16 +45,7 @@ export const RECORDS: RecordItem[] = [
   },
 
   // Current Activities
-  {
-    id: 'act-1',
-    title: 'Neon Reveries',
-    category: 'activity',
-    status: 'current',
-    date: '01 Oct – 01 Nov 2025',
-    image: ASSETS.ACTIVITY_NEON,
-    description: 'Wong Kar-Wai Screening Series',
-    slug: 'neon-reveries'
-  },
+  // Removed: Neon Reveries
 
   // Upcoming Activities
   {

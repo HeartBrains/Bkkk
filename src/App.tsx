@@ -122,7 +122,7 @@ export default function App() {
             {currentPage === 'visit' && <VisitPage />}
             {currentPage === 'news' && <PostPage onNavigate={handleNavigate} />}
             {currentPage === 'activities' && <ActivitiesPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
-            {currentPage === 'activity-detail' && <ActivityDetailPage onNavigate={handleNavigate} slug={selectedSlug || "neon-reveries"} backPage={backPage} />}
+            {currentPage === 'activity-detail' && <ActivityDetailPage onNavigate={handleNavigate} slug={selectedSlug || "liminal-signals"} backPage={backPage} />}
             {currentPage === 'blog' && <BlogPage onNavigate={handleNavigate} />}
             {currentPage === 'blog-detail' && <BlogDetailPage onNavigate={handleNavigate} slug={selectedSlug || "art-as-reflection"} />}
             {currentPage === 'exhibitions' && <ExhibitionsPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
