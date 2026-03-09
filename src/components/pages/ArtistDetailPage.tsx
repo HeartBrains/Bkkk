@@ -132,7 +132,7 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             
             {/* Left Column - Meta Data */}
             <div className="md:col-span-5 flex flex-col gap-8">
-                <div className="flex flex-col gap-1 px-[28px] py-[0px]">
+                <div className="flex flex-col gap-1 px-0 md:px-[28px] py-[0px]">
                     <h1 className={`text-xl md:text-2xl font-normal text-black mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {displayName}
                     </h1>

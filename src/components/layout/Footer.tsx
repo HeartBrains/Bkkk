@@ -15,7 +15,7 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
           <ImageWithFallback 
             src={logoImage} 
             alt="Bangkok Kunsthalle Logo" 
-            className="h-[40px] md:h-[60px] w-auto object-contain invert brightness-0"
+            className="h-[40px] md:h-[60px] w-auto object-contain invert brightness-0 -m-2 md:m-0"
           />
         </div>
 

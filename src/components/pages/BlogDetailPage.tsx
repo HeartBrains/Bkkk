@@ -81,7 +81,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
          <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
             <div className="md:col-span-5 flex flex-col gap-8">
-                <div className="flex flex-col gap-1 px-[28px] py-[0px]">
+                <div className="flex flex-col gap-1 px-0 md:px-[28px] py-[0px]">
                     <h1 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {postData.title}
                     </h1>

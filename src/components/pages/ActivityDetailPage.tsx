@@ -149,7 +149,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
             {/* Left Column */}
             <div className="md:col-span-5 flex flex-col gap-8">
                 <div>
-                    <div className="flex flex-col gap-0 px-[28px] py-[0px]">
+                    <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px]">
                         <h1 className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                            {postData.title}
                         </h1>
@@ -163,7 +163,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-0 px-[28px] py-[0px] mt-8">
+                    <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px] mt-8">
                         <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
                         </p>

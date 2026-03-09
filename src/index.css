@@ -621,6 +621,10 @@
     z-index: 60;
   }
 
+  .-m-2 {
+    margin: calc(var(--spacing) * -2);
+  }
+
   .m-\[0px\] {
     margin: 0;
   }
@@ -1522,10 +1526,6 @@
 
   .px-\[6vw\] {
     padding-inline: 6vw;
-  }
-
-  .px-\[28px\] {
-    padding-inline: 28px;
   }
 
   .py-0 {
@@ -2509,6 +2509,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:m-0 {
+      margin: calc(var(--spacing) * 0);
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:mb-0 {
       margin-bottom: calc(var(--spacing) * 0);
     }
@@ -2735,6 +2741,12 @@
   @media (width >= 48rem) {
     .md\:px-12 {
       padding-inline: calc(var(--spacing) * 12);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:px-\[28px\] {
+      padding-inline: 28px;
     }
   }
 
