@@ -5,6 +5,7 @@ import { ARTISTS_DATA } from '../../utils/residencyData';
 import { useLanguage } from '../../utils/languageContext';
 import { getTranslation } from '../../utils/translations';
 import { useState, useEffect } from 'react';
+import Slider from 'react-slick';
 
 interface ResidencyPageProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -63,16 +64,41 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
     }
   }, [targetSectionId]);
 
+  // Get all hero images from residency artists
+  const heroImages = ARTISTS_DATA.map(artist => artist.image);
+
+  // Slider settings
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    fade: true,
+    cssEase: 'ease-in-out',
+    pauseOnHover: false,
+    arrows: false,
+  };
+
   return (
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
-      {/* Hero Section */}
-      <ParallaxHero 
-        image="https://images.unsplash.com/photo-1534868297432-500841db8da1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc3QlMjByZXNpZGVuY3klMjBzdHVkaW98ZW58MXx8fHwxNzcyOTc2NjkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-        height="h-[80vh]"
-      >
-        <div className="absolute inset-0 bg-black/40" />
+      {/* Hero Section with Slider */}
+      <div className="relative w-full h-[80vh] overflow-hidden z-0">
+        <Slider {...sliderSettings} className="h-full">
+          {heroImages.map((image, index) => (
+            <div key={index} className="relative h-[80vh]">
+              <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${image})` }}
+              />
+            </div>
+          ))}
+        </Slider>
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
-      </ParallaxHero>
+      </div>
 
       {/* Content */}
       <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
@@ -110,7 +136,7 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
                       >
                         <div className="aspect-[3/4] w-full bg-gray-100 relative overflow-hidden">
                           <ImageWithFallback 
-                            src={artist.category === 'current' ? "https://images.unsplash.com/photo-1760260623945-07314e790eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBsb29raW5nJTIwYXQlMjBjYW1lcmElMjBwb3J0cmFpdCUyMGFydGlzdGljfGVufDF8fHx8MTc2ODE1MTAyOXww&ixlib=rb-4.1.0&q=80&w=1080" : artist.image}
+                            src={artist.gallery && artist.gallery.length > 0 ? artist.gallery[0] : artist.image}
                             alt={language === 'th' ? artist.nameTH : artist.name}
                             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           />

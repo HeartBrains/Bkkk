@@ -88,12 +88,12 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
 
          {/* Thumbnails */}
          {artist.gallery.length > 1 && (
-             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2">
-                {artist.gallery.map((src, index) => (
+             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2 max-w-[90vw] md:max-w-[500px] overflow-x-auto scrollbar-hide">
+                {artist.gallery.slice(0, 5).map((src, index) => (
                    <button
                       key={index}
                       onClick={() => scrollTo(index)}
-                      className={`w-16 h-10 rounded-md overflow-hidden border-2 transition-all duration-300 ${
+                      className={`flex-shrink-0 w-16 h-10 md:w-20 md:h-12 rounded-md overflow-hidden border-2 transition-all duration-300 ${
                          current === index 
                             ? 'border-white scale-105 shadow-lg' 
                             : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'

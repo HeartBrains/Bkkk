@@ -111,7 +111,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
   const sections = [
     { id: 'current-exhibitions', label: t?.('exhibitions.current') || 'Current Exhibitions' },
     { id: 'upcoming-exhibitions', label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions' },
-    { id: 'moving-image-archive', label: language === 'th' ? 'คลังภาพเคลื่อนไหว' : 'Moving Image Archive' }
+    { id: 'moving-image-archive', label: language === 'th' ? 'คลังภาพเคลื่อนไหว' : 'Moving Image Program' }
   ];
 
   // Scroll to section
