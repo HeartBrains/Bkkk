@@ -3,6 +3,7 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { useLanguage } from '../../utils/languageContext';
+import { Facebook, Instagram, Globe } from 'lucide-react';
 
 export function ContactPage() {
   const { language } = useLanguage();
@@ -25,8 +26,8 @@ export function ContactPage() {
              {/* Left Column */}
             <div className="w-full md:w-1/2 mb-12 md:mb-0">
                 <Reveal>
-                    <h1 className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'ติดต่อเรา' : 'Contact Us'}
+                    <h1 className={`text-xl md:text-2xl font-normal md:ml-[24px] ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'ติดต่อบางกอก คุนซ์ฮาลเล่' : 'Connect with Bangkok Kunsthalle'}
                     </h1>
                 </Reveal>
             </div>
@@ -38,22 +39,34 @@ export function ContactPage() {
                         <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
                             {language === 'th' ? (
                               <>
-                                ติดต่อบางกอก คุนซ์ฮาลเล่<br />
-                                สำหรับข้อสอบถามเกี่ยวกับนิทรรศการ<br />
-                                สื่อมวลชน การเยี่ยมชมส่วนตัว<br />
+                                สำหรับข้อสอบถามเกี่ยวกับนิทรรศการ
+                                สื่อมวลชน การเยี่ยมชมส่วนตัว
                                 หรือวัตถุประสงค์ทางการศึกษา
                               </>
                             ) : (
                               <>
-                                Connect with Bangkok Kunsthalle.<br />
-                                For inquiries regarding exhibitions,<br />
-                                press, private visits, or educational<br />
+                                For inquiries regarding exhibitions,
+                                press, private visits, or educational
                                 purpose.
                               </>
                             )}
                         </p>
-                        <p className={`text-xl md:text-2xl font-normal leading-tight mt-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {language === 'th' ? 'กรุณาฝากข้อความด้านล่าง' : 'Please leave a message below.'}
+                        <p className={`text-xl md:text-2xl font-normal mt-4 ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                            {language === 'th' ? (
+                              <>
+                                กรุณาฝากข้อความด้านล่าง หรือติดต่อเราทางอีเมล:{' '}
+                                <a href="mailto:info@bangkok-kunsthalle.org" className="underline hover:no-underline">
+                                  info@bangkok-kunsthalle.org
+                                </a>
+                              </>
+                            ) : (
+                              <>
+                                Please leave a message below, or contact us by email:{' '}
+                                <a href="mailto:info@bangkok-kunsthalle.org" className="underline hover:no-underline">
+                                  info@bangkok-kunsthalle.org
+                                </a>
+                              </>
+                            )}
                         </p>
                     </div>
                 </Reveal>
@@ -62,11 +75,11 @@ export function ContactPage() {
                     <form className="flex flex-col gap-6 w-full max-w-lg" onSubmit={(e) => e.preventDefault()}>
                         <Input 
                             placeholder={language === 'th' ? 'อีเมล' : 'Email'}
-                            className="rounded-none border-gray-300 h-12 text-lg placeholder:text-gray-400 font-sans"
+                            className="rounded-none border-gray-300 h-12 text-[19px] placeholder:text-gray-400 font-sans"
                         />
                         <Textarea 
                             placeholder={language === 'th' ? 'ข้อความสอบถาม' : 'Inquiry Box'}
-                            className={`rounded-none border-gray-300 min-h-[200px] text-lg placeholder:text-gray-400 resize-none font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}
+                            className={`rounded-none border-gray-300 min-h-[200px] text-[19px] placeholder:text-gray-400 resize-none font-sans ${language === 'th' ? 'leading-[1.82em]' : ''}`}
                         />
                         <Button 
                             type="submit"
@@ -75,6 +88,100 @@ export function ContactPage() {
                             {language === 'th' ? 'ส่ง' : 'Submit'}
                         </Button>
                     </form>
+                </Reveal>
+            </div>
+        </div>
+
+        {/* Social Media Section */}
+        <div className="flex flex-col md:flex-row mb-32 md:mb-40">
+            {/* Left Column */}
+            <div className="w-full md:w-1/2 mb-12 md:mb-0">
+                <Reveal>
+                    <h2 className={`text-xl md:text-2xl font-normal md:ml-[24px] ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'โซเชียลมีเดีย' : 'Social Media'}
+                    </h2>
+                </Reveal>
+            </div>
+
+            {/* Right Column */}
+            <div className="w-full md:w-1/2">
+                <Reveal delay={0.1}>
+                    <div className="flex flex-col gap-2">
+                        <a 
+                          href="https://www.facebook.com/BangkokKunsthalle" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className={`text-xl md:text-2xl font-normal underline hover:no-underline ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}
+                        >
+                          <Facebook className="inline-block mr-6" size={16} />
+                          BangkokKunsthalle
+                        </a>
+                        <a 
+                          href="https://www.instagram.com/bangkok_kunsthalle/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className={`text-xl md:text-2xl font-normal underline hover:no-underline ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}
+                        >
+                          <Instagram className="inline-block mr-6" size={16} />
+                          bangkok_kunsthalle
+                        </a>
+                        <a 
+                          href="http://www.khaoyaiart.com" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className={`text-xl md:text-2xl font-normal underline hover:no-underline ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}
+                        >
+                          <Globe className="inline-block mr-6" size={16} />
+                          www.khaoyaiart.com
+                        </a>
+                    </div>
+                </Reveal>
+            </div>
+        </div>
+
+        {/* Address Section */}
+        <div className="flex flex-col md:flex-row mb-32 md:mb-40">
+            {/* Left Column */}
+            <div className="w-full md:w-1/2 mb-12 md:mb-0">
+                <Reveal>
+                    <h2 className={`text-xl md:text-2xl font-normal md:ml-[24px] ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'ที่อยู่' : 'Address'}
+                    </h2>
+                </Reveal>
+            </div>
+
+            {/* Right Column */}
+            <div className="w-full md:w-1/2">
+                <Reveal delay={0.1}>
+                    <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'บางกอก คุนซ์ฮาลเล่' : 'Bangkok Kunsthalle'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? '599 ซอย พันธจิตต์ แขวงป้อมปราบ' : '599 Pantachit Alley, Pom Prap,'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'เขตป้อมปราบศัตรูพาย กรุงเทพมหานคร 10100' : 'Pom Prap Sattru Phai, Bangkok,'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'ประเทศไทย' : '10100 Thailand'}
+                            </p>
+                        </div>
+                        
+                        <div className="flex flex-col gap-1">
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'เวลาทำการ' : 'Opening Hours:'}
+                            </p>
+                            <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'วันพุธ - วันอาทิตย์' : 'Wednesday - Sunday'}
+                            </p>
+                            <p className="text-xl md:text-2xl font-normal leading-tight">14:00 - 20:00</p>
+                            <p className={`text-xl md:text-2xl font-normal mt-2 ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`}>
+                              {language === 'th' ? 'ปิดทำการ: วันจันทร์ - วันอังคาร' : 'Closed: Monday - Tuesday'}
+                            </p>
+                        </div>
+                    </div>
                 </Reveal>
             </div>
         </div>

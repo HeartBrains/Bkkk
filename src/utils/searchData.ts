@@ -1,9 +1,9 @@
-import { MOCK_POSTS_BILINGUAL } from './mockDataBilingual';
 import { RECORDS } from './records';
 import { ARTISTS_DATA } from './residencyData';
 import { translations } from './translations';
-import { EXHIBITIONS_DATA_BILINGUAL } from './exhibitionsData';
+import { exhibitions } from './exhibitionsData';
 import { movingImagePrograms } from './movingImageData';
+import { MOCK_POSTS_BILINGUAL } from './mockDataBilingual';
 
 export interface SearchDocument {
   id: string;
@@ -67,41 +67,7 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
     });
   });
 
-  // 2. Bilingual Posts (Activities, Exhibitions, Blog)
-  Object.values(MOCK_POSTS_BILINGUAL).forEach(post => {
-    (['en', 'th'] as const).forEach(lang => {
-      const p = post[lang];
-      if (!p) return;
-
-      let page = '';
-      let keywords = '';
-
-      if (p.type === 'activity') {
-        page = 'activity-detail';
-        keywords = `activity event ${p.categories?.join(' ') || ''}`;
-      } else if (p.type === 'exhibition') {
-        page = 'exhibition-detail';
-        keywords = `exhibition art show`;
-      } else if (p.type === 'post') {
-        page = 'blog-detail';
-        keywords = `blog news ${p.categories?.join(' ') || ''}`;
-      }
-
-      if (page) {
-        data.push({
-          id: `${p.type}-${p.slug}-${lang}`,
-          title: p.title,
-          content: stripHtml(p.content),
-          keywords: keywords,
-          page: page,
-          slug: p.slug,
-          lang: lang
-        });
-      }
-    });
-  });
-
-  // 3. Records (Archives) - Currently assuming EN mostly, but we can duplicate for TH or just leave as EN
+  // 2. Records (Archives) - Currently assuming EN mostly, but we can duplicate for TH or just leave as EN
   // Since we don't have explicit TH translations for RECORDS in the file provided, we will map them to EN
   // and maybe provide a generic TH fallback if needed, or just let them be searchable in EN.
   // To make them searchable in TH mode, we should at least include them with lang='th' if we want them to appear in TH search results.
@@ -147,7 +113,7 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       }
   });
 
-  // 4. Artists (Residency)
+  // 3. Artists (Residency)
   ARTISTS_DATA.forEach(artist => {
       // EN
       data.push({
@@ -171,26 +137,32 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       });
   });
 
-  // 5. Exhibitions from CSV Data (Bangkok Kunsthalle exhibitions)
-  Object.values(EXHIBITIONS_DATA_BILINGUAL).forEach(exhibition => {
-    (['en', 'th'] as const).forEach(lang => {
-      const e = exhibition[lang];
-      if (!e) return;
+  // 4. Exhibitions from CSV Data (Bangkok Kunsthalle exhibitions)
+  exhibitions.forEach(exhibition => {
+    // EN
+    data.push({
+      id: `exhibition-${exhibition.slug}-en`,
+      title: exhibition.title.en,
+      content: stripHtml(exhibition.statement.en + ' ' + exhibition.artist.en + ' ' + exhibition.biography.en),
+      keywords: `exhibition art show ${exhibition.artist.en} ${exhibition.dateDisplay.en} นิทรรศการ ศิลปะ`,
+      page: 'exhibition-detail',
+      slug: exhibition.slug,
+      lang: 'en'
+    });
 
-      // Add exhibition to search index with full bilingual support
-      data.push({
-        id: `exhibition-csv-${e.slug}-${lang}`,
-        title: e.title,
-        content: stripHtml(e.content + ' ' + (e.acf?.artist || '') + ' ' + (e.acf?.biography || '')),
-        keywords: `exhibition art show ${e.acf?.artist || ''} ${e.date} นิทรรศการ ศิลปะ`,
-        page: 'exhibition-detail',
-        slug: e.slug,
-        lang: lang
-      });
+    // TH
+    data.push({
+      id: `exhibition-${exhibition.slug}-th`,
+      title: exhibition.title.th,
+      content: stripHtml(exhibition.statement.th + ' ' + exhibition.artist.th + ' ' + exhibition.biography.th),
+      keywords: `exhibition art show ${exhibition.artist.th} ${exhibition.dateDisplay.th} นิทรรศการ ศิลปะ`,
+      page: 'exhibition-detail',
+      slug: exhibition.slug,
+      lang: 'th'
     });
   });
 
-  // 6. Moving Image Programs
+  // 5. Moving Image Programs
   movingImagePrograms.forEach(program => {
     // Get film artists for keywords
     const filmArtists = program.films.map(f => f.artist).join(' ');

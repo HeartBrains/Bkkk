@@ -1,61 +1,30 @@
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { Reveal } from '../ui/Reveal';
 import { ParallaxHero } from '../ui/ParallaxHero';
 import { useLanguage } from '../../utils/languageContext';
-import { getMockPostsByType } from '../../utils/mockDataBilingual';
-import { getAllExhibitions } from '../../utils/exhibitionsData';
+import { exhibitions } from '../../utils/exhibitionsData';
 import { useState, useEffect } from 'react';
-import { fetchRecords, RecordItem } from '../../utils/records';
 
-// Helper functions to parse and categorize exhibitions
-function parseExhibitionDate(dateString: string): { start: Date; end: Date } | null {
-  try {
-    // Handle different date formats
-    // Format 1: "13 December 2025 - 31 May 2026"
-    // Format 2: "13 December 2025 – 31 May 2026" (with en-dash)
-    const parts = dateString.split(/\s*[-–]\s*/);
-    if (parts.length !== 2) return null;
+// Categorize exhibition status using ISO dates
+function getExhibitionStatus(fromDate: string, toDate: string, referenceDate: Date): 'current' | 'upcoming' | 'past' | null {
+  const start = new Date(fromDate);
+  const end = new Date(toDate);
 
-    const [startStr, endStr] = parts;
-
-    // Parse dates - trying multiple formats
-    const parseDate = (str: string): Date | null => {
-      // Format: "13 December 2025"
-      const match = str.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
-      if (!match) return null;
-
-      const [, day, monthName, year] = match;
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      const monthIndex = months.findIndex(m => m.toLowerCase() === monthName.toLowerCase());
-      if (monthIndex === -1) return null;
-
-      return new Date(parseInt(year), monthIndex, parseInt(day));
-    };
-
-    const start = parseDate(startStr);
-    const end = parseDate(endStr);
-
-    if (!start || !end) return null;
-
-    return { start, end };
-  } catch (error) {
-    console.error('Error parsing date:', dateString, error);
-    return null;
+  // Upcoming: exhibition hasn't started yet
+  if (referenceDate < start) {
+    return 'upcoming';
   }
-}
 
-function isExhibitionActive(dateString: string, referenceDate: Date): boolean {
-  const parsed = parseExhibitionDate(dateString);
-  if (!parsed) return false;
-  
-  return referenceDate >= parsed.start && referenceDate <= parsed.end;
-}
+  // Current: today is between start and end
+  if (referenceDate >= start && referenceDate <= end) {
+    return 'current';
+  }
 
-function isExhibitionUpcoming(dateString: string, referenceDate: Date): boolean {
-  const parsed = parseExhibitionDate(dateString);
-  if (!parsed) return false;
-  
-  return referenceDate < parsed.start;
+  // Past: exhibition has ended
+  if (referenceDate > end) {
+    return 'past';
+  }
+
+  return null;
 }
 
 interface ExhibitionsPageProps {
@@ -64,57 +33,45 @@ interface ExhibitionsPageProps {
 }
 
 export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPageProps) {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [activeSection, setActiveSection] = useState('current-exhibitions');
-  const [movingImageRecords, setMovingImageRecords] = useState<RecordItem[]>([]);
 
-  // Get all exhibitions from CSV data and mock exhibitions in current language
-  const csvExhibitions = getAllExhibitions(language);
-  const mockExhibitions = getMockPostsByType('exhibition', language);
-  
-  // Combine both sources
-  const allExhibitions = [...mockExhibitions, ...csvExhibitions];
+  // Reference date: March 10, 2026
+  const today = new Date(2026, 2, 10);
 
-  // Fetch moving image programs
-  useEffect(() => {
-    const loadMovingImagePrograms = async () => {
-      try {
-        const records = await fetchRecords({ category: 'moving-image', status: 'all', language });
-        // Sort by date - newest first (2026, 2025, 2024...)
-        const sortedRecords = records.sort((a, b) => {
-          // Extract year from date string
-          const yearA = parseInt(a.date.match(/\b20\d{2}\b/)?.[0] || '0');
-          const yearB = parseInt(b.date.match(/\b20\d{2}\b/)?.[0] || '0');
-          return yearB - yearA; // Descending order
-        });
-        setMovingImageRecords(sortedRecords);
-      } catch (error) {
-        console.error('Failed to fetch moving image programs', error);
-      }
-    };
-    loadMovingImagePrograms();
-  }, [language]);
+  // Categorize exhibitions by status
+  const currentExhibitions = exhibitions
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'current')
+    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime());
 
-  // Categorize exhibitions
-  // Today's date: March 8, 2026
-  const today = new Date(2026, 2, 8); // Month is 0-indexed, so 2 = March
-  
-  const currentExhibitions = allExhibitions.filter(ex => 
-    isExhibitionActive(ex.date, today)
-  );
-  
-  const upcomingExhibitions = allExhibitions.filter(ex => 
-    isExhibitionUpcoming(ex.date, today)
-  );
+  const upcomingExhibitions = exhibitions
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'upcoming')
+    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime());
 
-  // Anchor sections
+  const pastExhibitions = exhibitions
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'past')
+    .sort((a, b) => new Date(b.toDate).getTime() - new Date(a.toDate).getTime());
+
+  // Navigation sections
   const sections = [
-    { id: 'current-exhibitions', label: t?.('exhibitions.current') || 'Current Exhibitions' },
-    { id: 'upcoming-exhibitions', label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions' },
-    { id: 'moving-image-archive', label: language === 'th' ? 'คลังภาพเคลื่อนไหว' : 'Moving Image Program' }
+    { 
+      id: 'current-exhibitions', 
+      label: language === 'th' ? 'นิทรรศการปัจจุบัน' : 'Current Exhibitions',
+      count: currentExhibitions.length
+    },
+    { 
+      id: 'upcoming-exhibitions', 
+      label: language === 'th' ? 'นิทรรศการที่กำลังจะเริ่ม' : 'Upcoming Exhibitions',
+      count: upcomingExhibitions.length
+    },
+    { 
+      id: 'past-exhibitions', 
+      label: language === 'th' ? 'นิทรรศการที่ผ่านมา' : 'Past Exhibitions',
+      count: pastExhibitions.length
+    }
   ];
 
-  // Scroll to section
+  // Scroll to section handler
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -140,16 +97,55 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [language]);
+  }, []);
 
-  // Scroll to target section if provided
+  // Scroll to target section on mount
   useEffect(() => {
     if (targetSectionId) {
-      setTimeout(() => {
-        scrollToSection(targetSectionId);
-      }, 100);
+      setTimeout(() => scrollToSection(targetSectionId), 100);
     }
   }, [targetSectionId]);
+
+  // Exhibition card component
+  const ExhibitionCard = ({ item, index, prefix }: { item: any; index: number; prefix: string }) => {
+    const imageUrl = item.gallery && item.gallery.length > 0 ? item.gallery[0] : '';
+    
+    return (
+      <div 
+        key={`${prefix}-${index}-${item.slug}`}
+        className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+        onClick={() => onNavigate?.('exhibition-detail', item.slug)}
+      >
+        <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
+          {imageUrl && (
+            <ImageWithFallback 
+              src={imageUrl} 
+              alt={item.title[language]}
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+          )}
+        </div>
+        <div className="flex flex-col gap-1">
+          <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            {item.title[language]}
+          </h3>
+          <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            {item.artist[language]}
+          </p>
+          <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            {item.dateDisplay[language]}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  // Empty state component
+  const EmptyState = ({ message }: { message: string }) => (
+    <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
+      {message}
+    </div>
+  );
 
   return (
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
@@ -163,7 +159,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
 
       <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
-          {/* Sticky Anchor Menu */}
+          {/* Sticky Navigation Menu */}
           <aside className="w-full md:w-1/2 shrink-0">
             <nav className="md:sticky md:top-32 flex flex-col items-start gap-2">
               {sections.map((section) => (
@@ -184,93 +180,48 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
 
           {/* Content Sections */}
           <div className="w-full md:w-1/2 flex flex-col">
-            {/* Current Exhibitions */}
+            {/* Current Exhibitions Section */}
             <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
               <div className="flex flex-col gap-12 md:gap-16">
                 {currentExhibitions.length > 0 ? (
-                  currentExhibitions.map((item) => (
-                    <div key={item.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item.slug)}>
-                      <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                        {item.featuredImage && (
-                          <ImageWithFallback 
-                            src={item.featuredImage.sourceUrl} 
-                            alt={item.title}
-                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                          />
-                        )}
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf?.artist}</p>
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
-                      </div>
-                    </div>
+                  currentExhibitions.map((item, index) => (
+                    <ExhibitionCard key={item.id} item={item} index={index} prefix="current" />
                   ))
                 ) : (
-                  <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {t('common.noResults')}
-                  </div>
+                  <EmptyState 
+                    message={language === 'th' ? 'ไม่มีนิทรรศการในขณะนี้' : 'No current exhibitions'}
+                  />
                 )}
               </div>
             </section>
 
-            {/* Upcoming Exhibitions */}
+            {/* Upcoming Exhibitions Section */}
             <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
               <div className="flex flex-col gap-12 md:gap-16">
                 {upcomingExhibitions.length > 0 ? (
-                  upcomingExhibitions.map((item) => (
-                    <div key={item.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item.slug)}>
-                      <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                        {item.featuredImage && (
-                          <ImageWithFallback 
-                            src={item.featuredImage.sourceUrl} 
-                            alt={item.title}
-                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                          />
-                        )}
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf?.artist}</p>
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
-                      </div>
-                    </div>
+                  upcomingExhibitions.map((item, index) => (
+                    <ExhibitionCard key={`upcoming-${item.id}`} item={item} index={index} prefix="upcoming" />
                   ))
                 ) : (
-                  <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {t('common.noResults')}
-                  </div>
+                  <EmptyState 
+                    message={language === 'th' ? 'ไม่มีนิทรรศการที่กำลังจะเริ่ม' : 'No upcoming exhibitions'}
+                  />
                 )}
               </div>
             </section>
 
-            {/* Moving Image Archive */}
-            <section id="moving-image-archive" className="mb-32 md:mb-40 scroll-mt-32">
+            {/* Past Exhibitions Section */}
+            <section id="past-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
               <div className="flex flex-col gap-12 md:gap-16">
-                {movingImageRecords.map((record) => (
-                  <div 
-                    key={record.id} 
-                    className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
-                    onClick={() => onNavigate?.('moving-image-detail', record.slug)}
-                  >
-                    {record.image && (
-                      <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
-                        <ImageWithFallback
-                          src={record.image}
-                          alt={record.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <div className="flex flex-col gap-1">
-                      <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                        {record.description}
-                      </p>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
-                    </div>
-                  </div>
-                ))}
+                {pastExhibitions.length > 0 ? (
+                  pastExhibitions.map((item, index) => (
+                    <ExhibitionCard key={`past-${item.id}`} item={item} index={index} prefix="past" />
+                  ))
+                ) : (
+                  <EmptyState 
+                    message={language === 'th' ? 'ไม่มีนิทรรศการที่ผ่านมา' : 'No past exhibitions'}
+                  />
+                )}
               </div>
             </section>
           </div>

@@ -260,7 +260,11 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                                     {/* Image */}
                                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                                         {item.category === 'moving-image' ? (
-                                            <div className="w-full h-full bg-gray-200 group-hover:bg-gray-300 transition-colors duration-300" />
+                                            <ImageWithFallback 
+                                                src={item.image} 
+                                                alt={item.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                            />
                                         ) : (
                                             <ImageWithFallback 
                                                 src={item.image} 

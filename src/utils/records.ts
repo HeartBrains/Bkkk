@@ -1,4 +1,4 @@
-import { ASSETS } from './assets';
+import { exhibitions } from './exhibitionsData';
 import { movingImagePrograms } from './movingImageData';
 import { movingImageGalleries } from './movingImageGalleryData';
 
@@ -19,122 +19,80 @@ export interface RecordItem {
   slug?: string;
 }
 
-export const RECORDS: RecordItem[] = [
-  // Current Exhibitions
-  {
-    id: 'exh-1',
-    title: 'Search for Life I',
-    category: 'exhibition',
-    status: 'current',
-    date: '22 Nov 2025 - 22 Jan 2026',
-    image: ASSETS.EXHIBITION_TERRAZZO,
-    description: 'Stephanie Comilang',
-    slug: 'search-for-life-1'
-  },
-  
-  // Upcoming Exhibitions
-  {
-    id: 'exh-2',
-    title: 'Future Landscapes',
-    category: 'exhibition',
-    status: 'upcoming',
-    date: '01 Feb 2026',
-    image: ASSETS.EXHIBITION_BUTTERFLY,
-    description: 'Group Exhibition',
-    slug: 'future-landscapes'
-  },
+// Generate records from exhibitions data
+const today = new Date(2026, 2, 10); // March 10, 2026 (reference date)
 
-  // Current Activities
-  // Removed: Neon Reveries
-
-  // Upcoming Activities
-  {
-    id: 'act-2',
-    title: 'Artist Talk: Stephanie Comilang',
-    category: 'activity',
-    status: 'upcoming',
-    date: '15 Dec 2025',
-    image: ASSETS.BLOG_1,
-    description: 'In conversation with curator',
-    slug: 'artist-talk-stephanie'
-  },
-
-  // Past (Archive) - Mixed
-  {
-    id: 'arch-1',
-    title: 'Unwinding Architecture',
-    category: 'exhibition',
-    status: 'past',
-    date: '10 Jan - 10 Mar 2025',
-    image: ASSETS.BLOG_6,
-    description: 'Retrospective',
-    slug: 'unwinding-architecture'
-  },
-  {
-    id: 'arch-2',
-    title: 'Sound & Space Workshop',
-    category: 'activity',
-    status: 'past',
-    date: '05 Mar 2025',
-    image: ASSETS.BLOG_2,
-    description: 'Interactive Workshop',
-    slug: 'sound-space-workshop'
-  },
-  {
-    id: 'arch-3',
-    title: 'Annual Gala 2024',
-    category: 'event',
-    status: 'past',
-    date: '20 Dec 2024',
-    image: ASSETS.EVENT_HERO,
-    description: 'Fundraising Event',
-    slug: 'annual-gala-2024'
-  },
-  {
-    id: 'arch-4',
-    title: 'Digital Horizons',
-    category: 'exhibition',
-    status: 'past',
-    date: '15 Aug - 15 Oct 2024',
-    image: ASSETS.BLOG_4,
-    description: 'New Media Art',
-    slug: 'digital-horizons'
-  },
-   {
-    id: 'arch-5',
-    title: 'Traditional Dance Performance',
-    category: 'activity',
-    status: 'past',
-    date: '12 Aug 2024',
-    image: ASSETS.BLOG_5,
-    description: 'Cultural Performance',
-    slug: 'traditional-dance'
+function getExhibitionStatus(startDate: Date, endDate: Date): RecordStatus {
+  if (today < startDate) {
+    return 'upcoming';
+  } else if (today > endDate) {
+    return 'past';
+  } else {
+    return 'current';
   }
-];
+}
 
-// Mock API function
-export async function fetchRecords(params?: { category?: RecordCategory | 'all', status?: RecordStatus | 'all', language?: 'en' | 'th' }): Promise<RecordItem[]> {
+// Convert exhibitions to records (English version for base RECORDS array)
+const exhibitionRecords: RecordItem[] = exhibitions.map(exhibition => {
+  const startDate = new Date(exhibition.fromDate);
+  const endDate = new Date(exhibition.toDate);
+  const status = getExhibitionStatus(startDate, endDate);
+  
+  return {
+    id: `exh-${exhibition.id}`,
+    title: exhibition.title.en,
+    category: 'exhibition',
+    status,
+    date: exhibition.dateDisplay.en,
+    startDate: exhibition.fromDate,
+    endDate: exhibition.toDate,
+    image: exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : '',
+    description: exhibition.artist.en,
+    slug: exhibition.slug
+  };
+});
+
+export const RECORDS: RecordItem[] = [...exhibitionRecords];
+
+// Mock API function with bilingual support
+export async function fetchRecords(params?: { 
+  category?: RecordCategory | 'all', 
+  status?: RecordStatus | 'all', 
+  language?: 'en' | 'th' 
+}): Promise<RecordItem[]> {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  let results = [...RECORDS];
+  const language = params?.language || 'en';
+  let results: RecordItem[] = [];
+  
+  // Add exhibition records dynamically based on language
+  const exhibitionRecordsLang: RecordItem[] = exhibitions.map(exhibition => {
+    const startDate = new Date(exhibition.fromDate);
+    const endDate = new Date(exhibition.toDate);
+    const status = getExhibitionStatus(startDate, endDate);
+    
+    return {
+      id: `exh-${exhibition.id}`,
+      title: exhibition.title[language],
+      category: 'exhibition',
+      status,
+      date: exhibition.dateDisplay[language],
+      startDate: exhibition.fromDate,
+      endDate: exhibition.toDate,
+      image: exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : '',
+      description: exhibition.artist[language],
+      slug: exhibition.slug
+    };
+  });
+  
+  results = [...exhibitionRecordsLang];
   
   // Add moving image programs dynamically
-  const language = params?.language || 'en';
-  const today = new Date();
-  
   const movingImageRecords: RecordItem[] = movingImagePrograms.map(program => {
     const startDate = new Date(program.fromDate);
     const endDate = new Date(program.toDate);
-    
-    let status: RecordStatus;
-    if (today < startDate) {
-      status = 'upcoming';
-    } else if (today > endDate) {
-      status = 'past';
-    } else {
-      status = 'current';
-    }
+    const status = getExhibitionStatus(startDate, endDate);
     
     // Get first gallery image from program.gallery or movingImageGalleries
     const gallery = program.gallery || movingImageGalleries[program.slug as keyof typeof movingImageGalleries];

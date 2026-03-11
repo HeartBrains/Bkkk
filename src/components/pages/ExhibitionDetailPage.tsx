@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMockPost } from '../../utils/mockDataBilingual';
-import { getExhibition } from '../../utils/exhibitionsData';
+import { exhibitions, exhibitionToWPPost } from '../../utils/exhibitionsData';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '../ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -37,7 +37,10 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
     if (slug) {
         setLoading(true);
         // Try to get exhibition from the new exhibitions data first
-        let data = getExhibition(slug, language);
+        let data = exhibitions.find(e => e.slug === slug);
+        if (data) {
+            data = exhibitionToWPPost(data, language);
+        }
         // Fallback to mock data if not found
         if (!data) {
             data = getMockPost(slug, language);
@@ -116,25 +119,42 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
 
          {/* Thumbnails */}
          {galleryImages.length > 1 && (
-             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2">
-                {galleryImages.map((src, index) => (
-                   <button
-                      key={index}
-                      onClick={() => scrollTo(index)}
-                      className={`w-16 h-10 rounded-md overflow-hidden border-2 transition-all duration-300 ${
-                         current === index 
-                            ? 'border-white scale-105 shadow-lg' 
-                            : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'
-                      }`}
-                   >
-                      <ImageWithFallback
-                         src={index === 0 ? "https://images.unsplash.com/photo-1664786063671-5f4f91e770cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNldW0lMjBhcmNoaXRlY3R1cmUlMjBsaWdodCUyMHNoYWRvd3xlbnwxfHx8fDE3NjgwNDkxMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" : src}
-                         alt={`Thumbnail ${index + 1}`}
-                         className="w-full h-full object-cover"
-                      />
-                   </button>
-                ))}
-             </div>
+             <div className="absolute bottom-8 right-6 md:right-12 z-20 max-w-[340px]">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    slidesToScroll: 1,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-2">
+                    {galleryImages.map((src, index) => (
+                      <CarouselItem key={index} className="pl-2 basis-1/5">
+                        <button
+                          onClick={() => scrollTo(index)}
+                          className={`w-16 h-10 rounded-md overflow-hidden border-2 transition-all duration-300 ${
+                            current === index 
+                              ? 'border-white scale-105 shadow-lg' 
+                              : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'
+                          }`}
+                        >
+                          <ImageWithFallback
+                            src={index === 0 ? "https://images.unsplash.com/photo-1664786063671-5f4f91e770cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNldW0lMjBhcmNoaXRlY3R1cmUlMjBsaWdodCUyMHNoYWRvd3xlbnwxfHx8fDE3NjgwNDkxMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" : src}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </button>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  {galleryImages.length > 5 && (
+                    <>
+                      <CarouselPrevious className="absolute -left-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-black/30 hover:bg-black/50 border-none text-white" />
+                      <CarouselNext className="absolute -right-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-black/30 hover:bg-black/50 border-none text-white" />
+                    </>
+                  )}
+                </Carousel>
+              </div>
          )}
 
          {/* Back Button */}

@@ -2,7 +2,7 @@ import { useLanguage } from '../../utils/languageContext';
 import { getMockPost } from '../../utils/mockDataBilingual';
 import { getCurrentMovingImageProgram } from '../../utils/movingImageData';
 import { movingImageGalleries } from '../../utils/movingImageGalleryData';
-import { getUpcomingExhibitions } from '../../utils/exhibitionHelpers';
+import { getUpcomingExhibitions, getCurrentExhibitions } from '../../utils/exhibitionHelpers';
 import { getCurrentActivities } from '../../utils/activityHelpers';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { HeroSlider } from '../ui/HeroSlider';
@@ -27,9 +27,6 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
   const [activeSection, setActiveSection] = useState('current-exhibitions');
 
   // Get bilingual content
-  const descriptionWithoutPlace = getMockPost('description-without-place', language);
-  const vernacularObjects = getMockPost('vernacular-objects', language);
-  const mittaDelSanti = getMockPost('mitta-del-santi', language);
   const liminalSignals = getMockPost('liminal-signals', language);
   
   // Get current moving image program
@@ -41,13 +38,8 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
     : null;
   const currentProgramHasImages = currentProgramGallery && currentProgramGallery.length > 0;
 
-  const currentExhibitions = [
-    descriptionWithoutPlace,
-    vernacularObjects,
-    mittaDelSanti
-  ].filter(Boolean);
-
-  // Get upcoming exhibitions
+  // Get current and upcoming exhibitions from exhibitionsData.ts
+  const currentExhibitions = getCurrentExhibitions(language);
   const upcomingExhibitions = getUpcomingExhibitions(language);
 
   // Get current activities

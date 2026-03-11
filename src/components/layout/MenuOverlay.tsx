@@ -42,8 +42,11 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
       children: [
           { label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' },
           { label: t('exhibitions.upcoming'), page: 'exhibitions', sectionId: 'upcoming-exhibitions' },
-          { label: 'Moving Image Program', page: 'exhibitions', sectionId: 'moving-image-archive' },
       ]
+    },
+    { 
+      label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program', 
+      page: 'moving-image'
     },
     {
         label: t('nav.activities'),
@@ -86,6 +89,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
   const isItemActive = (itemPage: string, currentPage: string) => {
     if (itemPage === currentPage) return true;
     if (itemPage === 'exhibitions' && currentPage === 'exhibition-detail') return true;
+    if (itemPage === 'moving-image' && currentPage === 'moving-image-detail') return true;
     if (itemPage === 'activities' && currentPage === 'activity-detail') return true;
     if (itemPage === 'blog' && (currentPage === 'blog-detail' || currentPage === 'news' || currentPage === 'post')) return true;
     if (itemPage === 'residency' && currentPage === 'artist-detail') return true;

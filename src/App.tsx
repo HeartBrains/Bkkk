@@ -26,8 +26,9 @@ import { ContactPage } from './components/pages/ContactPage';
 import { HiddenAssetsPage } from './components/pages/HiddenAssetsPage';
 import { ArtistDetailPage } from './components/pages/ArtistDetailPage';
 import { MovingImageDetailPage } from './components/pages/MovingImageDetailPage';
+import { MovingImagePage } from './components/pages/MovingImagePage';
 
-export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'artist-detail' | 'shop' | 'press' | 'contact' | 'hidden-assets' | 'moving-image-detail';
+export type Page = 'home' | 'khaoyai' | 'about' | 'vision' | 'history' | 'founder' | 'team' | 'support' | 'visit' | 'news' | 'activities' | 'activity-detail' | 'blog' | 'blog-detail' | 'exhibitions' | 'exhibition-detail' | 'archives' | 'residency' | 'artist-detail' | 'shop' | 'press' | 'contact' | 'hidden-assets' | 'moving-image' | 'moving-image-detail';
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false); // New state for Landing Page
@@ -130,6 +131,7 @@ export default function App() {
             {currentPage === 'archives' && <ArchivesPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'residency' && <ResidencyPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'artist-detail' && <ArtistDetailPage onNavigate={handleNavigate} slug={selectedSlug} backPage={backPage} />}
+            {currentPage === 'moving-image' && <MovingImagePage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'shop' && <ShopPage onNavigate={handleNavigate} targetSectionId={targetSectionId} />}
             {currentPage === 'press' && <PressPage />}
             {currentPage === 'contact' && <ContactPage />}

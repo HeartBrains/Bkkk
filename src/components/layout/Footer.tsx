@@ -1,4 +1,4 @@
-import { Instagram, Facebook, AtSign } from 'lucide-react';
+import { Instagram, Facebook, AtSign, Globe } from 'lucide-react';
 import { useLanguage } from '../../utils/languageContext';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import logoImage from "figma:asset/c4b9ac99c37ce625f62558a3efaf0107be9526ee.png";
@@ -38,13 +38,13 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
           </div>
 
           <div className="flex-1 flex justify-start md:justify-around items-center gap-6 w-[80%] sm:w-[40%] px-0 md:px-[29px] py-[0px]">
-            <a href="https://instagram.com/bangkokkunsthalle" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
+            <a href="https://www.instagram.com/bangkok_kunsthalle/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
               <Instagram className="w-5 h-5" />
             </a>
-            <a href="https://facebook.com/bangkokkunsthalle" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
+            <a href="https://www.facebook.com/BangkokKunsthalle" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="mailto:info@bangkokkunsthalle.com" className="hover:text-gray-300 transition-colors">
+            <a href="mailto:info@bangkok-kunsthalle.org" className="hover:text-gray-300 transition-colors">
               <AtSign className="w-5 h-5" />
             </a>
           </div>

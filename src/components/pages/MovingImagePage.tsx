@@ -1,0 +1,253 @@
+import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { useLanguage } from '../../utils/languageContext';
+import { useState, useEffect } from 'react';
+import { fetchRecords, RecordItem } from '../../utils/records';
+import Slider from 'react-slick';
+
+interface MovingImagePageProps {
+  onNavigate?: (page: string, slug?: string) => void;
+  targetSectionId?: string;
+}
+
+export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePageProps) {
+  const { language } = useLanguage();
+  const [movingImageRecords, setMovingImageRecords] = useState<RecordItem[]>([]);
+  const [activeSection, setActiveSection] = useState('current-programs');
+
+  // Fetch moving image programs
+  useEffect(() => {
+    const loadMovingImagePrograms = async () => {
+      try {
+        const records = await fetchRecords({ category: 'moving-image', status: 'all', language });
+        // Sort by date - newest first (2026, 2025, 2024...)
+        const sortedRecords = records.sort((a, b) => {
+          // Extract year from date string
+          const yearA = parseInt(a.date.match(/\b20\d{2}\b/)?.[0] || '0');
+          const yearB = parseInt(b.date.match(/\b20\d{2}\b/)?.[0] || '0');
+          return yearB - yearA; // Descending order
+        });
+        setMovingImageRecords(sortedRecords);
+      } catch (error) {
+        console.error('Failed to fetch moving image programs', error);
+      }
+    };
+    loadMovingImagePrograms();
+  }, [language]);
+
+  // Filter programs based on today's date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate date comparison
+
+  const currentPrograms = movingImageRecords.filter(record => {
+    // Extract year from date string (e.g., "2026", "2025")
+    const yearMatch = record.date.match(/\b20\d{2}\b/);
+    if (!yearMatch) return false;
+    
+    const recordYear = parseInt(yearMatch[0]);
+    const currentYear = today.getFullYear();
+    
+    // Consider current if year is current year or future
+    return recordYear >= currentYear;
+  });
+
+  const pastPrograms = movingImageRecords.filter(record => {
+    const yearMatch = record.date.match(/\b20\d{2}\b/);
+    if (!yearMatch) return false;
+    
+    const recordYear = parseInt(yearMatch[0]);
+    const currentYear = today.getFullYear();
+    
+    // Consider past if year is before current year
+    return recordYear < currentYear;
+  });
+
+  // Anchor sections
+  const sections = [
+    { id: 'current-programs', label: language === 'th' ? 'ปัจจุบัน' : 'Current' },
+    { id: 'past-programs', label: language === 'th' ? 'ที่ผ่านมา' : 'Past' }
+  ];
+
+  // Scroll to section
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 120;
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i].id);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [language]);
+
+  // Scroll to target section if provided
+  useEffect(() => {
+    if (targetSectionId) {
+      scrollToSection(targetSectionId);
+    }
+  }, [targetSectionId]);
+
+  // Get all hero images from moving image records
+  const heroImages = movingImageRecords
+    .filter(record => record.image) // Only include records with images
+    .map(record => record.image);
+
+  // Slider settings
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    fade: true,
+    cssEase: 'ease-in-out',
+    pauseOnHover: false,
+    arrows: false,
+  };
+
+  return (
+    <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
+      {/* Hero Section with Slider */}
+      {heroImages.length > 0 ? (
+        <div className="relative w-full h-[80vh] overflow-hidden z-0">
+          <Slider {...sliderSettings} className="h-full">
+            {heroImages.map((image, index) => (
+              <div key={index} className="relative h-[80vh]">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${image})` }}
+                />
+              </div>
+            ))}
+          </Slider>
+          <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
+        </div>
+      ) : (
+        <div className="relative w-full h-[80vh] bg-gray-200" />
+      )}
+
+      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-0">
+          {/* Left Column - Title & Anchor Menu */}
+          <aside className="w-full md:w-1/2 shrink-0">
+            <div className="md:sticky md:top-32">
+              <h1 className={`text-xl md:text-2xl font-normal text-black mb-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                {language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program'}
+              </h1>
+
+              {/* Anchor Navigation */}
+              <nav className="flex flex-col gap-3">
+                {sections.map((section) => (
+                  <button
+                    key={section.id}
+                    onClick={() => scrollToSection(section.id)}
+                    className={`text-left text-xl md:text-2xl font-normal transition-colors duration-300 ${
+                      activeSection === section.id 
+                        ? 'text-black' 
+                        : 'text-gray-400 hover:text-gray-600'
+                    } ${language === 'th' ? 'leading-[1.82em]' : ''}`}
+                  >
+                    {section.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </aside>
+
+          {/* Right Column - Content */}
+          <div className="w-full md:w-1/2 flex flex-col">
+            {/* Current Programs */}
+            <section id="current-programs" className="mb-32 md:mb-40 scroll-mt-32">
+              <div className="flex flex-col gap-12 md:gap-16">
+                {currentPrograms.length > 0 ? (
+                  currentPrograms.map((record) => (
+                    <div 
+                      key={record.id} 
+                      className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+                      onClick={() => onNavigate?.('moving-image-detail', record.slug)}
+                    >
+                      {record.image && (
+                        <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
+                          <ImageWithFallback
+                            src={record.image}
+                            alt={record.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-1">
+                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {record.description}
+                        </p>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
+                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* Past Programs */}
+            <section id="past-programs" className="mb-32 md:mb-40 scroll-mt-32">
+              <div className="flex flex-col gap-12 md:gap-16">
+                {pastPrograms.length > 0 ? (
+                  pastPrograms.map((record) => (
+                    <div 
+                      key={record.id} 
+                      className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+                      onClick={() => onNavigate?.('moving-image-detail', record.slug)}
+                    >
+                      {record.image && (
+                        <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
+                          <ImageWithFallback
+                            src={record.image}
+                            alt={record.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-1">
+                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {record.description}
+                        </p>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
+                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
