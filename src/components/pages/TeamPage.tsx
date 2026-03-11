@@ -6,8 +6,6 @@ import { ASSETS } from '../../utils/assets';
 import { useLanguage } from '../../utils/languageContext';
 import { getTranslation } from '../../utils/translations';
 import { FOUNDER, DIRECTORS, TEAM_GROUPS } from '../../utils/teamDataBilingual';
-import founderImage from "figma:asset/63583d51ce120d2667a025955b831543df17fc5f.png";
-import stefanoImage from "figma:asset/53a86972f0147a364bd78a4ba6e4e6c9bfcf4267.png";
 
 type Section = 'founder' | 'team' | string;
 
@@ -91,7 +89,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
     <div className="w-full min-h-screen bg-white">
       {/* Hero Section */}
       <ParallaxHero 
-        image="https://images.unsplash.com/photo-1735605917461-4c1b77a6616f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY4MTA0MDI2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+        image="https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-team-f51a7633.jpg"
         height="h-[60vh] md:h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
@@ -102,15 +100,15 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
           
           {/* Sidebar */}
           <aside className="w-full md:w-1/2 shrink-0 relative h-fit mb-12 md:mb-0">
-            <nav className="flex flex-col items-start gap-2">
+            <nav className="md:sticky md:top-32 flex flex-col items-start gap-2">
                 
                 {/* Founder */}
                 <button
                     onClick={() => scrollToSection('founder')}
-                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 cursor-pointer ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                    className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 cursor-pointer ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                         activeSection === 'founder' || !activeSection
-                        ? 'text-black font-medium'
-                        : 'text-gray-400 hover:text-black font-normal'
+                        ? 'text-black'
+                        : 'text-gray-400 hover:text-black'
                     }`}
                 >
                     {getTranslation(language, 'team.founder')}
@@ -121,10 +119,10 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 <div className="flex flex-col gap-2">
                     <button 
                         onClick={() => scrollToSection(getDirectorId(DIRECTORS[0].name))}
-                        className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                        className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                             DIRECTORS.some(d => activeSection === getDirectorId(d.name))
-                            ? 'text-black font-medium'
-                            : 'text-gray-400 hover:text-black font-normal'
+                            ? 'text-black'
+                            : 'text-gray-400 hover:text-black'
                         }`}
                     >
                         {getTranslation(language, 'team.directors')}
@@ -135,10 +133,10 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 {/* Team */}
                 <button
                     onClick={() => scrollToSection('team')}
-                    className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                    className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                         activeSection === 'team'
-                        ? 'text-black font-medium'
-                        : 'text-gray-400 hover:text-black font-normal'
+                        ? 'text-black'
+                        : 'text-gray-400 hover:text-black'
                     }`}
                 >
                     {getTranslation(language, 'team.team')}
@@ -156,7 +154,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                      <div className="aspect-[2/3] w-full bg-gray-100 mb-6">
                         <div 
                             className="w-full h-full bg-cover bg-right p-[0px] m-[0px]"
-                            style={{ backgroundImage: `url(${founderImage})` }}
+                            style={{ backgroundImage: `url(${FOUNDER.image})` }}
                         />
                     </div>
                 </Reveal>
@@ -182,7 +180,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                             <div className="aspect-[2/3] w-full bg-gray-100 mb-6">
                                 <div 
                                     className="w-full h-full bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${director.name === 'Stefano Rabolli Pansera' ? stefanoImage : director.image})` }}
+                                    style={{ backgroundImage: `url(${director.image})` }}
                                 />
                             </div>
                         </Reveal>

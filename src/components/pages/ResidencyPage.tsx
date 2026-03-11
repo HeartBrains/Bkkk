@@ -5,7 +5,6 @@ import { ARTISTS_DATA } from '../../utils/residencyData';
 import { useLanguage } from '../../utils/languageContext';
 import { getTranslation } from '../../utils/translations';
 import { useState, useEffect } from 'react';
-import Slider from 'react-slick';
 
 interface ResidencyPageProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -64,41 +63,15 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
     }
   }, [targetSectionId]);
 
-  // Get all hero images from residency artists
-  const heroImages = ARTISTS_DATA.map(artist => artist.image);
-
-  // Slider settings
-  const sliderSettings = {
-    dots: false,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    fade: true,
-    cssEase: 'ease-in-out',
-    pauseOnHover: false,
-    arrows: false,
-  };
-
   return (
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
-      {/* Hero Section with Slider */}
-      <div className="relative w-full h-[80vh] overflow-hidden z-0">
-        <Slider {...sliderSettings} className="h-full">
-          {heroImages.map((image, index) => (
-            <div key={index} className="relative h-[80vh]">
-              <div 
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
-              />
-            </div>
-          ))}
-        </Slider>
-        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+      {/* Hero Section */}
+      <ParallaxHero 
+        image="https://irp.cdn-website.com/5516674f/dms3rep/multi/1000012646.jpg"
+        height="h-[80vh]"
+      >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
-      </div>
+      </ParallaxHero>
 
       {/* Content */}
       <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">

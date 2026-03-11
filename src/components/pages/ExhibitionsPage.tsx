@@ -151,7 +151,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
       {/* Hero Section */}
       <ParallaxHero 
-        image="https://images.unsplash.com/photo-1767294274414-5e1e6c3974e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcnQlMjBleGhpYml0aW9uJTIwc3BhY2V8ZW58MXx8fHwxNzcyOTc2Njg4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+        image="https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-for-Exhibitions-list-83b680a4.jpg"
         height="h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
