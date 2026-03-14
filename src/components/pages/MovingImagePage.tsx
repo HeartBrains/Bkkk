@@ -63,8 +63,8 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
 
   // Anchor sections
   const sections = [
-    { id: 'current-programs', label: language === 'th' ? 'ปัจจุบัน' : 'Current' },
-    { id: 'past-programs', label: language === 'th' ? 'ที่ผ่านมา' : 'Past' }
+    { id: 'current-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
+    { id: 'past-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program' }
   ];
 
   // Scroll to section
@@ -144,15 +144,11 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
         <div className="relative w-full h-[80vh] bg-gray-200" />
       )}
 
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
           {/* Left Column - Title & Anchor Menu */}
           <aside className="w-full md:w-1/2 shrink-0">
             <div className="md:sticky md:top-32">
-              <h1 className={`text-xl md:text-2xl font-normal text-black mb-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                {language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program'}
-              </h1>
-
               {/* Anchor Navigation */}
               <nav className="flex flex-col gap-3">
                 {sections.map((section) => (
@@ -181,7 +177,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   currentPrograms.map((record) => (
                     <div 
                       key={record.id} 
-                      className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+                      className="flex flex-col gap-6 w-full cursor-pointer group" 
                       onClick={() => onNavigate?.('moving-image-detail', record.slug)}
                     >
                       {record.image && (
@@ -196,7 +192,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                       <div className="flex flex-col gap-1">
                         <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                          {record.description}
+                          {record.artist || record.curator}
                         </p>
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
                       </div>
@@ -217,7 +213,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   pastPrograms.map((record) => (
                     <div 
                       key={record.id} 
-                      className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+                      className="flex flex-col gap-6 w-full cursor-pointer group" 
                       onClick={() => onNavigate?.('moving-image-detail', record.slug)}
                     >
                       {record.image && (
@@ -232,7 +228,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                       <div className="flex flex-col gap-1">
                         <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                          {record.description}
+                          {record.artist || record.curator}
                         </p>
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
                       </div>

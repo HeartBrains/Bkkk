@@ -52,31 +52,10 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
     );
   }
 
-  const galleryImages = gallery && gallery.length > 0 ? gallery : [];
+  const galleryImages = gallery && gallery.length > 0 ? gallery.slice(0, 5) : [];
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
-      {/* Back Button - Always visible */}
-      <div className={galleryImages.length > 0 ? "absolute top-[120px] left-6 z-50" : "pt-32 px-6 md:px-12"}>
-        <button 
-          onClick={() => onNavigate?.(backPage || 'home')}
-          className={galleryImages.length > 0 
-            ? "flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
-            : "flex items-center gap-2 text-black/80 hover:text-black transition-colors px-4 py-2 rounded-full hover:bg-gray-100"
-          }
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="text-sm font-normal font-sans">
-            {backPage === 'archives'
-              ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
-              : backPage === 'exhibitions'
-              ? (language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions')
-              : (language === 'th' ? 'กลับสู่หน้าหลัก' : 'Back to Home')
-            }
-          </span>
-        </button>
-      </div>
-
       {/* Hero Section - Only show if images exist */}
       {galleryImages.length > 0 && (
         <div className="h-[35vh] md:h-[80vh] w-full relative overflow-hidden group bg-black">
@@ -108,28 +87,41 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
 
           {/* Thumbnails */}
           {galleryImages.length > 1 && (
-            <div className="absolute bottom-8 right-6 md:right-12 z-20 max-w-[calc(100vw-3rem)] md:max-w-[400px]">
-              <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {galleryImages.map((src, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollTo(index)}
-                    className={`w-16 h-10 rounded-md overflow-hidden border-2 transition-all duration-300 flex-shrink-0 snap-start ${
-                      current === index 
-                        ? 'border-white scale-105 shadow-lg' 
-                        : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'
-                    }`}
-                  >
-                    <ImageWithFallback
-                      src={src}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+            <div className="absolute bottom-8 right-[5%] z-20 flex gap-2">
+              {galleryImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollTo(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    current === index 
+                      ? 'bg-white scale-125' 
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
             </div>
           )}
+
+          {/* Back Button */}
+          <div className="absolute bottom-8 left-6 md:left-12 z-20">
+            <button 
+              onClick={() => onNavigate?.(backPage || 'home')}
+              className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-sm font-normal font-sans">
+                {backPage === 'archives'
+                  ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
+                  : backPage === 'exhibitions'
+                  ? (language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions')
+                  : backPage === 'moving-image'
+                  ? (language === 'th' ? 'กลับสู่โปรแกรมภาพเคลื่อนไหว' : 'Back to Moving Image Program')
+                  : (language === 'th' ? 'กลับสู่หน้าหลัก' : 'Back to Home')
+                }
+              </span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -137,7 +129,7 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
       <div className={`w-full px-6 md:py-16 ${galleryImages.length > 0 ? 'py-12' : 'py-8'}`}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
           {/* Left Column - Program Info */}
-          <div className="md:col-span-5 flex flex-col gap-8">
+          <div className="md:col-span-6 flex flex-col gap-8">
             <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px]">
               {/* Title */}
               <h1 className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : ''} m-[0px]`}>
@@ -182,7 +174,7 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
           </div>
 
           {/* Right Column - Statement */}
-          <div className="md:col-span-7 px-0 md:px-[28px]">
+          <div className="md:col-start-7 md:col-span-6 px-0 md:px-[28px]">
             <div 
               className={`[&>p]:mb-6 [&>p]:text-2xl ${language === 'th' ? '[&>p]:leading-[1.82em]' : ''}`}
               dangerouslySetInnerHTML={{ __html: program.statement[language] }}

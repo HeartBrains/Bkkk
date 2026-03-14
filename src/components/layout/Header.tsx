@@ -13,11 +13,11 @@ interface HeaderProps {
 export function Header({ onMenuClick, onLogoClick, isTransparent = false, isScrolled = false }: HeaderProps) {
   return (
     <header 
-      className={`fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-start md:items-center transition-all duration-300 bg-transparent`}
+      className={`fixed top-0 left-0 w-full z-40 px-[5%] py-6 flex justify-between items-start md:items-center transition-all duration-300 bg-transparent`}
     >
       <div 
         onClick={onLogoClick}
-        className="cursor-pointer mt-0 mr-0 mb-0 ml-0 md:ml-[24px] p-0 overflow-visible"
+        className="cursor-pointer mt-0 mr-0 mb-0 ml-0 p-0 overflow-visible"
       >
         <ImageWithFallback 
           src={logoImage} 
@@ -25,7 +25,7 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false, isScro
           className={`h-[40px] md:h-[60px] w-auto object-contain transition-all duration-300 ${isTransparent ? 'invert brightness-0' : ''} ${isScrolled ? 'opacity-0 invisible' : 'opacity-100 visible'} mx-[-8px] my-[0px]`}
         />
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mr-[-2%]">
         {/* Removed KYAF link */}
         <Button 
           variant="ghost" 
@@ -36,7 +36,7 @@ export function Header({ onMenuClick, onLogoClick, isTransparent = false, isScro
               : 'text-black'
           }`}
         >
-          <Menu className="!w-[82%] !h-[82%] md:!w-[45%] md:!h-[45%]" strokeWidth={1.5} />
+          <Menu className="!w-[100%] !h-[82%] md:!w-[45%] md:!h-[45%]" strokeWidth={1.5} />
         </Button>
       </div>
     </header>

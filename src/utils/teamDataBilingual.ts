@@ -54,7 +54,7 @@ export const DIRECTORS: Director[] = [
             "Luckana Kunavichayanont is a prominent figure in the Thai art scene, known for her leadership and curatorial work. She served as the Director of the Bangkok Art and Culture Centre (BACC) for many years, steering it to become a central hub for contemporary art in Thailand."
         ],
         bioTH: [
-            "ลักขณา กุลนาวิชญานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและงานภัณฑารักษ์ เธอดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นเวลาหลายปี นำพาให้กลายเป็นศูนย์กลางสำคัญของศิลปะร่วมสมัยในประเทศไทย"
+            "ลักขณา กุลนาวิชญานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและงานภัณฑารักษ์ เธอดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นเวลาหลายปี นำพาให้กลายเป็นศูนย์กลางสำคัญของศิลปะร่วมสมัยในประเทศไ���ย"
         ]
     },
     {
@@ -83,6 +83,33 @@ export const DIRECTORS: Director[] = [
 
 export const TEAM_GROUPS: TeamGroup[] = [
     {
+        role: 'Advisory Board',
+        roleTH: 'คณะที่ปรึกษา',
+        members: [
+            'Juan Carlos Verme',
+            'Disaphol Chansiri',
+            'Alan Lau',
+            'Woon Kyung Lee',
+            'Manuela Lucà-Dazio',
+            'Jessica Morgan',
+            'Rita and Uli Sigg',
+            'Taizo Son'
+        ]
+    },
+    {
+        role: "Founder's Circle & Collector's Roundtable Donors",
+        roleTH: 'วงผู้ก่อตั้งและผู้บริจาคโต๊ะกลมนักสะสม',
+        members: [
+            'Sangita Jindal',
+            'Isabel Liu',
+            'Takeo Obayashi',
+            'Taizo Son',
+            'Nunthinee Tanner',
+            'Elisa Yu',
+            'Lisa Zhang'
+        ]
+    },
+    {
         role: 'Curators',
         roleTH: 'ภัณฑารักษ์',
         members: ['Mark Chearavanont', 'Gemmica Sinthawalai'],
@@ -101,45 +128,39 @@ export const TEAM_GROUPS: TeamGroup[] = [
         membersTH: ['ธัญชนก เบญจจินดา']
     },
     {
-        role: 'Artist Residency Program Co-ordinator',
-        roleTH: 'ผู้ประสานงานโปรแกรมศิลปินพำนัก',
-        members: ['Pompavee Ritticongkhajorn'],
-        membersTH: ['ปอมปวีณ์ ฤทธิคงขจร']
-    },
-    {
         role: 'Gallery Co-ordinator',
         roleTH: 'ผู้ประสานงานแกลเลอรี',
-        members: ['Pornrama Laopiyasakul'],
-        membersTH: ['พรระมา เหล่าปิยะสกุล']
+        members: ['Porrama Laopiyasakul'],
+        membersTH: ['พรรมา เหล่าปิยะสกุล']
     },
     {
-        role: 'Graphic Designers',
+        role: 'Graphic Designer',
         roleTH: 'กราฟิกดีไซเนอร์',
-        members: ['Kawisara Vacharaprucks', 'Kevin Niran Bondoerffer'],
-        membersTH: ['กวิสรา วัชรพฤกษ์', 'เควิน นิรันดร์ บอนเดอร์เฟอร์']
+        members: ['Thirasak Bunto'],
+        membersTH: ['ธีรศักดิ์ บัณโฑ']
+    },
+    {
+        role: 'Publication Editor',
+        roleTH: 'บรรณาธิการสิ่งพิมพ์',
+        members: ['Korn Karava'],
+        membersTH: ['กร คาราวา']
     },
     {
         role: 'Operation Team',
         roleTH: 'ทีมปฏิบัติการ',
-        members: ['Charisara Nuknaw', 'Sulawan Wongthong'],
-        membersTH: ['ชริสรา นุกนิว', 'สุลาวัลย์ วงศ์ทอง']
+        members: ['Supanee Amraranga', 'Chanisara Nukeaw', 'Sulawan Wongthong'],
+        membersTH: ['สุพนี อำระนางค์', 'ชนิสรา นุเกียว', 'สุลาวัลย์ วงศ์ทอง']
     },
     {
-        role: 'Financial Sustainability and Donor Relations',
+        role: 'Financial Sustainability & Donor Relations',
         roleTH: 'ความยั่งยืนทางการเงินและความสัมพันธ์กับผู้บริจาค',
         members: ['Siripat Rojnirun'],
         membersTH: ['ศิริภัทร โรจน์นิรันดร์']
     },
     {
-        role: 'Accountant Team',
-        roleTH: 'ทีมบัญชี',
-        members: ['Kamitta Pimparcha', 'Kanpitcha Namwimolwut'],
-        membersTH: ['กมิตตา พิมพาชา', 'กานต์พิชชา นามวิมลวุฒิ']
-    },
-    {
-        role: 'Publication Editor',
-        roleTH: 'บรรณาธิการสิ่งพิมพ์',
-        members: ['Korn Kazaxa'],
-        membersTH: ['กร คาซาซ่า']
+        role: 'Building Caretaker',
+        roleTH: 'ผู้ดูแลอาคาร',
+        members: ['Monta Saleerueng'],
+        membersTH: ['มณฑา สาลีเรือง']
     }
 ];

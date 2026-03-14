@@ -114,6 +114,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
             exit={{ x: '-100%' }}
             transition={{ duration: 0.5, ease: "circOut" }}
             className="hidden md:block w-1/2 h-full relative overflow-hidden"
+            onClick={onClose}
           >
             <div 
               className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"

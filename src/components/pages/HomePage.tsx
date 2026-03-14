@@ -49,7 +49,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
   const sections = [
     { id: 'current-exhibitions', label: t?.('exhibitions.current') || 'Current Exhibitions' },
     { id: 'upcoming-exhibitions', label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions' },
-    { id: 'moving-image-program', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program' },
+    { id: 'moving-image-program', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
     { id: 'current-activities', label: language === 'th' ? 'กิจกรรมปัจจุบัน' : 'Current Activities' }
   ];
 
@@ -91,7 +91,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
       </HeroSlider>
 
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
           {/* Sticky Anchor Menu */}
           <aside className="w-full md:w-1/2 shrink-0">
@@ -117,17 +117,17 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
           </aside>
 
           {/* Content Sections */}
-          <div className="w-full md:w-1/2 flex flex-col">
+          <div className="w-full md:w-1/2 flex flex-col md:items-end">
             {/* Current Exhibitions */}
-            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12 md:gap-16">
+            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
                 {currentExhibitions.map((item) => (
-                  <div key={item!.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
+                  <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                       <ImageWithFallback 
                         src={item!.featuredImage.sourceUrl} 
                         alt={item!.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="w-full aspect-[3/4] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                     </div>
                     <div className="flex flex-col gap-1">
@@ -141,11 +141,11 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
             </section>
 
             {/* Upcoming Exhibitions */}
-            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12">
+            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:items-end">
                 {upcomingExhibitions.length > 0 ? (
                   upcomingExhibitions.map((item) => (
-                    <div key={item!.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
+                    <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback 
                           src={item!.featuredImage.sourceUrl} 
@@ -161,9 +161,9 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                     </div>
                   ))
                 ) : (
-                  <div className="flex flex-col gap-6 w-full md:w-[45vw]">
+                  <div className="flex flex-col gap-6 w-full">
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'ไม่มีนิทรรศการที่กำลังจะมาถึง' : 'No upcoming exhibitions'}
+                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
                     </p>
                   </div>
                 )}
@@ -171,11 +171,11 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
             </section>
 
             {/* Moving Image Program */}
-            <section id="moving-image-program" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12">
+            <section id="moving-image-program" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:items-end">
                 {currentMovingImageProgram && (
                   <div 
-                    className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+                    className="flex flex-col gap-6 w-full cursor-pointer group" 
                     onClick={() => onNavigate?.('moving-image-detail', currentMovingImageProgram.slug)}
                   >
                     {currentProgramHasImages && (
@@ -205,11 +205,11 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
             </section>
 
             {/* Current Activities */}
-            <section id="current-activities" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12">
+            <section id="current-activities" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:items-end">
                 {currentActivities.length > 0 ? (
                   currentActivities.map((item) => (
-                    <div key={item.id} className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" onClick={() => onNavigate?.('activity-detail', item.slug)}>
+                    <div key={item.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('activity-detail', item.slug)}>
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback 
                           src={item.image} 
@@ -227,7 +227,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                     </div>
                   ))
                 ) : (
-                  <div className="flex flex-col gap-6 w-full md:w-[45vw]">
+                  <div className="flex flex-col gap-6 w-full">
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'ไม่มีกิจกรรมปัจจุบัน' : 'No current activities'}
                     </p>

@@ -246,15 +246,15 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
             </aside>
 
             {/* Content */}
-            <div className="w-full md:w-1/2">
-                <div className="space-y-16 md:space-y-24">
+            <div className="w-full md:w-1/2 flex flex-col md:items-end">
+                <div className="space-y-16 md:space-y-24 w-full">
                     {loading ? (
                         <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">Loading archives...</div>
                     ) : displayedRecords.length > 0 ? (
                         displayedRecords.map((item, index) => (
                             <Reveal key={item.id} delay={index * 0.1}>
                                 <div 
-                                    className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
+                                    className="flex flex-col gap-6 w-full cursor-pointer group"
                                     onClick={() => handleItemClick(item)}
                                 >
                                     {/* Image */}
@@ -263,13 +263,13 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                                             <ImageWithFallback 
                                                 src={item.image} 
                                                 alt={item.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                                className="w-full aspect-[3/4] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                             />
                                         ) : (
                                             <ImageWithFallback 
                                                 src={item.image} 
                                                 alt={item.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                                className="w-full aspect-[3/4] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                             />
                                         )}
                                     </div>

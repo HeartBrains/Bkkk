@@ -64,8 +64,8 @@ export function ShopPage({ onNavigate, targetSectionId }: ShopPageProps) {
       </ParallaxHero>
 
       {/* Content */}
-      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px] min-h-[800px]">
-        <section id={activeTab === 'bookings' ? 'bookings' : 'products'} className="flex flex-col md:flex-row mb-32 md:mb-40">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
+        <section id={activeTab === 'bookings' ? 'bookings' : 'products'} className="flex flex-col md:flex-row gap-12 md:gap-0 mb-32 md:mb-40">
             
             {/* Left Sidebar */}
             <aside className="w-full md:w-1/2 shrink-0 relative mb-12 md:mb-0">
@@ -110,7 +110,7 @@ export function ShopPage({ onNavigate, targetSectionId }: ShopPageProps) {
             </aside>
 
             {/* Main Content */}
-            <main className="w-full md:w-1/2 flex flex-col gap-12 md:gap-16 pl-0 pr-0 md:pr-[10px] py-0">
+            <main className="w-full md:w-1/2 flex flex-col gap-12 md:gap-16">
                     {activeTab === 'products' ? (
                         products.map((product, index) => (
                             <Reveal key={product.id} delay={index * 0.1}>
@@ -131,21 +131,23 @@ export function ShopPage({ onNavigate, targetSectionId }: ShopPageProps) {
                             <Reveal key={booking.id} delay={index * 0.1}>
                                 <div className="flex flex-col gap-6 w-full group">
                                     {/* Placeholder Image */}
-                                    <div className="aspect-[3/4] w-full bg-gray-300" />
+                                    <div className="aspect-[3/4] w-full bg-gray-100" />
                                     
                                     {/* Info */}
-                                    <div className="flex justify-between items-start mb-4">
-                                        <h3 className={`text-xl md:text-2xl font-normal font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? booking.nameTH : booking.name}</h3>
-                                        <span className="text-xl md:text-2xl font-normal font-sans text-black">{booking.price}</span>
-                                    </div>
-                                    
-                                    <div>
-                                        <button 
-                                            className={`border border-black px-4 py-2 text-lg font-sans text-black hover:bg-black hover:text-white transition-colors cursor-pointer ${language === 'th' ? 'leading-[1.82em]' : ''}`}
-                                            onClick={() => onNavigate?.('contact')}
-                                        >
-                                            {getTranslation(language, 'shop.bookTicket')}
-                                        </button>
+                                    <div className="flex flex-col gap-1">
+                                        <div className="flex justify-between items-start">
+                                            <h3 className={`text-xl md:text-2xl font-normal font-sans text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? booking.nameTH : booking.name}</h3>
+                                            <span className="text-xl md:text-2xl font-normal font-sans text-black leading-tight">{booking.price}</span>
+                                        </div>
+                                        
+                                        <div className="mt-2">
+                                            <button 
+                                                className={`border border-black px-4 py-2 text-lg font-sans text-black hover:bg-black hover:text-white transition-colors cursor-pointer ${language === 'th' ? 'leading-[1.82em]' : ''}`}
+                                                onClick={() => onNavigate?.('contact')}
+                                            >
+                                                {getTranslation(language, 'shop.bookTicket')}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </Reveal>

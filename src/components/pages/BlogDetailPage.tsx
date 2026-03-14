@@ -80,7 +80,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
       <div className="w-full px-6 py-12 md:py-16">
          <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             {/* Left Column */}
-            <div className="md:col-span-5 flex flex-col gap-8">
+            <div className="md:col-span-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1 px-0 md:px-[28px] py-[0px]">
                     <h1 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {postData.title}
@@ -101,7 +101,7 @@ export function BlogDetailPage({ onNavigate, post, slug }: BlogDetailPageProps) 
             </div>
 
             {/* Right Column */}
-            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                <div dangerouslySetInnerHTML={{ __html: postData.content }} />
 
                {postData.acf?.keyThemes && (

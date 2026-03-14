@@ -113,7 +113,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
     return (
       <div 
         key={`${prefix}-${index}-${item.slug}`}
-        className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group" 
+        className="flex flex-col gap-6 w-full md:w-1/2 cursor-pointer group" 
         onClick={() => onNavigate?.('exhibition-detail', item.slug)}
       >
         <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">

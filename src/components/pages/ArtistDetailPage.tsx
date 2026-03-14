@@ -88,23 +88,18 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
 
          {/* Thumbnails */}
          {artist.gallery.length > 1 && (
-             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2 max-w-[90vw] md:max-w-[500px] overflow-x-auto scrollbar-hide">
-                {artist.gallery.slice(0, 5).map((src, index) => (
-                   <button
-                      key={index}
-                      onClick={() => scrollTo(index)}
-                      className={`flex-shrink-0 w-16 h-10 md:w-20 md:h-12 rounded-md overflow-hidden border-2 transition-all duration-300 ${
-                         current === index 
-                            ? 'border-white scale-105 shadow-lg' 
-                            : 'border-transparent opacity-70 hover:opacity-100 hover:scale-105'
-                      }`}
-                   >
-                      <ImageWithFallback
-                         src={src}
-                         alt={`Thumbnail ${index + 1}`}
-                         className="w-full h-full object-cover"
-                      />
-                   </button>
+             <div className="absolute bottom-8 right-[5%] z-20 flex gap-2">
+                {artist.gallery.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      current === index 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white/50 hover:bg-white/75'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
                 ))}
              </div>
          )}
@@ -131,7 +126,7 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Left Column - Meta Data */}
-            <div className="md:col-span-5 flex flex-col gap-8">
+            <div className="md:col-span-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1 px-0 md:px-[28px] py-[0px]">
                     <h1 className={`text-xl md:text-2xl font-normal text-black mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {displayName}
@@ -144,7 +139,7 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             </div>
 
             {/* Right Column - Text Content */}
-            <div className={`md:col-start-6 md:col-span-7 text-xl md:text-2xl text-black font-normal leading-tight space-y-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+            <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight space-y-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                 <div>
                     <h3 className={`font-normal mb-4 ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`} style={{ fontSize: '19px' }}>{language === 'th' ? 'ชีวประวัติ' : 'Biography'}</h3>
                     <div className={`text-xl md:text-2xl text-gray-700 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`} dangerouslySetInnerHTML={{ __html: displayBio }} />

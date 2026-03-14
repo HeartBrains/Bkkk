@@ -86,7 +86,7 @@ export function ActivitiesPage({ onNavigate, targetSectionId }: ActivitiesPagePr
       </ParallaxHero>
 
       {/* Main Content */}
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
           {/* Left Sidebar - Fixed */}
           <aside className="w-full md:w-1/2 shrink-0">
@@ -120,7 +120,7 @@ export function ActivitiesPage({ onNavigate, targetSectionId }: ActivitiesPagePr
             {filteredActivities.map((item, itemIdx) => (
               <Reveal key={item.id} delay={itemIdx * 0.1}>
                 <div 
-                  className="flex flex-col gap-6 w-full md:w-[45vw] cursor-pointer group"
+                  className="flex flex-col gap-6 w-full cursor-pointer group"
                   onClick={() => onNavigate('activity-detail', item.slug)}
                 >
                   <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden">

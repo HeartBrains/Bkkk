@@ -8,7 +8,7 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
   
   return (
     <footer className="w-full bg-black text-white md:px-12 p-[48px] pl-[24px] sm:p-[24px]">
-      <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0">
+      <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0 mr-[5%] md:pr-[2%]">
         
         {/* Left: Logo */}
         <div className="flex flex-col">

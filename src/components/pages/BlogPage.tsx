@@ -61,7 +61,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
        </ParallaxHero>
 
       {/* Content Section */}
-      <div className="w-full mx-auto px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full mx-auto px-[5%] pt-[96px] pb-[0px]">
         <div className="flex flex-col">
             
             {/* Sidebar - Shows only years that are currently loaded/visible */}
