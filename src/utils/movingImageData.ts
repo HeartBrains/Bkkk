@@ -32,6 +32,32 @@ export interface MovingImageProgram {
 
 export const movingImagePrograms: MovingImageProgram[] = [
   {
+    id: '6',
+    slug: 'upcoming-program-2026',
+    title: {
+      en: 'To Be Announced',
+      th: 'จะประกาศในเร็วๆ นี้'
+    },
+    curator: {
+      en: 'Rosalia Namsai Engchuan',
+      th: 'โรซาเลีย นามทราย เอ็งชวน'
+    },
+    fromDate: '2026-05-01',
+    toDate: '2026-07-31',
+    dateDisplay: {
+      en: '1 May 2026 - 31 July 2026',
+      th: '1 พฤษภาคม 2569 - 31 กรกฎาคม 2569'
+    },
+    statement: {
+      en: '<p>Details of our upcoming Moving Image Program will be announced soon. Stay tuned for another thought-provoking exploration of cinema and contemporary art.</p>',
+      th: '<p>รายละเอียดของโปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึงของเราจะประกาศในเร็วๆ นี้ ติดตามการสำรวจภาพยนตร์และศิลปะร่วมสมัยที่กระตุ้นความคิด</p>'
+    },
+    gallery: [
+      'https://images.unsplash.com/photo-1764689668473-b834a1a575e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaWxtJTIwcHJvamVjdG9yJTIwY2luZW1hJTIwYXJ0fGVufDF8fHx8MTc3MzU2MjYzMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+    ],
+    films: []
+  },
+  {
     id: '1',
     slug: 'infringes',
     title: {

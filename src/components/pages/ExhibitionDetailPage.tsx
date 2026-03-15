@@ -150,7 +150,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
       </div>
 
       {/* Content Section */}
-      <div className="w-full px-6 py-12 md:py-16">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Left Column - Meta Data */}

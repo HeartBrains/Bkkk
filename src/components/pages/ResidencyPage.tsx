@@ -17,6 +17,11 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
 
   const sections = [
     {
+      id: 'upcoming-residency',
+      title: getTranslation(language, 'residency.upcomingResidency'),
+      items: ARTISTS_DATA.filter(artist => artist.category === 'upcoming')
+    },
+    {
       id: 'current-artists',
       title: getTranslation(language, 'residency.currentArtists'),
       items: ARTISTS_DATA.filter(artist => artist.category === 'current')

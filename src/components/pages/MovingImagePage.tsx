@@ -38,34 +38,30 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate date comparison
 
+  const upcomingPrograms = movingImageRecords.filter(record => {
+    return record.status === 'upcoming';
+  });
+
   const currentPrograms = movingImageRecords.filter(record => {
-    // Extract year from date string (e.g., "2026", "2025")
-    const yearMatch = record.date.match(/\b20\d{2}\b/);
-    if (!yearMatch) return false;
-    
-    const recordYear = parseInt(yearMatch[0]);
-    const currentYear = today.getFullYear();
-    
-    // Consider current if year is current year or future
-    return recordYear >= currentYear;
+    return record.status === 'current';
   });
 
   const pastPrograms = movingImageRecords.filter(record => {
-    const yearMatch = record.date.match(/\b20\d{2}\b/);
-    if (!yearMatch) return false;
-    
-    const recordYear = parseInt(yearMatch[0]);
-    const currentYear = today.getFullYear();
-    
-    // Consider past if year is before current year
-    return recordYear < currentYear;
+    return record.status === 'past';
   });
 
   // Anchor sections
   const sections = [
+    { id: 'upcoming-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program' },
     { id: 'current-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
     { id: 'past-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program' }
-  ];
+  ].filter(section => {
+    // Only show sections that have content
+    if (section.id === 'upcoming-programs') return upcomingPrograms.length > 0;
+    if (section.id === 'current-programs') return currentPrograms.length > 0;
+    if (section.id === 'past-programs') return pastPrograms.length > 0;
+    return true;
+  });
 
   // Scroll to section
   const scrollToSection = (id: string) => {
@@ -170,6 +166,42 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
 
           {/* Right Column - Content */}
           <div className="w-full md:w-1/2 flex flex-col">
+            {/* Upcoming Programs */}
+            <section id="upcoming-programs" className="mb-32 md:mb-40 scroll-mt-32">
+              <div className="flex flex-col gap-12 md:gap-16">
+                {upcomingPrograms.length > 0 ? (
+                  upcomingPrograms.map((record) => (
+                    <div 
+                      key={record.id} 
+                      className="flex flex-col gap-6 w-full cursor-pointer group" 
+                      onClick={() => onNavigate?.('moving-image-detail', record.slug)}
+                    >
+                      {record.image && (
+                        <div className="aspect-[3/4] w-full bg-gray-200 overflow-hidden relative transition-colors duration-300 group-hover:bg-gray-300">
+                          <ImageWithFallback
+                            src={record.image}
+                            alt={record.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-1">
+                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.title}</h3>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {record.artist || record.curator}
+                        </p>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{record.date}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
+                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                  </div>
+                )}
+              </div>
+            </section>
+
             {/* Current Programs */}
             <section id="current-programs" className="mb-32 md:mb-40 scroll-mt-32">
               <div className="flex flex-col gap-12 md:gap-16">

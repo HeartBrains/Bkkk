@@ -99,6 +99,7 @@ export const translations = {
     'residency.title': 'Artist in Residence',
     'residency.description': 'Our residency program supports emerging and established artists.',
     'residency.currentArtists': 'Current Artists',
+    'residency.upcomingResidency': 'Upcoming Residency',
     'residency.pastArtists': 'Past Artists',
     
     // Visit
@@ -258,6 +259,7 @@ export const translations = {
     'residency.title': 'ศิลปินพำนัก',
     'residency.description': 'โปรแกรมศิลปินพำนักของเราสนับสนุนศิลปินหน้าใหม่และศิลปินที่มีชื่อเสียง',
     'residency.currentArtists': 'ศิลปินปัจจุบัน',
+    'residency.upcomingResidency': 'ศิลปินพำนักที่จะมาถึง',
     'residency.pastArtists': 'ศิลปินที่ผ่านมา',
     'residency.applyNow': 'สมัครตอนนี้',
     'residency.currentResidents': 'ศิลปินพำนักปัจจุบัน',

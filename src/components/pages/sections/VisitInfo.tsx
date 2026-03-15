@@ -45,7 +45,7 @@ export function VisitInfo() {
                 
                 <div className="w-full aspect-square md:aspect-[4/3] bg-[#D9D9D9] relative overflow-hidden">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.590763634063!2d100.511872!3d13.743292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e299004545c9d9%3A0x6e6f7f8a9b0c1d2e!2sBangkok%20Kunsthalle!5e0!3m2!1sen!2sth!4v1710000000000!5m2!1sen!2sth"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.640882!2d100.5151093!3d13.7403172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e299183fb5ee6b%3A0xf0317ecca013dd7b!2sBangkok%20Kunsthalle!5e0!3m2!1sen!2sth!4v1710417600000!5m2!1sen!2sth&z=21"
                         title="Bangkok Kunsthalle Map"
                         width="100%" 
                         height="100%" 
@@ -53,7 +53,7 @@ export function VisitInfo() {
                         allowFullScreen 
                         loading="lazy" 
                         referrerPolicy="no-referrer-when-downgrade"
-                        className="w-full h-full grayscale opacity-80 hover:opacity-100 transition-opacity duration-500"
+                        className="w-full h-full"
                     />
                 </div>
             </div>
@@ -89,7 +89,7 @@ export function VisitInfo() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-8">
             <div className="md:col-span-6">
                 <span className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                  {language === 'th' ? 'การเดินทาง' : 'Transportation'}
+                  {language === 'th' ? 'การดินทาง' : 'Transportation'}
                 </span>
             </div>
             <div className="md:col-span-6 flex flex-col gap-8">
@@ -124,7 +124,15 @@ export function VisitInfo() {
                       {language === 'th' ? 'แท็กซี่หรือแกร็บ' : 'Taxi or Grab'}
                     </p>
                     <p className={`text-xl md:text-2xl font-sans text-black mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'ค้นหา "บางกอก คุนซ์ฮาลเล่"' : 'Search for "Bangkok Kunsthalle"'}
+                      {language === 'th' ? (
+                        <>
+                          ค้นหา "<a href="https://maps.app.goo.gl/88XLQBeDFaC1wvuQA" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">บางกอก คุนซ์ฮาลเล่</a>"
+                        </>
+                      ) : (
+                        <>
+                          Search for "<a href="https://maps.app.goo.gl/88XLQBeDFaC1wvuQA" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">Bangkok Kunsthalle</a>"
+                        </>
+                      )}
                     </p>
                     <p className={`text-xl md:text-2xl font-sans text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'หรือแสดงที่อยู่นี้ให้คนขับ:' : 'or show the driver this address in Thai:'}
@@ -139,7 +147,7 @@ export function VisitInfo() {
                       {language === 'th' ? 'เรือ' : 'Boat'}
                     </p>
                     <p className={`text-xl md:text-2xl font-sans text-black mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'สำหรับเส้นทางที่สวยงามกว่า นั่งเรือด่วนเจ้าพระยาไปที่ท่ากรมเจ้าท่า (N4)' : 'For a more scenic route, take the Chao Phraya Express Boat to Marine Department (N4)'}
+                      {language === 'th' ? 'สำหรับเส้นทางที่สวยงามกวา นั่งเรือด่วนเจ้าพระยาไปที่ท่ากรมเจ้าท่า (N4)' : 'For a more scenic route, take the Chao Phraya Express Boat to Marine Department (N4)'}
                     </p>
                     <p className={`text-xl md:text-2xl font-sans text-gray-500 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                       {language === 'th' ? 'เดิน 15 นาที' : 'with a 15 minute walk.'}
@@ -154,7 +162,7 @@ export function VisitInfo() {
                     {language === 'th' ? (
                       <>
                         <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">ที่จอดรถในสถานที่มีจำกัดมากเนื่องจากตั้งอยู่ในซอยแคบ</p>
-                        <p className="text-xl md:text-2xl font-sans text-black mt-4 leading-[1.82em]">แนะนำอย่างยิ่งให้จอดรถที่ลานจอดรถเชิงพาณิชย์ใกล้เคียง:</p>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-4 leading-[1.82em]">แนะนำอย่างยิ่งให้จอดรถที่ลานจอรถเชิพาณิชย์ใกล้เคียง:</p>
                         <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">
                           <a href="https://maps.app.goo.gl/bz9RmmiWfELuy4MV6" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">
                             อาคารจอดรถ Moh Mee Development

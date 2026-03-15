@@ -15,7 +15,7 @@ export function ContactPage() {
           <img 
               src="https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-contact-1-89b6eddb.jpg"
               alt="Bangkok Kunsthalle"
-              className="w-full h-full object-cover grayscale"
+              className="w-full h-full object-cover"
           />
       </div>
 

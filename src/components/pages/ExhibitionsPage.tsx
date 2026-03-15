@@ -55,14 +55,14 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
   // Navigation sections
   const sections = [
     { 
-      id: 'current-exhibitions', 
-      label: language === 'th' ? 'นิทรรศการปัจจุบัน' : 'Current Exhibitions',
-      count: currentExhibitions.length
-    },
-    { 
       id: 'upcoming-exhibitions', 
       label: language === 'th' ? 'นิทรรศการที่กำลังจะเริ่ม' : 'Upcoming Exhibitions',
       count: upcomingExhibitions.length
+    },
+    { 
+      id: 'current-exhibitions', 
+      label: language === 'th' ? 'นิทรรศการปัจจุบัน' : 'Current Exhibitions',
+      count: currentExhibitions.length
     },
     { 
       id: 'past-exhibitions', 
@@ -113,7 +113,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
     return (
       <div 
         key={`${prefix}-${index}-${item.slug}`}
-        className="flex flex-col gap-6 w-full md:w-1/2 cursor-pointer group" 
+        className="flex flex-col gap-6 w-full cursor-pointer group" 
         onClick={() => onNavigate?.('exhibition-detail', item.slug)}
       >
         <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
@@ -122,6 +122,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
               src={imageUrl} 
               alt={item.title[language]}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              style={{ width: '100%' }}
             />
           )}
         </div>
@@ -141,8 +142,8 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
   };
 
   // Empty state component
-  const EmptyState = ({ message }: { message: string }) => (
-    <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
+  const EmptyState = ({ message, className = '' }: { message: string; className?: string }) => (
+    <div className={`py-20 text-gray-400 font-sans text-xl md:text-2xl ${className}`}>
       {message}
     </div>
   );
@@ -157,7 +158,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
       </ParallaxHero>
 
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
           {/* Sticky Navigation Menu */}
           <aside className="w-full md:w-1/2 shrink-0">
@@ -166,10 +167,10 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  className={`text-left text-xl md:text-2xl font-sans transition-all duration-300 ${
+                  className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 ${
                     activeSection === section.id
-                      ? 'text-black font-medium'
-                      : 'text-gray-400 hover:text-black font-normal'
+                      ? 'text-black'
+                      : 'text-gray-400 hover:text-black'
                   }`}
                 >
                   {section.label}
@@ -179,10 +180,26 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
           </aside>
 
           {/* Content Sections */}
-          <div className="w-full md:w-1/2 flex flex-col">
+          <div className="w-full md:w-1/2 flex flex-col md:items-end">
+            {/* Upcoming Exhibitions Section */}
+            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
+                {upcomingExhibitions.length > 0 ? (
+                  upcomingExhibitions.map((item, index) => (
+                    <ExhibitionCard key={`upcoming-${item.id}`} item={item} index={index} prefix="upcoming" />
+                  ))
+                ) : (
+                  <EmptyState 
+                    message={language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    className="w-full text-center"
+                  />
+                )}
+              </div>
+            </section>
+
             {/* Current Exhibitions Section */}
-            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12 md:gap-16">
+            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
                 {currentExhibitions.length > 0 ? (
                   currentExhibitions.map((item, index) => (
                     <ExhibitionCard key={item.id} item={item} index={index} prefix="current" />
@@ -195,24 +212,9 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
               </div>
             </section>
 
-            {/* Upcoming Exhibitions Section */}
-            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12 md:gap-16">
-                {upcomingExhibitions.length > 0 ? (
-                  upcomingExhibitions.map((item, index) => (
-                    <ExhibitionCard key={`upcoming-${item.id}`} item={item} index={index} prefix="upcoming" />
-                  ))
-                ) : (
-                  <EmptyState 
-                    message={language === 'th' ? 'ไม่มีนิทรรศการที่กำลังจะเริ่ม' : 'No upcoming exhibitions'}
-                  />
-                )}
-              </div>
-            </section>
-
             {/* Past Exhibitions Section */}
-            <section id="past-exhibitions" className="mb-32 md:mb-40 scroll-mt-32">
-              <div className="flex flex-col gap-12 md:gap-16">
+            <section id="past-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
                 {pastExhibitions.length > 0 ? (
                   pastExhibitions.map((item, index) => (
                     <ExhibitionCard key={`past-${item.id}`} item={item} index={index} prefix="past" />

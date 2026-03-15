@@ -23,6 +23,7 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
   const { language, t } = useLanguage();
   const [allRecords, setAllRecords] = useState<RecordItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [heroImages, setHeroImages] = useState<string[]>([]);
   
   // Filter state
   const [activeFilter, setActiveFilter] = useState<{
@@ -36,6 +37,12 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
       try {
         const data = await fetchRecords({ status: 'past', category: 'all', language });
         setAllRecords(data);
+        
+        // Select 5 random images for hero slideshow
+        const imagesWithData = data.filter(record => record.image);
+        const shuffled = [...imagesWithData].sort(() => Math.random() - 0.5);
+        const selectedImages = shuffled.slice(0, 5).map(record => record.image);
+        setHeroImages(selectedImages);
       } catch (error) {
         console.error("Failed to fetch records", error);
       } finally {
@@ -127,28 +134,28 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
   return (
     <div className="w-full bg-white min-h-screen pb-24">
       <ParallaxHero 
-        image="https://images.unsplash.com/photo-1758782362535-3aeb1808e56d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBhcmNoaXZlJTIwZG9jdW1lbnRzfGVufDF8fHx8MTc3Mjk3NjY4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+        images={heroImages}
         height="h-[80vh]"
       >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
       </ParallaxHero>
 
-      <div className="w-full px-6 pt-[96px] pr-[24px] pb-[0px] md:pl-[48px]">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px]">
         
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
             
             {/* Sidebar */}
             <aside className="w-full md:w-1/2 shrink-0">
-                <div className="md:sticky md:top-32 flex flex-col gap-12">
+                <div className="md:sticky md:top-32 flex flex-col gap-8">
                     
                     {/* Past Exhibition */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <h3 
                             onClick={() => handleFilterClick('exhibition', 'all')}
-                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                            className={`text-xl md:text-2xl font-sans font-normal cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeFilter.category === 'exhibition' && activeFilter.year === 'all'
-                                ? 'text-black font-medium'
-                                : 'text-black font-medium hover:text-gray-600'
+                                ? 'text-black'
+                                : 'text-gray-400 hover:text-black'
                             }`}
                         >
                             {t('archives.pastExhibition')}
@@ -159,10 +166,10 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                                     <button 
                                         key={`exh-${year}`}
                                         onClick={() => handleFilterClick('exhibition', year)}
-                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                                        className={`text-xl md:text-2xl text-left font-sans font-normal transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                             activeFilter.category === 'exhibition' && activeFilter.year === year
-                                            ? 'text-black font-medium'
-                                            : 'text-gray-400 font-normal hover:text-gray-600'
+                                            ? 'text-black'
+                                            : 'text-gray-400 hover:text-black'
                                         }`}
                                     >
                                         {year}
@@ -175,13 +182,13 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                     </div>
 
                     {/* Past Activities */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <h3 
                             onClick={() => handleFilterClick('activity', 'all')}
-                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                            className={`text-xl md:text-2xl font-sans font-normal cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeFilter.category === 'activity' && activeFilter.year === 'all'
-                                ? 'text-black font-medium'
-                                : 'text-black font-medium hover:text-gray-600'
+                                ? 'text-black'
+                                : 'text-gray-400 hover:text-black'
                             }`}
                         >
                             {t('archives.pastActivities')}
@@ -192,10 +199,10 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                                     <button 
                                         key={`act-${year}`}
                                         onClick={() => handleFilterClick('activity', year)}
-                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                                        className={`text-xl md:text-2xl text-left font-sans font-normal transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                             activeFilter.category === 'activity' && activeFilter.year === year
-                                            ? 'text-black font-medium'
-                                            : 'text-gray-400 font-normal hover:text-gray-600'
+                                            ? 'text-black'
+                                            : 'text-gray-400 hover:text-black'
                                         }`}
                                     >
                                         {year}
@@ -208,13 +215,13 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                     </div>
 
                     {/* Past Moving Image Programs */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <h3 
                             onClick={() => handleFilterClick('moving-image', 'all')}
-                            className={`text-xl md:text-2xl font-sans cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                            className={`text-xl md:text-2xl font-sans font-normal cursor-pointer transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                 activeFilter.category === 'moving-image' && activeFilter.year === 'all'
-                                ? 'text-black font-medium'
-                                : 'text-black font-medium hover:text-gray-600'
+                                ? 'text-black'
+                                : 'text-gray-400 hover:text-black'
                             }`}
                         >
                             {language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Programs'}
@@ -225,10 +232,10 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
                                     <button 
                                         key={`mi-${year}`}
                                         onClick={() => handleFilterClick('moving-image', year)}
-                                        className={`text-xl md:text-2xl text-left font-sans transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
+                                        className={`text-xl md:text-2xl text-left font-sans font-normal transition-colors ${language === 'th' ? 'leading-[1.82em]' : ''} ${
                                             activeFilter.category === 'moving-image' && activeFilter.year === year
-                                            ? 'text-black font-medium'
-                                            : 'text-gray-400 font-normal hover:text-gray-600'
+                                            ? 'text-black'
+                                            : 'text-gray-400 hover:text-black'
                                         }`}
                                     >
                                         {year}
@@ -247,7 +254,7 @@ export function ArchivesPage({ onNavigate, targetSectionId }: ArchivesPageProps)
 
             {/* Content */}
             <div className="w-full md:w-1/2 flex flex-col md:items-end">
-                <div className="space-y-16 md:space-y-24 w-full">
+                <div className="flex flex-col gap-12 md:gap-16 w-full">
                     {loading ? (
                         <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">Loading archives...</div>
                     ) : displayedRecords.length > 0 ? (

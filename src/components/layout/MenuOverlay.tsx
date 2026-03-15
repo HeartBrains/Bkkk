@@ -40,13 +40,19 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
       label: t('nav.exhibitions'), 
       page: 'exhibitions',
       children: [
-          { label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' },
           { label: t('exhibitions.upcoming'), page: 'exhibitions', sectionId: 'upcoming-exhibitions' },
+          { label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' },
+          { label: t('exhibitions.past'), page: 'exhibitions', sectionId: 'past-exhibitions' },
       ]
     },
     { 
       label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program', 
-      page: 'moving-image'
+      page: 'moving-image',
+      children: [
+          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program', page: 'moving-image', sectionId: 'upcoming-programs' },
+          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program', page: 'moving-image', sectionId: 'current-programs' },
+          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program', page: 'moving-image', sectionId: 'past-programs' },
+      ]
     },
     {
         label: t('nav.activities'),
@@ -60,6 +66,7 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
         label: t('nav.residency'),
         page: 'residency',
         children: [
+            { label: t('residency.upcomingResidency'), page: 'residency', sectionId: 'upcoming-residency' },
             { label: t('residency.currentArtists'), page: 'residency', sectionId: 'current-artists' },
             { label: t('residency.pastArtists'), page: 'residency', sectionId: 'past-artists' },
         ]
