@@ -39,26 +39,7 @@ export function SupportPage() {
                     </h1>
                 </Reveal>
                 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-16 md:gap-y-24">
-                    {PARTNERS.map((partner, i) => (
-                        <Reveal key={i} delay={i * 0.1}>
-                            <div className="flex flex-col items-center text-center group">
-                                {/* Logo Sprite */}
-                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 md:mb-8 overflow-hidden relative transition-colors duration-300 bg-white">
-                                    <div 
-                                        className="w-full h-full"
-                                        style={{
-                                            backgroundImage: `url(${partnersSprite})`,
-                                            backgroundSize: '200% 400%',
-                                            backgroundPosition: partner.bgPos,
-                                            backgroundRepeat: 'no-repeat'
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </Reveal>
-                    ))}
-                </div>
+                
             </div>
         </div>
     );

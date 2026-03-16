@@ -5,6 +5,7 @@ import { ARTISTS_DATA } from '../../utils/residencyData';
 import { useLanguage } from '../../utils/languageContext';
 import { getTranslation } from '../../utils/translations';
 import { useState, useEffect } from 'react';
+import { getEmptyStateMessage } from '../../utils/siteConfig';
 
 interface ResidencyPageProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -162,7 +163,7 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
                     ))
                   ) : (
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                      {getEmptyStateMessage('noCurrentResidency', language)}
                     </p>
                   )}
                 </div>

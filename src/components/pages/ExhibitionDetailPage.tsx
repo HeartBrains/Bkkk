@@ -98,11 +98,11 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
               >
                 <CarouselContent className="h-full -ml-0">
                    {galleryImages.map((src, index) => (
-                      <CarouselItem key={index} className="h-full pl-0">
+                      <CarouselItem key={index} className="h-full pl-0 flex items-center justify-center">
                          <img
                             src={src}
                             alt={`${postData.title} Gallery ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover object-center"
                             loading={index === 0 ? "eager" : "lazy"}
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
@@ -130,7 +130,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
 
          {/* Thumbnails */}
          {galleryImages.length > 1 && (
-             <div className="absolute bottom-8 right-6 md:right-12 z-20 flex gap-2">
+             <div className="absolute bottom-8 right-6 md:right-[5%] z-20 flex gap-2">
                 {galleryImages.map((_, index) => (
                   <button
                     key={index}
@@ -150,10 +150,10 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
          <div className="absolute bottom-8 left-6 md:left-12 z-20">
             <button 
                 onClick={() => onNavigate('exhibitions')}
-                className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-normal font-sans">
+                <span className="text-sm font-normal font-sans whitespace-nowrap">
                     {language === 'th' ? 'กลับสู่นทรรศการ' : 'Back to Exhibitions'}
                 </span>
             </button>

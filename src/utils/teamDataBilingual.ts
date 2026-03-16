@@ -26,7 +26,7 @@ export const FOUNDER: Director = {
         "คุณมาริษา เจียรวนนท์ เกิดที่สาธารณรัฐเกาหลี และต่อมาได้รับสัญชาติไทย เป็นนักสะสมศิลปะและผู้อุปถัมภ์ศิลปะที่มีวิสัยทัศน์ ด้วยความมุ่งมั่นในศิลปะ การศึกษา และอาหาร ซึ่งเป็นสามองค์ประกอบสำคัญที่เชื่อมโยงวัฒนธรรมไทยสู่เวทีโลก คุณมาริษาได้ก่อตั้ง Thai Art Initiative (ThAI) ในปี พ.ศ. 2565 และบางกอก คุนสท์ฮัลเล่ ในปี พ.ศ. 2567 ด้วยพันธกิจในการยกระดับประเทศไทยให้เป็นศูนย์กลางศิลปะร่วมสมัยแห่งเอเชียตะวันออกเฉียงใต้",
         "คุณมาริษามีบทบาทสำคัญในแวดวงศิลปะร่วมสมัยระดับโลก ปัจจุบันดำรงตำแหน่งในคณะกรรมการจัดหาผลงานศิลปะภูมิภาคเอเชีย-แปซิฟิกของ Tate Modern (ลอนดอน) และสภาผู้นำระหว่างประเทศของ New Museum (นิวยอร์ก) ในปี พ.ศ. 2565 คุณมาริษาได้รับรางวัล RINASCIMENTO+ Award เป็นคนแรก เพื่อยกย่องบทบาทในฐานะนักสะสมศิลปะผู้มีวิสัยทัศน์ ในภูมิภาคเอเชีย ดำรงตำแหน่งผู้อุปถัมภ์ผู้ก่อตั้ง M+ Museum (ฮ่องกง) และกรรมการมูลนิธิหอศิลป์ BACC (กรุงเทพฯ) รวมถึงได้รับการแต่งตั้งเป็นผู้เชี่ยวชาญอาวุโสโดยกระทรวงวัฒนธรรมและสำนักนายกรัฐมนตรีแห่งประเทศไทย เพื่อให้คำปรึกษาและกำกับดูแลการพัฒนาศิลปะร่วมสมัย วัฒนธรรม และเอกลักษณ์ของชาติ"
     ],
-    image: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Marisa+Portraits-+Naat+Krairiksh-ae926715.jpg'
+    image: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-9.+Team--Marisa+Portraits-+Naat+Krairiksh.jpg'
 };
 
 export const DIRECTORS: Director[] = [
@@ -44,7 +44,7 @@ export const DIRECTORS: Director[] = [
             "ในปี พ.ศ. 2556 เขาได้ก่อตั้ง Beyond Entropy Ltd องค์กรภัณฑารักษ์ที่ดำเนินงานในจุดตัดของศิลปะ สถาปัตยกรรม และภูมิรัฐศาสตร์ เขาเป็นภัณฑารักษ์ให้กับศาลาแองโกลาในงาน Venice Biennale ครั้งที่ 55 (ได้รับรางวัล Golden Lion สำหรับการมีส่วนร่วมระดับชาติที่ดีที่สุด)",
             "เขาเคยเป็นผู้อำนวยการของ Hauser & Wirth ในลอนดอนและเซนต์มอริตซ์ ปัจจุบันดำรงตำแหน่งผู้อำนวยการของบางกอก คุนสท์ฮัลเล่"
         ],
-        image: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Stefano+Portraits-+Andrea+Rossetti+3.jpg'
+        image: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-9.+Team--Stefano+Portraits-+Andrea+Rossetti+3+-+Copy.jpg'
     },
     {
         name: 'Luckana Kunavichayanont',
@@ -54,8 +54,9 @@ export const DIRECTORS: Director[] = [
             "Luckana Kunavichayanont is a prominent figure in the Thai art scene, known for her leadership and curatorial work. She served as the Director of the Bangkok Art and Culture Centre (BACC) for many years, steering it to become a central hub for contemporary art in Thailand."
         ],
         bioTH: [
-            "ลักขณา กุลนาวิชญานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและงานภัณฑารักษ์ เธอดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นเวลาหลายปี นำพาให้กลายเป็นศูนย์กลางสำคัญของศิลปะร่วมสมัยในประเทศไ���ย"
-        ]
+            "ลักขณา กุลนาวิชญานนท์ เป็นบุคคลสำคัญในแวดวงศิลปะไทย มีชื่อเสียงในด้านความเป็นผู้นำและงานภัณฑารักษ์ เธอดำรงตำแหน่งผู้อำนวยการหอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร (BACC) เป็นเวลาหลายปี นำพาให้กลายเป็นศูนย์กลางสำคัญของศิลปะร่วมสมัยในประเทศไทย"
+        ],
+        image: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-9.+Team--Luckana-+Krittawat+Atthsis+3+-+Copy.jpg'
     },
     {
         name: 'Poonperm Paitayawat',

@@ -3,6 +3,7 @@ import { ParallaxHero } from '../ui/ParallaxHero';
 import { useLanguage } from '../../utils/languageContext';
 import { exhibitions } from '../../utils/exhibitionsDataNew';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { getEmptyStateMessage } from '../../utils/siteConfig';
 
 // Categorize exhibition status using ISO dates
 function getExhibitionStatus(fromDate: string, toDate: string, referenceDate: Date): 'current' | 'upcoming' | 'past' | null {
@@ -197,7 +198,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
                   ))
                 ) : (
                   <EmptyState 
-                    message={language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    message={getEmptyStateMessage('noUpcomingExhibitions', language)}
                     className="w-full text-center"
                   />
                 )}
@@ -213,7 +214,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
                   ))
                 ) : (
                   <EmptyState 
-                    message={language === 'th' ? 'ไม่มีนิทรรศการในขณะนี้' : 'No current exhibitions'}
+                    message={getEmptyStateMessage('noCurrentExhibitions', language)}
                   />
                 )}
               </div>
@@ -228,7 +229,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
                   ))
                 ) : (
                   <EmptyState 
-                    message={language === 'th' ? 'ไม่มีนิทรรศการที่ผ่านมา' : 'No past exhibitions'}
+                    message={getEmptyStateMessage('noPastExhibitions', language)}
                   />
                 )}
               </div>

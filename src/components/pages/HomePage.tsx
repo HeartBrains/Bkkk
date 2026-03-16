@@ -7,19 +7,17 @@ import { getMockPostsByType } from '../../utils/mockDataBilingual';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { HeroSlider } from '../ui/HeroSlider';
 import { useState, useEffect, useMemo } from 'react';
-import heroImage from 'figma:asset/8e246e2ab08ea6847836a779350a6d9869881ed9.png';
-import imgPumaDescriptionWithoutPlaceSamatchaApaisuwan1 from "figma:asset/f876ff15d4a325a29125011d24ad2ca5ca66bb51.png";
-import imgPumaVernacularObjectsPrapasiriKasemkijkajorn13 from "figma:asset/93174aaa38e984342b3c7203ec474df53dd7d616.png";
-import imgPumaDescriptionWithoutPlaceSamatchaApaisuwan11 from "figma:asset/e4b9c70ac0b33be9a2541c9a6b47492e9354df1f.png";
-import imgPumaLiminalSignals8 from "figma:asset/5e140ec6d37cb7e0037ac051703f84bd597985db.png";
-import imgPumaMittaDelSantiWarunWanapaiboon1 from "figma:asset/9eae500bdb07f8716e004e113057b5a47b2d86bd.png";
+import { getEmptyStateMessage } from '../../utils/siteConfig';
 
+// Hero images from different pages
 const heroImages = [
-  imgPumaDescriptionWithoutPlaceSamatchaApaisuwan1,
-  imgPumaVernacularObjectsPrapasiriKasemkijkajorn13,
-  imgPumaDescriptionWithoutPlaceSamatchaApaisuwan11,
-  imgPumaLiminalSignals8,
-  imgPumaMittaDelSantiWarunWanapaiboon1
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_cover-for-about.jpg", // Visit
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-for-Exhibitions-list-83b680a4.jpg", // Exhibitions
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1+COVER.jpg", // Moving Image Program
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/1000012646.jpg", // Residency
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-for-history-34e22018.jpg", // About
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-team-f51a7633.jpg", // Team
+  "https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-contact-1-89b6eddb.jpg" // Contact
 ];
 
 export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: string) => void }) {
@@ -167,7 +165,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                 ) : (
                   <div className="flex flex-col gap-6 w-full">
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming Soon'}
+                      {getEmptyStateMessage('noUpcomingExhibitions', language)}
                     </p>
                   </div>
                 )}
@@ -233,7 +231,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                 ) : (
                   <div className="flex flex-col gap-6 w-full">
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'ไม่มีกิจกรรมปัจจุบัน' : 'No current activities'}
+                      {getEmptyStateMessage('noCurrentActivities', language)}
                     </p>
                   </div>
                 )}

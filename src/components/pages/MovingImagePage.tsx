@@ -3,6 +3,7 @@ import { useLanguage } from '../../utils/languageContext';
 import { useState, useEffect, useMemo } from 'react';
 import { fetchRecords, RecordItem } from '../../utils/records';
 import Slider from 'react-slick';
+import { getEmptyStateMessage } from '../../utils/siteConfig';
 
 interface MovingImagePageProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -198,7 +199,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    {getEmptyStateMessage('noUpcomingMovingImage', language)}
                   </div>
                 )}
               </div>
@@ -234,7 +235,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    {getEmptyStateMessage('noCurrentMovingImage', language)}
                   </div>
                 )}
               </div>
@@ -270,7 +271,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    {getEmptyStateMessage('noPastMovingImage', language)}
                   </div>
                 )}
               </div>

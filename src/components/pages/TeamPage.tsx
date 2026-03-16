@@ -17,6 +17,7 @@ interface TeamPageProps {
 export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
   const { language } = useLanguage();
   const [activeSection, setActiveSection] = useState<string>('founder');
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   
   const getDirectorId = (name: string) => name.replace(/\s+/g, '-').toLowerCase();
   const getTeamGroupId = (role: string) => role.replace(/\s+/g, '-').replace(/'/g, '').replace(/&/g, 'and').toLowerCase();
@@ -35,9 +36,27 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
       }
   };
 
+  // Initial Scroll to top
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    });
+    
+    // Allow scroll handler to run after initial load completes
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   // Scroll Spy
   useEffect(() => {
       const handleScroll = () => {
+          // Don't update during initial load
+          if (isInitialLoad) return;
+          
           const sectionIds = [
             'founder', 
             ...DIRECTORS.map(d => getDirectorId(d.name)), 
@@ -68,24 +87,9 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
       };
       
       window.addEventListener('scroll', handleScroll);
-      // Run once on mount to set initial state correctly
-      handleScroll();
       
       return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Initial Scroll
-  useEffect(() => {
-    // Always default to founder section on initial load
-    const timer = setTimeout(() => {
-      // Scroll to top to show founder section
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+  }, [isInitialLoad]);
 
   return (
     <div className="w-full min-h-screen bg-white">
@@ -101,7 +105,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
         <div className="flex flex-col md:flex-row gap-12 md:gap-0">
           
           {/* Sidebar */}
-          <aside className="w-full md:w-1/2 shrink-0 relative h-fit mb-12 md:mb-0">
+          <aside className="w-full md:w-1/2 shrink-0">
             <nav className="md:sticky md:top-32 flex flex-col items-start gap-2">
                 
                 {/* Founder */}
@@ -139,11 +143,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                         <button
                             key={group.role}
                             onClick={() => scrollToSection(getTeamGroupId(group.role))}
-                            className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 select-none ${
-                                activeSection === getTeamGroupId(group.role)
-                                ? 'text-black'
-                                : 'text-gray-400 hover:text-black'
-                            } ${language === 'th' ? 'leading-[1.82em]' : ''}`}
+                            className={`text-left text-xl md:text-2xl font-sans font-normal transition-all duration-300 select-none text-gray-400 hover:text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}
                         >
                             {language === 'th' ? group.roleTH : group.role}
                         </button>
@@ -162,7 +162,7 @@ export function TeamPage({ activePage = 'founder' }: TeamPageProps) {
                 <Reveal>
                      <div className="aspect-[2/3] w-full bg-gray-100 mb-6">
                         <div 
-                            className="w-full h-full bg-[length:100%_auto] bg-right bg-no-repeat p-[0px] m-[0px]"
+                            className="w-full h-full bg-cover bg-center bg-no-repeat p-[0px] m-[0px]"
                             style={{ backgroundImage: `url(${FOUNDER.image})` }}
                         />
                     </div>
