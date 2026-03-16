@@ -1,5 +1,6 @@
 import { WPPost } from './types';
-import { exhibitions, exhibitionToWPPost } from './exhibitionsData';
+import { exhibitions, exhibitionToWPPost } from './exhibitionsDataNew';
+import { getDetailContent } from './detailContent';
 
 // Reference date: March 10, 2026
 const today = new Date(2026, 2, 10);
@@ -11,7 +12,7 @@ export function getUpcomingExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
       const startDate = new Date(exhibition.fromDate);
       return startDate > today;
     })
-    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime())
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime())
     .map(exhibition => exhibitionToWPPost(exhibition, language));
 }
 
@@ -23,7 +24,7 @@ export function getCurrentExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
       const endDate = new Date(exhibition.toDate);
       return today >= startDate && today <= endDate;
     })
-    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime())
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime())
     .map(exhibition => exhibitionToWPPost(exhibition, language));
 }
 
@@ -34,6 +35,6 @@ export function getPastExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
       const endDate = new Date(exhibition.toDate);
       return endDate < today;
     })
-    .sort((a, b) => new Date(b.toDate).getTime() - new Date(a.toDate).getTime())
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime())
     .map(exhibition => exhibitionToWPPost(exhibition, language));
 }

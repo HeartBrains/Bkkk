@@ -1,31 +1,37 @@
 **Add your own guidelines here**
 ## Moving Image Data Updates (December 2024)
 
-Successfully updated gallery image arrays for all 5 Moving Image programs:
-1. **"Shapeshifting Spaces"** - Added full gallery of 12 images
-2. **"we gather"** - Added full gallery of 15 images  
-3. **"seeds"** - Added full gallery of 13 images
-4. **"Infringes"** - Gallery already complete with 13 images
-5. **"Search for Life I"** - Gallery already complete with 8 images
+Successfully updated ALL 6 Moving Image Programs with CSV images:
+1. **Infringes** - 6 images ✅
+2. **Shapeshifting Spaces** - 7 images ✅
+3. **we gather** - 6 images ✅  
+4. **seeds** - 6 images ✅
+5. **Search for Life I** - 6 images ✅
+6. **Inviting You to Die With Me** - 6 images ✅
 
-All gallery data stored in `/utils/movingImageData.ts`. Carousel system in Moving Image detail pages now uses first image from each gallery as the feature image in listings.
+All gallery data stored in `/utils/movingImageData.ts` within each program object. The `/utils/movingImageGalleryData.ts` file has been cleared and is now deprecated. Carousel system in Moving Image detail pages uses the first image from each gallery as the feature image in listings. All images have been replaced with real program photography from the CSV.
 
 ## Exhibitions Data Updates (March 2025)
 
-Successfully updated gallery image arrays for all 10 Exhibitions with available images from CSV:
-1. **Nine Plus Five Works** - 51 images ✅
-2. **nostalgia for unity** - 50 images ✅  
-3. **MEND PIECE** - 14 images ✅
-4. **Like Nouns Slipping Into Verbs** - 22 images ✅
-5. **Calligraphic Abstraction** - 32 images ✅
-6. **Painting as Event** - 8 images ✅
-7. **Poetics of Horizontality** - 27 images ✅
-8. **This page is intentionally left blank** - 25 images ✅
-9. **Mitta del Santi** - 13 images ✅
-10. **FOREVER LOVE SOUL ENGINE** - 18 images ✅
-11. **Blind Spots: Panels, Paravents and Screens** - 9 images ✅
+Successfully updated ALL 16 Exhibitions with CSV images:
+1. **Nine Plus Five Works** - 6 images ✅
+2. **nostalgia for unity** - 6 images ✅  
+3. **MEND PIECE** - 6 images ✅
+4. **Like Nouns Slipping Into Verbs** - 6 images ✅
+5. **Calligraphic Abstraction** - 6 images ✅
+6. **Painting as Event** - 6 images ✅
+7. **Poetics of Horizontality** - 6 images ✅
+8. **This page is intentionally left blank** - 6 images ✅
+9. **Mitta del Santi** - 6 images ✅
+10. **Vernacular Objects** - 6 images ✅
+11. **Description Without Place** - 6 images ✅
+12. **FOREVER LOVE SOUL ENGINE** - 6 images ✅
+13. **Blind Spots** - 6 images ✅
+14. **Soul Searching** - 6 images ✅
+15. **Splendor in the City** - 6 images ✅
+16. **A Bit Fountain and a Bit Not** - 6 images ✅
 
-Gallery data stored in `/utils/exhibitionsGalleryData.ts` and imported into `/utils/exhibitionsData.ts`. The `createExhibitionData` function accepts an optional `gallery` parameter. When provided, the first image in the gallery array is automatically used as the feature image in exhibition listings. All mockup Unsplash images have been replaced with real exhibition photography from the CSV.
+Gallery data stored directly in `/utils/exhibitionsDataNew.ts` within each exhibition object. The first image in the gallery array is automatically used as the feature image in exhibition listings. All images have been replaced with real exhibition photography from the CSV.
 
 ## font consistent ##
 - make font size consistent for entire website, adjust to 5  font sizes, font's weight to 4 weight

@@ -1,6 +1,6 @@
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { useLanguage } from '../../utils/languageContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { fetchRecords, RecordItem } from '../../utils/records';
 import Slider from 'react-slick';
 
@@ -50,18 +50,20 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
     return record.status === 'past';
   });
 
-  // Anchor sections
-  const sections = [
-    { id: 'upcoming-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program' },
-    { id: 'current-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
-    { id: 'past-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program' }
-  ].filter(section => {
-    // Only show sections that have content
-    if (section.id === 'upcoming-programs') return upcomingPrograms.length > 0;
-    if (section.id === 'current-programs') return currentPrograms.length > 0;
-    if (section.id === 'past-programs') return pastPrograms.length > 0;
-    return true;
-  });
+  // Anchor sections - memoized to prevent recreation on every render
+  const sections = useMemo(() => {
+    return [
+      { id: 'upcoming-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program' },
+      { id: 'current-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
+      { id: 'past-programs', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program' }
+    ].filter(section => {
+      // Only show sections that have content
+      if (section.id === 'upcoming-programs') return upcomingPrograms.length > 0;
+      if (section.id === 'current-programs') return currentPrograms.length > 0;
+      if (section.id === 'past-programs') return pastPrograms.length > 0;
+      return true;
+    });
+  }, [language, upcomingPrograms.length, currentPrograms.length, pastPrograms.length]);
 
   // Scroll to section
   const scrollToSection = (id: string) => {
@@ -89,7 +91,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [language]);
+  }, [sections]);
 
   // Scroll to target section if provided
   useEffect(() => {
@@ -196,7 +198,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
                   </div>
                 )}
               </div>
@@ -232,7 +234,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
                   </div>
                 )}
               </div>
@@ -268,7 +270,7 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
                   ))
                 ) : (
                   <div className="py-20 text-gray-400 font-sans text-xl md:text-2xl">
-                    {language === 'th' ? 'ไม่มีข้อมูล' : 'No results'}
+                    {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
                   </div>
                 )}
               </div>

@@ -1,9 +1,9 @@
-import { RECORDS } from './records';
 import { ARTISTS_DATA } from './residencyData';
 import { translations } from './translations';
-import { exhibitions } from './exhibitionsData';
+import { exhibitions } from './exhibitionsDataNew';
 import { movingImagePrograms } from './movingImageData';
 import { MOCK_POSTS_BILINGUAL } from './mockDataBilingual';
+import { getDetailContentByLanguage } from './detailContent';
 
 export interface SearchDocument {
   id: string;
@@ -71,56 +71,60 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
   // Since we don't have explicit TH translations for RECORDS in the file provided, we will map them to EN
   // and maybe provide a generic TH fallback if needed, or just let them be searchable in EN.
   // To make them searchable in TH mode, we should at least include them with lang='th' if we want them to appear in TH search results.
-  RECORDS.forEach(record => {
-      // Check if already exists in MOCK_POSTS_BILINGUAL (to avoid duplicates if they overlap)
-      // The logic in original file did this.
-      const exists = Object.values(MOCK_POSTS_BILINGUAL).some(p => p.en.slug === record.slug);
-      if (exists) return;
+  // RECORDS.forEach(record => {
+  //     // Check if already exists in MOCK_POSTS_BILINGUAL (to avoid duplicates if they overlap)
+  //     // The logic in original file did this.
+  //     const exists = Object.values(MOCK_POSTS_BILINGUAL).some(p => p.en.slug === record.slug);
+  //     if (exists) return;
 
-      let page = '';
-      let keywords = '';
+  //     let page = '';
+  //     let keywords = '';
 
-      if (record.category === 'activity' || record.category === 'event') {
-        page = 'activity-detail';
-        keywords = `activity event ${record.status} ${record.description || ''}`;
-      } else if (record.category === 'exhibition') {
-        page = 'exhibition-detail';
-        keywords = `exhibition art show ${record.status} ${record.description || ''}`;
-      }
+  //     if (record.category === 'activity' || record.category === 'event') {
+  //       page = 'activity-detail';
+  //       keywords = `activity event ${record.status} ${record.description || ''}`;
+  //     } else if (record.category === 'exhibition') {
+  //       page = 'exhibition-detail';
+  //       keywords = `exhibition art show ${record.status} ${record.description || ''}`;
+  //     }
 
-      if (page) {
-        // Add for EN
-        data.push({
-          id: `record-${record.id}-en`,
-          title: record.title,
-          content: `${record.description || ''} (${record.date})`,
-          keywords: keywords,
-          page: page,
-          slug: record.slug,
-          lang: 'en'
-        });
+  //     if (page) {
+  //       // Add for EN
+  //       data.push({
+  //         id: `record-${record.id}-en`,
+  //         title: record.title,
+  //         content: `${record.description || ''} (${record.date})`,
+  //         keywords: keywords,
+  //         page: page,
+  //         slug: record.slug,
+  //         lang: 'en'
+  //       });
 
-        // Add for TH (using same content as fallback, so it appears in TH search)
-        data.push({
-          id: `record-${record.id}-th`,
-          title: record.title, // Keep EN title
-          content: `${record.description || ''} (${record.date})`,
-          keywords: keywords,
-          page: page,
-          slug: record.slug,
-          lang: 'th'
-        });
-      }
-  });
+  //       // Add for TH (using same content as fallback, so it appears in TH search)
+  //       data.push({
+  //         id: `record-${record.id}-th`,
+  //         title: record.title, // Keep EN title
+  //         content: `${record.description || ''} (${record.date})`,
+  //         keywords: keywords,
+  //         page: page,
+  //         slug: record.slug,
+  //         lang: 'th'
+  //       });
+  //     }
+  // });
 
   // 3. Artists (Residency)
   ARTISTS_DATA.forEach(artist => {
+      // Support both old and new data structure
+      const enContent = artist.content || (artist.bio ? `${artist.bio}${artist.statement || ''}` : '');
+      const thContent = artist.contentTH || (artist.bioTH ? `${artist.bioTH}${artist.statementTH || ''}` : enContent);
+      
       // EN
       data.push({
           id: `artist-${artist.slug}-en`,
           title: artist.name,
-          content: stripHtml(artist.bio + " " + artist.statement),
-          keywords: `artist resident residency ${artist.period} ${artist.category} ศิลปิน`,
+          content: stripHtml(enContent),
+          keywords: `artist resident residency ${artist.period} ${artist.status} ศิลปิน`,
           page: 'artist-detail',
           slug: artist.slug,
           lang: 'en'
@@ -129,21 +133,25 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       data.push({
           id: `artist-${artist.slug}-th`,
           title: artist.nameTH || artist.name,
-          content: stripHtml((artist.bioTH || artist.bio) + " " + (artist.statementTH || artist.statement)),
-          keywords: `artist resident residency ${artist.periodTH || artist.period} ${artist.category} ศิลปิน พำนัก`,
+          content: stripHtml(thContent),
+          keywords: `artist resident residency ${artist.periodTH || artist.period} ${artist.status} ศิลปิน พำนัก`,
           page: 'artist-detail',
           slug: artist.slug,
           lang: 'th'
       });
   });
 
-  // 4. Exhibitions from CSV Data (Bangkok Kunsthalle exhibitions)
+  // 4. Exhibitions
   exhibitions.forEach(exhibition => {
+    // Get detail content for both languages
+    const enContent = getDetailContentByLanguage(exhibition.slug, 'en') || '';
+    const thContent = getDetailContentByLanguage(exhibition.slug, 'th') || '';
+    
     // EN
     data.push({
       id: `exhibition-${exhibition.slug}-en`,
       title: exhibition.title.en,
-      content: stripHtml(exhibition.statement.en + ' ' + exhibition.artist.en + ' ' + exhibition.biography.en),
+      content: stripHtml(enContent + ' ' + exhibition.artist.en),
       keywords: `exhibition art show ${exhibition.artist.en} ${exhibition.dateDisplay.en} นิทรรศการ ศิลปะ`,
       page: 'exhibition-detail',
       slug: exhibition.slug,
@@ -154,7 +162,7 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
     data.push({
       id: `exhibition-${exhibition.slug}-th`,
       title: exhibition.title.th,
-      content: stripHtml(exhibition.statement.th + ' ' + exhibition.artist.th + ' ' + exhibition.biography.th),
+      content: stripHtml(thContent + ' ' + exhibition.artist.th),
       keywords: `exhibition art show ${exhibition.artist.th} ${exhibition.dateDisplay.th} นิทรรศการ ศิลปะ`,
       page: 'exhibition-detail',
       slug: exhibition.slug,
@@ -167,11 +175,15 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
     // Get film artists for keywords
     const filmArtists = program.films.map(f => f.artist).join(' ');
     
+    // Get detail content from detailContent.ts instead of inline content
+    const enContent = getDetailContentByLanguage(program.slug, 'en') || '';
+    const thContent = getDetailContentByLanguage(program.slug, 'th') || '';
+    
     // EN
     data.push({
       id: `moving-image-${program.id}-en`,
       title: program.title.en,
-      content: stripHtml(program.statement.en),
+      content: stripHtml(enContent),
       keywords: `moving image film video cinema ${program.curator.en} ${filmArtists} ภาพยนตร์ วิดีโอ`,
       page: 'moving-image-detail',
       slug: program.slug,
@@ -182,10 +194,37 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
     data.push({
       id: `moving-image-${program.id}-th`,
       title: program.title.th,
-      content: stripHtml(program.statement.th),
+      content: stripHtml(thContent),
       keywords: `moving image film video cinema ${program.curator.th} ${filmArtists} ภาพยนตร์ วิดีโอ ภาพเคลื่อนไหว`,
       page: 'moving-image-detail',
       slug: program.slug,
+      lang: 'th'
+    });
+  });
+
+  // 6. Blog Posts
+  Object.values(MOCK_POSTS_BILINGUAL).forEach(postData => {
+    // EN
+    const enPost = postData.en;
+    data.push({
+      id: `blog-${enPost.slug}-en`,
+      title: enPost.title,
+      content: stripHtml(enPost.content),
+      keywords: `blog article post ${enPost.author} ${enPost.categories.join(' ')} ${enPost.date} บทความ บล็อก`,
+      page: 'blog-detail',
+      slug: enPost.slug,
+      lang: 'en'
+    });
+
+    // TH
+    const thPost = postData.th;
+    data.push({
+      id: `blog-${thPost.slug}-th`,
+      title: thPost.title,
+      content: stripHtml(thPost.content),
+      keywords: `blog article post ${thPost.author} ${thPost.categories.join(' ')} ${thPost.date} บทความ บล็อก`,
+      page: 'blog-detail',
+      slug: thPost.slug,
       lang: 'th'
     });
   });

@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMovingImageProgramBySlug } from '../../utils/movingImageData';
 import { movingImageGalleries } from '../../utils/movingImageGalleryData';
+import { getDetailContentByLanguage } from '../../utils/detailContent';
 import { ArrowLeft } from 'lucide-react';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '../ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -17,6 +17,9 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
   const { language } = useLanguage();
   const program = getMovingImageProgramBySlug(slug);
   const gallery = program?.gallery || movingImageGalleries[slug as keyof typeof movingImageGalleries];
+  
+  // Get detail content from detailContent.ts based on language
+  const detailContent = getDetailContentByLanguage(slug, language) || '';
 
   const plugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
@@ -68,10 +71,15 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
             <CarouselContent className="h-full -ml-0">
               {galleryImages.map((src, index) => (
                 <CarouselItem key={index} className="h-full pl-0">
-                  <ImageWithFallback
+                  <img
                     src={src}
                     alt={`${program.title[language]} Gallery ${index + 1}`}
                     className="w-full h-full object-cover opacity-90"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
                   />
                 </CarouselItem>
               ))}
@@ -126,7 +134,7 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
       )}
 
       {/* Main Content */}
-      <div className={`w-full px-6 md:py-16 ${galleryImages.length > 0 ? 'py-12' : 'py-8'}`}>
+      <div className={`w-full px-[5%] md:py-16 ${galleryImages.length > 0 ? 'pt-[96px] pb-[0px]' : 'py-8'}`}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
           {/* Left Column - Program Info */}
           <div className="md:col-span-6 flex flex-col gap-8">
@@ -140,11 +148,10 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
               <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : ''} m-[0px]`}>
                 {program.dateDisplay[language]}
               </p>
-
-              {/* Curator */}
-              <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}
-                {program.curator[language]}
+              
+              {/* Curated by */}
+              <p className={`text-xl md:text-2xl font-normal ${language === 'th' ? 'leading-[1.82em]' : ''} m-[0px]`}>
+                {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}{program.curator[language]}
               </p>
             </div>
 
@@ -165,19 +172,32 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
                       {film.duration && `, ${film.duration}`}
                     </p>
                     <p className={`text-xl md:text-2xl text-gray-500 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {film.credit}
+                      {film.credit.replace(/courtesy of the artist\.?/i, '').trim()}
                     </p>
                   </div>
                 ))}
               </div>
+              
+              {/* Installation Views */}
+              {program.installationViews && program.installationViews.length > 0 && (
+                <div className="mt-16">
+                  <ul className="space-y-3">
+                    {program.installationViews.map((view, index) => (
+                      <li key={index} className={`text-[12px] text-gray-600 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {view.artist}, <em>{view.title}</em>, {view.year}. {language === 'th' ? 'ภาพจัดแสดง, บางกอก คุนสท์ฮัลเล่' : 'Installation view, Bangkok Kunsthalle'}.
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Right Column - Statement */}
           <div className="md:col-start-7 md:col-span-6 px-0 md:px-[28px]">
             <div 
-              className={`[&>p]:mb-6 [&>p]:text-2xl ${language === 'th' ? '[&>p]:leading-[1.82em]' : ''}`}
-              dangerouslySetInnerHTML={{ __html: program.statement[language] }}
+              className={`[&>p]:mb-8 [&>p]:text-2xl ${language === 'th' ? '[&>p]:leading-[1.82em]' : ''}`}
+              dangerouslySetInnerHTML={{ __html: detailContent }}
             />
           </div>
         </div>

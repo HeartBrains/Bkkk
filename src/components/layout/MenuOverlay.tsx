@@ -21,7 +21,21 @@ interface MenuItem {
 
 export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOverlayProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const { language, setLanguage, t } = useLanguage();
+  
+  // Safe hook call with fallback for HMR
+  let language: 'en' | 'th' = 'en';
+  let setLanguage: ((lang: 'en' | 'th') => void) | undefined;
+  let t: (key: string) => string = (key) => key;
+  
+  try {
+    const context = useLanguage();
+    language = context.language;
+    setLanguage = context.setLanguage;
+    t = context.t;
+  } catch (error) {
+    // During HMR, context might not be available
+    console.warn('LanguageContext not available, using defaults');
+  }
 
   const toggleExpand = (label: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -271,14 +285,14 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                     <div className="text-[18px] font-normal text-gray-500 select-none tracking-wide flex items-center">
                         <button 
                             className={`cursor-pointer transition-colors ${language === 'en' ? 'text-white' : 'hover:text-white'}`}
-                            onClick={() => setLanguage('en')}
+                            onClick={() => setLanguage && setLanguage('en')}
                         >
                             EN
                         </button>
                         <span className="mx-2">|</span>
                         <button 
                             className={`cursor-pointer transition-colors ${language === 'th' ? 'text-white' : 'hover:text-white'}`}
-                            onClick={() => setLanguage('th')}
+                            onClick={() => setLanguage && setLanguage('th')}
                         >
                             TH
                         </button>

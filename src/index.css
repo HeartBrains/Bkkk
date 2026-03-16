@@ -8,6 +8,11 @@
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;
+      --tw-rotate-x: rotateX(0);
+      --tw-rotate-y: rotateY(0);
+      --tw-rotate-z: rotateZ(0);
+      --tw-skew-x: skewX(0);
+      --tw-skew-y: skewY(0);
       --tw-space-y-reverse: 0;
       --tw-border-style: solid;
       --tw-gradient-position: initial;
@@ -710,6 +715,10 @@
     margin-top: calc(var(--spacing) * 12);
   }
 
+  .mt-16 {
+    margin-top: calc(var(--spacing) * 16);
+  }
+
   .mt-auto {
     margin-top: auto;
   }
@@ -799,6 +808,10 @@
 
   .hidden {
     display: none;
+  }
+
+  .inline {
+    display: inline;
   }
 
   .inline-block {
@@ -903,10 +916,6 @@
 
   .h-\[10vh\] {
     height: 10vh;
-  }
-
-  .h-\[20vh\] {
-    height: 20vh;
   }
 
   .h-\[35vh\] {
@@ -1053,6 +1062,10 @@
     flex-shrink: 0;
   }
 
+  .grow {
+    flex-grow: 1;
+  }
+
   .grow-0 {
     flex-grow: 0;
   }
@@ -1108,6 +1121,10 @@
 
   .rotate-180 {
     rotate: 180deg;
+  }
+
+  .transform {
+    transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
   }
 
   .transform-none {
@@ -1216,6 +1233,12 @@
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+  }
+
+  :where(.space-y-3 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
   }
 
   :where(.space-y-4 > :not(:last-child)) {
@@ -1750,6 +1773,10 @@
     font-size: 10px;
   }
 
+  .text-\[12px\] {
+    font-size: 12px;
+  }
+
   .text-\[18px\] {
     font-size: 18px;
   }
@@ -1915,6 +1942,11 @@
 
   .opacity-100 {
     opacity: 1;
+  }
+
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
 
   .shadow-lg {
@@ -2960,10 +2992,6 @@
     height: calc(var(--spacing) * 4);
   }
 
-  .\[\&\>p\]\:mb-6 > p {
-    margin-bottom: calc(var(--spacing) * 6);
-  }
-
   .\[\&\>p\]\:mb-8 > p {
     margin-bottom: calc(var(--spacing) * 8);
   }
@@ -3169,6 +3197,36 @@ html {
   syntax: "*";
   inherits: false;
   initial-value: 1;
+}
+
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateX(0);
+}
+
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateY(0);
+}
+
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateZ(0);
+}
+
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: skewX(0);
+}
+
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: skewY(0);
 }
 
 @property --tw-space-y-reverse {

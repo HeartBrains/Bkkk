@@ -15,23 +15,56 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
   const { language } = useLanguage();
   const [activeSection, setActiveSection] = useState('current-artists');
 
+  // Helper function to extract year and month from period string
+  const extractPeriodDate = (period: string): Date => {
+    // Extract year (4 digits)
+    const yearMatch = period.match(/\b(20\d{2})\b/);
+    const year = yearMatch ? parseInt(yearMatch[1]) : 0;
+    
+    // Extract first month mentioned
+    const months = ['january', 'february', 'march', 'april', 'may', 'june', 
+                    'july', 'august', 'september', 'october', 'november', 'december'];
+    const periodLower = period.toLowerCase();
+    let month = 0;
+    
+    for (let i = 0; i < months.length; i++) {
+      if (periodLower.includes(months[i])) {
+        month = i;
+        break;
+      }
+    }
+    
+    return new Date(year, month);
+  };
+
   const sections = [
-    {
-      id: 'upcoming-residency',
-      title: getTranslation(language, 'residency.upcomingResidency'),
-      items: ARTISTS_DATA.filter(artist => artist.category === 'upcoming')
-    },
     {
       id: 'current-artists',
       title: getTranslation(language, 'residency.currentArtists'),
-      items: ARTISTS_DATA.filter(artist => artist.category === 'current')
+      items: ARTISTS_DATA
+        .filter(artist => artist.status === 'current')
+        .sort((a, b) => b.id - a.id)
+    },
+    {
+      id: 'upcoming-residency',
+      title: getTranslation(language, 'residency.upcomingResidency'),
+      items: ARTISTS_DATA
+        .filter(artist => artist.status === 'upcoming')
+        .sort((a, b) => b.id - a.id)
     },
     {
       id: 'past-artists',
       title: getTranslation(language, 'residency.pastArtists'),
-      items: ARTISTS_DATA.filter(artist => artist.category === 'previous')
+      items: ARTISTS_DATA
+        .filter(artist => artist.status === 'past')
+        .sort((a, b) => b.id - a.id)
     }
-  ].filter(section => section.items.length > 0);
+  ];
+
+  // Filter out empty sections except "Current Artists" which must always show
+  const visibleSections = sections.filter(section => 
+    section.id === 'current-artists' || section.items.length > 0
+  );
 
   // Scroll to section
   const scrollToSection = (id: string) => {
@@ -48,10 +81,10 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i].id);
+      for (let i = visibleSections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(visibleSections[i].id);
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
+          setActiveSection(visibleSections[i].id);
           break;
         }
       }
@@ -84,7 +117,7 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
           {/* Sticky Anchor Menu */}
           <aside className="w-full md:w-1/2 shrink-0">
             <nav className="md:sticky md:top-32 flex flex-col items-start gap-2">
-              {sections.map((section) => (
+              {visibleSections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
@@ -102,30 +135,36 @@ export function ResidencyPage({ onNavigate, targetSectionId }: ResidencyPageProp
 
           {/* Content Sections */}
           <div className="w-full md:w-1/2 flex flex-col">
-            {sections.map((section, idx) => (
+            {visibleSections.map((section, idx) => (
               <section key={idx} id={section.id} className="mb-32 md:mb-40 scroll-mt-32">
                 {/* Artists */}
                 <div className="flex flex-col gap-12 md:gap-16">
-                  {section.items.map((artist, index) => (
-                    <Reveal key={artist.id} delay={index * 0.1}>
-                      <div 
-                        className="flex flex-col gap-6 w-full cursor-pointer group"
-                        onClick={() => onNavigate?.('artist-detail', artist.slug)} 
-                      >
-                        <div className="aspect-[3/4] w-full bg-gray-100 relative overflow-hidden">
-                          <ImageWithFallback 
-                            src={artist.gallery && artist.gallery.length > 0 ? artist.gallery[0] : artist.image}
-                            alt={language === 'th' ? artist.nameTH : artist.name}
-                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                          />
+                  {section.items.length > 0 ? (
+                    section.items.map((artist, index) => (
+                      <Reveal key={artist.id} delay={index * 0.1}>
+                        <div 
+                          className="flex flex-col gap-6 w-full cursor-pointer group"
+                          onClick={() => onNavigate?.('artist-detail', artist.slug)} 
+                        >
+                          <div className="aspect-[3/4] w-full bg-gray-100 relative overflow-hidden">
+                            <ImageWithFallback 
+                              src={artist.featuredImage}
+                              alt={language === 'th' ? artist.nameTH : artist.name}
+                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <h3 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.nameTH : artist.name}</h3>
+                            <p className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.periodTH : artist.period}</p>
+                          </div>
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <h3 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.nameTH : artist.name}</h3>
-                          <p className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{language === 'th' ? artist.periodTH : artist.period}</p>
-                        </div>
-                      </div>
-                    </Reveal>
-                  ))}
+                      </Reveal>
+                    ))
+                  ) : (
+                    <p className={`text-xl md:text-2xl font-normal text-gray-400 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                    </p>
+                  )}
                 </div>
               </section>
             ))}

@@ -1,8 +1,8 @@
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { useState, useEffect } from 'react';
 import { ParallaxHero } from '../ui/ParallaxHero';
 import { useLanguage } from '../../utils/languageContext';
-import { exhibitions } from '../../utils/exhibitionsData';
-import { useState, useEffect } from 'react';
+import { exhibitions } from '../../utils/exhibitionsDataNew';
+import { ImageWithFallback } from '../figma/ImageWithFallback';
 
 // Categorize exhibition status using ISO dates
 function getExhibitionStatus(fromDate: string, toDate: string, referenceDate: Date): 'current' | 'upcoming' | 'past' | null {
@@ -42,15 +42,15 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
   // Categorize exhibitions by status
   const currentExhibitions = exhibitions
     .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'current')
-    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime());
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   const upcomingExhibitions = exhibitions
     .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'upcoming')
-    .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime());
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   const pastExhibitions = exhibitions
     .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'past')
-    .sort((a, b) => new Date(b.toDate).getTime() - new Date(a.toDate).getTime());
+    .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   // Navigation sections
   const sections = [
@@ -108,7 +108,8 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
 
   // Exhibition card component
   const ExhibitionCard = ({ item, index, prefix }: { item: any; index: number; prefix: string }) => {
-    const imageUrl = item.gallery && item.gallery.length > 0 ? item.gallery[0] : '';
+    const imageUrl = item.featuredImage || '';
+    const [imgError, setImgError] = useState(false);
     
     return (
       <div 
@@ -117,13 +118,19 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
         onClick={() => onNavigate?.('exhibition-detail', item.slug)}
       >
         <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-          {imageUrl && (
+          {imageUrl && !imgError ? (
             <ImageWithFallback 
               src={imageUrl} 
               alt={item.title[language]}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              style={{ width: '100%' }}
+              loading="lazy"
+              onError={() => setImgError(true)}
+              crossOrigin="anonymous"
             />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+              {language === 'th' ? 'ไม่สามารถโหลดรูปภาพ' : 'Image unavailable'}
+            </div>
           )}
         </div>
         <div className="flex flex-col gap-1">

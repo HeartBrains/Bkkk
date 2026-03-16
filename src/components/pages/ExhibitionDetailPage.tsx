@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMockPost } from '../../utils/mockDataBilingual';
-import { exhibitions, exhibitionToWPPost } from '../../utils/exhibitionsData';
+import { exhibitions, exhibitionToWPPost } from '../../utils/exhibitionsDataNew';
+import { getDetailContentByLanguage } from '../../utils/detailContent';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '../ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -20,6 +21,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
   const [postData, setPostData] = useState<WPPost | undefined>(exhibition);
   const [loading, setLoading] = useState(!exhibition && !!slug);
   const [error, setError] = useState(false);
+  const [detailContent, setDetailContent] = useState<string>('');
 
   const plugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
@@ -31,6 +33,11 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
     if (exhibition) {
         setPostData(exhibition);
         setLoading(false);
+        // Get detail content based on current language and exhibition slug
+        if (exhibition.slug) {
+          const content = getDetailContentByLanguage(exhibition.slug, language) || '';
+          setDetailContent(content);
+        }
         return;
     }
     
@@ -47,6 +54,9 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
         }
         if (data) {
             setPostData(data);
+            // Get detail content based on current language
+            const content = getDetailContentByLanguage(slug, language) || '';
+            setDetailContent(content);
             setLoading(false);
         } else {
             setError(true);
@@ -72,31 +82,32 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
     ? postData.gallery 
     : (postData.featuredImage ? [postData.featuredImage.sourceUrl] : []);
 
-  // Add random placeholder images as requested, limit to 5 total
-  const galleryImages = [
-    ...baseGallery,
-    "https://images.unsplash.com/photo-1762718984199-b00c15f3d347?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcnQlMjBleGhpYml0aW9uJTIwYWJzdHJhY3QlMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2ODA0Njc2MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    "https://images.unsplash.com/photo-1762928289094-197055a5d5c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcnQlMjBnYWxsZXJ5JTIwaW5zdGFsbGF0aW9uJTIwd2hpdGUlMjB3YWxsfGVufDF8fHx8MTc2ODA0Njc2NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  ].slice(0, 5);
+  // Use only real gallery images, no placeholders
+  const galleryImages = baseGallery;
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
        {/* Hero Section */}
        <div className="h-[35vh] md:h-[80vh] w-full relative overflow-hidden group bg-black">
-         {galleryImages.length > 0 ? (
-             <Carousel
+          {galleryImages.length > 0 ? (
+              <Carousel
                 setApi={setApi}
                 plugins={[plugin.current]}
                 className="w-full h-full"
                 opts={{ align: "start", loop: true }}
-             >
+              >
                 <CarouselContent className="h-full -ml-0">
                    {galleryImages.map((src, index) => (
                       <CarouselItem key={index} className="h-full pl-0">
-                         <ImageWithFallback
-                            src={index === 0 ? "https://images.unsplash.com/photo-1664786063671-5f4f91e770cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNldW0lMjBhcmNoaXRlY3R1cmUlMjBsaWdodCUyMHNoYWRvd3xlbnwxfHx8fDE3NjgwNDkxMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" : src}
+                         <img
+                            src={src}
                             alt={`${postData.title} Gallery ${index + 1}`}
-                            className="w-full h-full object-cover opacity-90"
+                            className="w-full h-full object-cover"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
                          />
                       </CarouselItem>
                    ))}
@@ -108,14 +119,14 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                         <CarouselNext className="pointer-events-auto static transform-none h-12 w-12 bg-black/30 hover:bg-black/50 border-none text-white" />
                     </div>
                 )}
-             </Carousel>
-         ) : (
-             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              </Carousel>
+          ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                 <span className="text-gray-400">
                     {language === 'th' ? 'ไม่มีรูปภาพ' : 'No images available'}
                 </span>
-             </div>
-         )}
+              </div>
+          )}
 
          {/* Thumbnails */}
          {galleryImages.length > 1 && (
@@ -143,7 +154,7 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-normal font-sans">
-                    {language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions'}
+                    {language === 'th' ? 'กลับสู่นทรรศการ' : 'Back to Exhibitions'}
                 </span>
             </button>
         </div>
@@ -160,36 +171,36 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                         {postData.title}
                     </h1>
                     
-                    {postData.date && (
-                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
-                    )}
-                </div>
-
-                {postData.acf?.artist && (
-                    <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px]">
-                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {language === 'th' ? 'ศิลปิน' : 'Artist'}
-                        </p>
+                    {postData.acf?.artist && (
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                             {postData.acf.artist}
                         </p>
-                    </div>
-                )}
-
-                {postData.acf?.curator && (
-                    <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px]">
+                    )}
+                    
+                    {postData.date && (
+                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.date}</p>
+                    )}
+                    
+                    {postData.acf?.curator && (
                         <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                            {language === 'th' ? 'ภัณฑารักษ์โดย' : 'Curated by'}
+                            {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}{postData.acf.curator}
                         </p>
-                        <p className={`text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{postData.acf.curator}</p>
-                    </div>
-                )}
+                    )}
+                    
+                    {postData.acf?.imageCredits && (
+                        <div className="mt-8 pt-6">
+                            <p className="text-gray-500 text-[12px]">
+                                {postData.acf.imageCredits}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Right Column - Text Content */}
-            <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight space-y-6 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                {postData.content && (
-                    <div className="[&>p]:mb-8" dangerouslySetInnerHTML={{ __html: postData.content }} />
+            <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                {detailContent && (
+                    <div className="[&>p]:mb-8" dangerouslySetInnerHTML={{ __html: detailContent }} />
                 )}
 
                 {postData.acf?.biography && (
@@ -201,14 +212,6 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
                             <div className="[&>p]:mb-8" dangerouslySetInnerHTML={{ __html: postData.acf.biography }} />
                         </div>
                     </>
-                )}
-
-                {postData.acf?.imageCredits && (
-                    <div className="mt-8 pt-6 border-t border-gray-200">
-                        <p className="text-sm text-gray-500">
-                            {postData.acf.imageCredits}
-                        </p>
-                    </div>
                 )}
             </div>
         </div>

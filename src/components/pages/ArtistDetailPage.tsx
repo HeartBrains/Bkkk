@@ -13,6 +13,8 @@ import Autoplay from "embla-carousel-autoplay";
 import { Reveal } from '../ui/Reveal';
 import { ARTISTS_DATA, ArtistDetail } from '../../utils/residencyData';
 import { useLanguage } from '../../utils/languageContext';
+import { getDetailContentByLanguage } from '../../utils/detailContent';
+import { getResidencyCreditByIndex } from '../../utils/residencyCreditData';
 
 interface ArtistDetailPageProps {
   onNavigate: (page: string) => void;
@@ -53,8 +55,15 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
 
   const displayName = language === 'th' ? artist.nameTH : artist.name;
   const displayPeriod = language === 'th' ? artist.periodTH : artist.period;
-  const displayBio = language === 'th' ? artist.bioTH : artist.bio;
-  const displayStatement = language === 'th' ? artist.statementTH : artist.statement;
+  
+  // Get detail content from detailContent.ts based on language
+  const detailContent = slug ? getDetailContentByLanguage(slug, language) || '' : '';
+
+  // Get gallery images from artist data
+  const gallery = artist.gallery || [];
+
+  // Get current image credit
+  const currentCredit = slug ? getResidencyCreditByIndex(slug, current) : '';
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
@@ -67,7 +76,7 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             opts={{ align: "start", loop: true }}
             >
             <CarouselContent className="h-full -ml-0">
-                {artist.gallery.map((src, index) => (
+                {gallery.map((src, index) => (
                     <CarouselItem key={index} className="h-full pl-0">
                         <ImageWithFallback
                         src={src}
@@ -78,18 +87,34 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
                 ))}
             </CarouselContent>
             
-            {artist.gallery.length > 1 && (
+            {gallery.length > 1 && (
                 <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                     <CarouselPrevious className="pointer-events-auto static transform-none h-12 w-12 bg-black/30 hover:bg-black/50 border-none text-white" />
                     <CarouselNext className="pointer-events-auto static transform-none h-12 w-12 bg-black/30 hover:bg-black/50 border-none text-white" />
                 </div>
             )}
+
+            {/* Back Button */}
+            <div className="absolute bottom-8 left-6 md:left-12 z-20">
+                <button 
+                    onClick={() => onNavigate(backPage || 'residency')}
+                    className="flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                    <span className="text-sm font-normal font-sans">
+                        {backPage === 'archives'
+                            ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
+                            : (language === 'th' ? 'กลับสู่ศิลปินพำนัก' : 'Back to Residency')
+                        }
+                    </span>
+                </button>
+            </div>
             </Carousel>
 
          {/* Thumbnails */}
-         {artist.gallery.length > 1 && (
+         {gallery.length > 1 && (
              <div className="absolute bottom-8 right-[5%] z-20 flex gap-2">
-                {artist.gallery.map((_, index) => (
+                {gallery.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
@@ -103,50 +128,36 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
                 ))}
              </div>
          )}
-
-         {/* Back Button */}
-         <div className="absolute bottom-8 left-6 md:left-12 z-20">
-            <button 
-                onClick={() => onNavigate(backPage || 'residency')}
-                className="fixed top-[120px] left-6 z-50 md:static flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
-            >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-normal font-sans">
-                    {backPage === 'archives'
-                        ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
-                        : (language === 'th' ? 'กลับสู่ศิลปินพำนัก' : 'Back to Residency')
-                    }
-                </span>
-            </button>
-        </div>
       </div>
 
       {/* Content Section */}
-      <div className="w-full px-6 py-12 md:py-16">
+      <div className="w-full px-[5%] pt-[96px] pb-[0px] md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
             
             {/* Left Column - Meta Data */}
             <div className="md:col-span-6 flex flex-col gap-8">
-                <div className="flex flex-col gap-1 px-0 md:px-[28px] py-[0px]">
-                    <h1 className={`text-xl md:text-2xl font-normal text-black mb-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                <div className="flex flex-col gap-0 px-0 md:px-[28px] py-[0px]">
+                    <h1 className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {displayName}
                     </h1>
                     <p className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {language === 'th' ? 'ศิลปินพำนัก' : 'Artist in Residence'}
                     </p>
-                    <p className={`text-xl md:text-2xl text-gray-500 font-normal mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{displayPeriod}</p>
+                    <p className={`text-xl md:text-2xl font-normal text-black ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {displayPeriod.replace(/–/g, ' - ').replace(/\s+-\s+/g, ' - ')}
+                    </p>
+                    {currentCredit && (
+                        <p className={`text-sm md:text-base font-normal text-gray-500 mt-4 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                            {currentCredit}
+                        </p>
+                    )}
                 </div>
             </div>
 
             {/* Right Column - Text Content */}
             <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight space-y-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                 <div>
-                    <h3 className={`font-normal mb-4 ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`} style={{ fontSize: '19px' }}>{language === 'th' ? 'ชีวประวัติ' : 'Biography'}</h3>
-                    <div className={`text-xl md:text-2xl text-gray-700 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`} dangerouslySetInnerHTML={{ __html: displayBio }} />
-                </div>
-                <div>
-                    <h3 className={`font-normal mb-4 ${language === 'th' ? 'leading-[1.82em]' : 'leading-tight'}`} style={{ fontSize: '19px' }}>{language === 'th' ? 'ถ้อยแถลงการพำนัก' : 'Residency Statement'}</h3>
-                    <div className={`text-xl md:text-2xl text-gray-700 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`} dangerouslySetInnerHTML={{ __html: displayStatement }} />
+                    <div className={`text-xl md:text-2xl text-gray-700 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''} [&>p]:mb-8`} dangerouslySetInnerHTML={{ __html: detailContent }} />
                 </div>
             </div>
         </div>

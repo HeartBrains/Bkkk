@@ -1,4 +1,4 @@
-import { exhibitions } from './exhibitionsData';
+import { exhibitions } from './exhibitionsDataNew';
 import { movingImagePrograms } from './movingImageData';
 import { movingImageGalleries } from './movingImageGalleryData';
 
@@ -46,7 +46,7 @@ const exhibitionRecords: RecordItem[] = exhibitions.map(exhibition => {
     date: exhibition.dateDisplay.en,
     startDate: exhibition.fromDate,
     endDate: exhibition.toDate,
-    image: exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : '',
+    image: exhibition.featuredImage || (exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : ''),
     description: exhibition.artist.en,
     slug: exhibition.slug
   };
@@ -80,7 +80,7 @@ export async function fetchRecords(params?: {
       date: exhibition.dateDisplay[language],
       startDate: exhibition.fromDate,
       endDate: exhibition.toDate,
-      image: exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : '',
+      image: exhibition.featuredImage || (exhibition.gallery && exhibition.gallery.length > 0 ? exhibition.gallery[0] : ''),
       description: exhibition.artist[language],
       slug: exhibition.slug
     };
@@ -94,9 +94,9 @@ export async function fetchRecords(params?: {
     const endDate = new Date(program.toDate);
     const status = getExhibitionStatus(startDate, endDate);
     
-    // Get first gallery image from program.gallery or movingImageGalleries
+    // Use featuredImage if available, otherwise fallback to first gallery image
     const gallery = program.gallery || movingImageGalleries[program.slug as keyof typeof movingImageGalleries];
-    const firstImage = gallery && gallery.length > 0 ? gallery[0] : '';
+    const featuredImage = program.featuredImage || (gallery && gallery.length > 0 ? gallery[0] : '');
     
     return {
       id: `moving-image-${program.id}`,
@@ -106,7 +106,7 @@ export async function fetchRecords(params?: {
       date: program.dateDisplay[language],
       startDate: program.fromDate,
       endDate: program.toDate,
-      image: firstImage,
+      image: featuredImage,
       description: `${language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}${program.curator[language]}`,
       slug: program.slug
     };

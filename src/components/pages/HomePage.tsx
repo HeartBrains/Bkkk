@@ -3,10 +3,10 @@ import { getMockPost } from '../../utils/mockDataBilingual';
 import { getCurrentMovingImageProgram } from '../../utils/movingImageData';
 import { movingImageGalleries } from '../../utils/movingImageGalleryData';
 import { getUpcomingExhibitions, getCurrentExhibitions } from '../../utils/exhibitionHelpers';
-import { getCurrentActivities } from '../../utils/activityHelpers';
+import { getMockPostsByType } from '../../utils/mockDataBilingual';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { HeroSlider } from '../ui/HeroSlider';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import heroImage from 'figma:asset/8e246e2ab08ea6847836a779350a6d9869881ed9.png';
 import imgPumaDescriptionWithoutPlaceSamatchaApaisuwan1 from "figma:asset/f876ff15d4a325a29125011d24ad2ca5ca66bb51.png";
 import imgPumaVernacularObjectsPrapasiriKasemkijkajorn13 from "figma:asset/93174aaa38e984342b3c7203ec474df53dd7d616.png";
@@ -36,22 +36,22 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
   const currentProgramGallery = currentMovingImageProgram?.slug 
     ? (currentMovingImageProgram.gallery || movingImageGalleries[currentMovingImageProgram.slug as keyof typeof movingImageGalleries])
     : null;
-  const currentProgramHasImages = currentProgramGallery && currentProgramGallery.length > 0;
+  const currentProgramHasImages = currentMovingImageProgram?.featuredImage || (currentProgramGallery && currentProgramGallery.length > 0);
 
   // Get current and upcoming exhibitions from exhibitionsData.ts
   const currentExhibitions = getCurrentExhibitions(language);
   const upcomingExhibitions = getUpcomingExhibitions(language);
 
   // Get current activities
-  const currentActivities = getCurrentActivities();
+  const currentActivities = getMockPostsByType('activities', language);
 
-  // Anchor sections
-  const sections = [
+  // Anchor sections - memoized to prevent recreation on every render
+  const sections = useMemo(() => [
     { id: 'current-exhibitions', label: t?.('exhibitions.current') || 'Current Exhibitions' },
     { id: 'upcoming-exhibitions', label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions' },
     { id: 'moving-image-program', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
     { id: 'current-activities', label: language === 'th' ? 'กิจกรรมปัจจุบัน' : 'Current Activities' }
-  ];
+  ], [language, t]);
 
   // Scroll to section
   const scrollToSection = (id: string) => {
@@ -79,7 +79,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [language]);
+  }, [sections]);
 
   return (
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
@@ -124,11 +124,13 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                 {currentExhibitions.map((item) => (
                   <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                     <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                      <ImageWithFallback 
-                        src={item!.featuredImage.sourceUrl} 
-                        alt={item!.title}
-                        className="w-full aspect-[3/4] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
+                      {item!.featuredImage && (
+                        <ImageWithFallback 
+                          src={item!.featuredImage} 
+                          alt={item!.title}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                      )}
                     </div>
                     <div className="flex flex-col gap-1">
                       <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.title}</h3>
@@ -147,11 +149,13 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                   upcomingExhibitions.map((item) => (
                     <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                        <ImageWithFallback 
-                          src={item!.featuredImage.sourceUrl} 
-                          alt={item!.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
+                        {item!.featuredImage && (
+                          <ImageWithFallback 
+                            src={item!.featuredImage} 
+                            alt={item!.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        )}
                       </div>
                       <div className="flex flex-col gap-1">
                         <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.title}</h3>
@@ -163,7 +167,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                 ) : (
                   <div className="flex flex-col gap-6 w-full">
                     <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming soon'}
+                      {language === 'th' ? 'เร็วๆ นี้' : 'Coming Soon'}
                     </p>
                   </div>
                 )}
@@ -181,7 +185,7 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                     {currentProgramHasImages && (
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback
-                          src={currentProgramGallery![0]}
+                          src={currentMovingImageProgram.featuredImage || currentProgramGallery![0]}
                           alt={currentMovingImageProgram.title[language]}
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
@@ -212,15 +216,15 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                     <div key={item.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('activity-detail', item.slug)}>
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         <ImageWithFallback 
-                          src={item.image} 
+                          src={item.featuredImage.sourceUrl} 
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
                         <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
-                        {item.description && (
-                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.description}</p>
+                        {item.acf?.artist && (
+                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf.artist}</p>
                         )}
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
                       </div>
