@@ -75,13 +75,13 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '23 ตุลาคม 2567 - 22 ธันวาคม 2567'
     },
     status: 'past',
-    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1+COVER.jpg',
+    featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1+COVER-1920w.jpg',
     gallery: [
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+22.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+30.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Rhea+Storr-+A+Protest-+A+Celebration-+A+Mixed+Message-+2018-+12minutes-+courtesy+of+the+artist+and+LUX+London.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Riar+Rizaldi-+Notes+from+Gog+Magog-+2022-+20+minutes-+courtesy+of+the+artist.jpg'
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+30-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Riar+Rizaldi-+Notes+from+Gog+Magog-+2022-+20+minutes-+courtesy+of+the+artist-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Rhea+Storr-+A+Protest-+A+Celebration-+A+Mixed+Message-+2018-+12minutes-+courtesy+of+the+artist+and+LUX+London-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+22-1920w.jpg'
     ],
     installationViews: [
       {
@@ -178,13 +178,13 @@ export const movingImagePrograms: MovingImageProgram[] = [
     },
     status: 'past',
     
-    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+5+COVER.jpg',
+    featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+5+COVER-1920w.jpg',
     gallery: [
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+5.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+10.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Warm+Spell-+Krittawat+-+Prapasiri+1.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+2.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+1.jpg'
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Warm+Spell-+Krittawat+-+Prapasiri+1-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+5-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+1-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+2-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+10-1920w.jpg'
     ],
     films: [
       {
@@ -513,6 +513,11 @@ export function getMovingImageProgramBySlug(slug: string): MovingImageProgram | 
 export function getCurrentMovingImageProgram(): MovingImageProgram | undefined {
   const today = new Date();
   return movingImagePrograms.find(program => {
+    // Priority 1: Check explicit status tag
+    if (program.status === 'current') return true;
+    if (program.status === 'upcoming' || program.status === 'past') return false;
+    
+    // Priority 2: Calculate from dates
     const fromDate = new Date(program.fromDate);
     const toDate = new Date(program.toDate);
     return today >= fromDate && today <= toDate;

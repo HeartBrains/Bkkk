@@ -34,14 +34,14 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "เอ็มมา แมคคอร์มิก กู๊ดฮาร์ท",
     period: "January - February 2024",
     periodTH: "มกราคม - กุมภาพันธ์ 2567",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+4+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+4+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+6.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+21.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+13.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+11.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+4.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+13-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+21-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+11-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+4-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.1+Emma+McCormick+Goodhart--glai+glaai-+Puttisin+Choojesroom+6-1920w.jpg"
     ]
   },
   {
@@ -51,14 +51,14 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "นาตาลี บรึค",
     period: "July - September 2024",
     periodTH: "กรกฎาคม - กันยายน 2567",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+1+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+1+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+3.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+2.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+1.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+6.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+5.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+2-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+5-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+6-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+3-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.2+Natalie+Br%C3%BCck--Working+On+The+Imaginary+Object-+Sivakorn+Charoenyothin+1-1920w.jpg"
     ]
   },
   {
@@ -68,14 +68,14 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "โคล ลู",
     period: "October 2024",
     periodTH: "ตุลาคม 2567",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+2+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+2+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+2.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+20.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+19.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--The+Engineers-+Krittawat+Atthsis+and+Puttisin+Choojesroom+2.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--The+Engineers-+Krittawat+Atthsis+and+Puttisin+Choojesroom+3.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+19-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--The+Engineers-+Krittawat+Atthsis+and+Puttisin+Choojesroom+2-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+20-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--The+Engineers-+Krittawat+Atthsis+and+Puttisin+Choojesroom+3-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.3+Cole+Lu--Cole+Lu-+The+Engineers-+Kanrapee+Chokpaiboon+2-1920w.jpg"
     ]
   },
   {
@@ -85,13 +85,13 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "นิโกลาส อามาโต",
     period: "January - February 2025",
     periodTH: "มกราคม - กุมภาพันธ์ 2568",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+1+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+1+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+7.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+1.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+16.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+9.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+7-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+1-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+16-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.4+Nicolas+Amato--Unwinding+Architecture-+Bangkok+Kunsthalle+9-1920w.jpg"
     ]
   },
   {
@@ -101,12 +101,12 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "แอนโทนี ฮิวเบอร์แมน",
     period: "February - March 2025",
     periodTH: "กุมภาพันธ์ - มีนาคม 2568",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+1+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+1+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+1.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+2.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+4.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+1-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+4-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.5+Anthony+Huberman--An+Artist+Led+Approach-+Bangkok+Kunsthalle+2-1920w.jpg"
     ]
   },
   {
@@ -116,13 +116,14 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "สเปนเซอร์ สวีนีย์",
     period: "July - December 2025",
     periodTH: "กรกฎาคม - ธันวาคม 2568",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+6+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+6+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+6.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+5.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+6.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Disco+Hut-+Prapasiri+Kasemkijkajorn.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+5-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Prapasiri+Kasemkijkajorn+6-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Patsu+Supakajohnwanich+11-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Disco+Hut-+Prapasiri+Kasemkijkajorn-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.6+Spencer+Sweeney--Living+Cinematheque-+Patsu+Supakajohnwanich+6-1920w.jpg"
     ]
   },
   {
@@ -132,12 +133,12 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "ลูก้า โล ปินโต",
     period: "August - September 2025",
     periodTH: "สิงหาคม - กันยายน 2568",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+7+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+7+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+4.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+7.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+5.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+7-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+4-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.7+Luca+Lo+Pinto--From+Display+to+Discourse-+Bangkok+Kunsthalle+5-1920w.jpg"
     ]
   },
   {
@@ -147,14 +148,14 @@ export const ARTISTS_DATA: ArtistDetail[] = [
     nameTH: "เอดูอาร์โด วิลเลียมส์",
     period: "November - December 2025",
     periodTH: "พฤศจิกายน - ธันวาคม 2568",
-    featuredImage: "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--A+Very+Long+Gif-+Patsu+Supakajohnwanich+2+COVER.jpg",
+    featuredImage: "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--A+Very+Long+Gif-+Patsu+Supakajohnwanich+2+COVER-1920w.jpg",
     status: 'past',
     gallery: [
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--A+Very+Long+Gif-+Patsu+Supakajohnwanich+2.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+16.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+3.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+10.jpg",
-      "https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Parsi14+copy.jpg"
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--A+Very+Long+Gif-+Patsu+Supakajohnwanich+2-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+16-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+3-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Teddy+workshop-+Krittawat+Atthsis+10-1920w.jpg",
+      "https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-6.+Residency-6.8+Eduardo+Williams--Parsi14+copy-1920w.jpg"
     ]
   },
   {

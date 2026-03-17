@@ -1,7 +1,6 @@
 import { Instagram, Facebook, AtSign, Globe } from 'lucide-react';
 import { useLanguage } from '../../utils/languageContext';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
-import logoImage from "figma:asset/c4b9ac99c37ce625f62558a3efaf0107be9526ee.png";
+import { Logo } from '../ui/Logo';
 
 export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) {
   const { language } = useLanguage();
@@ -12,10 +11,9 @@ export function Footer({ onNavigate }: { onNavigate?: (page: string) => void }) 
         
         {/* Left: Logo */}
         <div className="flex flex-col">
-          <ImageWithFallback 
-            src={logoImage} 
-            alt="Bangkok Kunsthalle Logo" 
-            className="h-[40px] md:h-[60px] w-auto object-contain invert brightness-0 -m-2 md:m-0"
+          <Logo 
+            className="h-[40px] md:h-[60px] w-auto -m-2 md:m-0"
+            white={true}
           />
         </div>
 

@@ -7,7 +7,7 @@ import { getMockPostsByType } from '../../utils/mockDataBilingual';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { HeroSlider } from '../ui/HeroSlider';
 import { useState, useEffect, useMemo } from 'react';
-import { getEmptyStateMessage } from '../../utils/siteConfig';
+import { getEmptyStateMessage, siteConfig } from '../../utils/siteConfig';
 
 // Hero images from different pages
 const heroImages = [
@@ -44,12 +44,31 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
   const currentActivities = getMockPostsByType('activities', language);
 
   // Anchor sections - memoized to prevent recreation on every render
-  const sections = useMemo(() => [
-    { id: 'current-exhibitions', label: t?.('exhibitions.current') || 'Current Exhibitions' },
-    { id: 'upcoming-exhibitions', label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions' },
-    { id: 'moving-image-program', label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program' },
-    { id: 'current-activities', label: language === 'th' ? 'กิจกรรมปัจจุบัน' : 'Current Activities' }
-  ], [language, t]);
+  const sections = useMemo(() => {
+    const allSections = [
+      { 
+        id: 'current-exhibitions', 
+        label: t?.('exhibitions.current') || 'Current Exhibitions', 
+        visible: siteConfig.homeAnchors.currentExhibitions && currentExhibitions.length > 0 
+      },
+      { 
+        id: 'upcoming-exhibitions', 
+        label: t?.('exhibitions.upcoming') || 'Upcoming Exhibitions', 
+        visible: siteConfig.homeAnchors.upcomingExhibitions && upcomingExhibitions.length > 0 
+      },
+      { 
+        id: 'moving-image-program', 
+        label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program', 
+        visible: siteConfig.homeAnchors.currentMovingImageProgram && currentMovingImageProgram !== null 
+      },
+      { 
+        id: 'current-activities', 
+        label: language === 'th' ? 'กิจกรรมปัจจุบัน' : 'Current Activities', 
+        visible: siteConfig.homeAnchors.currentActivities && currentActivities.length > 0 
+      }
+    ];
+    return allSections.filter(section => section.visible);
+  }, [language, t, currentExhibitions, upcomingExhibitions, currentMovingImageProgram, currentActivities]);
 
   // Scroll to section
   const scrollToSection = (id: string) => {
@@ -117,34 +136,10 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
           {/* Content Sections */}
           <div className="w-full md:w-1/2 flex flex-col md:items-end">
             {/* Current Exhibitions */}
-            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
-                {currentExhibitions.map((item) => (
-                  <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
-                    <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                      {item!.featuredImage && (
-                        <ImageWithFallback 
-                          src={item!.featuredImage} 
-                          alt={item!.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.title}</h3>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.acf?.artist}</p>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.date}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Upcoming Exhibitions */}
-            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:items-end">
-                {upcomingExhibitions.length > 0 ? (
-                  upcomingExhibitions.map((item) => (
+            {siteConfig.homeAnchors.currentExhibitions && (
+              <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:gap-16 md:items-end">
+                  {currentExhibitions.map((item) => (
                     <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
                       <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
                         {item!.featuredImage && (
@@ -157,86 +152,118 @@ export function HomePage({ onNavigate }: { onNavigate?: (page: string, slug?: st
                       </div>
                       <div className="flex flex-col gap-1">
                         <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.title}</h3>
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.acf?.artist}</p>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.acf?.artist || item!.acf?.curator}</p>
                         <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.date}</p>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="flex flex-col gap-6 w-full">
-                    <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {getEmptyStateMessage('noUpcomingExhibitions', language)}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </section>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Upcoming Exhibitions */}
+            {siteConfig.homeAnchors.upcomingExhibitions && (
+              <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:items-end">
+                  {upcomingExhibitions.length > 0 ? (
+                    upcomingExhibitions.map((item) => (
+                      <div key={item!.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('exhibition-detail', item!.slug)}>
+                        <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
+                          {item!.featuredImage && (
+                            <ImageWithFallback 
+                              src={item!.featuredImage} 
+                              alt={item!.title}
+                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            />
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.title}</h3>
+                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.acf?.artist || item!.acf?.curator}</p>
+                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item!.date}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col gap-6 w-full">
+                      <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {getEmptyStateMessage('noUpcomingExhibitions', language)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* Moving Image Program */}
-            <section id="moving-image-program" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:items-end">
-                {currentMovingImageProgram && (
-                  <div 
-                    className="flex flex-col gap-6 w-full cursor-pointer group" 
-                    onClick={() => onNavigate?.('moving-image-detail', currentMovingImageProgram.slug)}
-                  >
-                    {currentProgramHasImages && (
-                      <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                        <ImageWithFallback
-                          src={currentMovingImageProgram.featuredImage || currentProgramGallery![0]}
-                          alt={currentMovingImageProgram.title[language]}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
+            {siteConfig.homeAnchors.currentMovingImageProgram && (
+              <section id="moving-image-program" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:items-end">
+                  {currentMovingImageProgram && (
+                    <div 
+                      className="flex flex-col gap-6 w-full cursor-pointer group" 
+                      onClick={() => onNavigate?.('moving-image-detail', currentMovingImageProgram.slug)}
+                    >
+                      {currentProgramHasImages && (
+                        <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
+                          <ImageWithFallback
+                            src={currentMovingImageProgram.featuredImage || currentProgramGallery![0]}
+                            alt={currentMovingImageProgram.title[language]}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-1">
+                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {currentMovingImageProgram.title[language]}
+                        </h3>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}
+                          {currentMovingImageProgram.curator[language]}
+                        </p>
+                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                          {currentMovingImageProgram.dateDisplay[language]}
+                        </p>
                       </div>
-                    )}
-                    <div className="flex flex-col gap-1">
-                      <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                        {currentMovingImageProgram.title[language]}
-                      </h3>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                        {language === 'th' ? 'ภัณฑารักษ์: ' : 'Curated by '}
-                        {currentMovingImageProgram.curator[language]}
-                      </p>
-                      <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                        {currentMovingImageProgram.dateDisplay[language]}
-                      </p>
                     </div>
-                  </div>
-                )}
-              </div>
-            </section>
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* Current Activities */}
-            <section id="current-activities" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:items-end">
-                {currentActivities.length > 0 ? (
-                  currentActivities.map((item) => (
-                    <div key={item.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('activity-detail', item.slug)}>
-                      <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-                        <ImageWithFallback 
-                          src={item.featuredImage.sourceUrl} 
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
+            {siteConfig.homeAnchors.currentActivities && (
+              <section id="current-activities" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:items-end">
+                  {currentActivities.length > 0 ? (
+                    currentActivities.map((item) => (
+                      <div key={item.id} className="flex flex-col gap-6 w-full cursor-pointer group" onClick={() => onNavigate?.('activity-detail', item.slug)}>
+                        <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
+                          <ImageWithFallback 
+                            src={item.featuredImage.sourceUrl} 
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
+                          {item.acf?.artist && (
+                            <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf.artist}</p>
+                          )}
+                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1">
-                        <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.title}</h3>
-                        {item.acf?.artist && (
-                          <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.acf.artist}</p>
-                        )}
-                        <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>{item.date}</p>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col gap-6 w-full">
+                      <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
+                        {getEmptyStateMessage('noCurrentActivities', language)}
+                      </p>
                     </div>
-                  ))
-                ) : (
-                  <div className="flex flex-col gap-6 w-full">
-                    <p className={`text-xl md:text-2xl font-normal text-gray-400 leading-tight text-center md:text-left ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {getEmptyStateMessage('noCurrentActivities', language)}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </section>
+                  )}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>

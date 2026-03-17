@@ -1,5 +1,6 @@
 import { WPPost } from './types';
 import { getDetailContentByLanguage } from './detailContent';
+import { determineStatus, Status } from './dateStatusHelper';
 
 export interface Exhibition {
   id: string;
@@ -27,7 +28,11 @@ export interface Exhibition {
   featuredImage?: string;
   gallery?: string[];
   tags?: string;
-  status: 'current' | 'upcoming' | 'past';
+}
+
+// Interface with computed status
+export interface ExhibitionWithStatus extends Exhibition {
+  status: Status;
 }
 
 function formatDateDisplay(fromDate: string, toDate: string): { en: string, th: string } {
@@ -92,8 +97,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.1+Nine+Plus+Five+Works--Nine+Plus+Five+Works+Opening-+Samatcha+Apaisuwan+31.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.1+Nine+Plus+Five+Works--Nine+Plus+Five+Works+Opening-+Samatcha+Apaisuwan+32.jpg'
     ],
-    tags: 'Video art, Experimental film, France, Portraiture, Travelogue',
-    status: 'past'
+    tags: 'Video art, Experimental film, France, Portraiture, Travelogue'
   },
   {
     id: '2',
@@ -120,8 +124,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.2+nostalgia+for+unity--nostalgia+for+unity-+Artit+Punyanutaruk+10.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.2+nostalgia+for+unity--nostalgia+for+unity-+Artit+Punyanutaruk+20.jpg'
     ],
-    tags: 'Site-specific, Installation, Thailand, Ritual, Ecology',
-    status: 'past'
+    tags: 'Site-specific, Installation, Thailand, Ritual, Ecology'
   },
   {
     id: '3',
@@ -151,8 +154,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.3+MEND+PIECE--Mend+Piece-+Andrea+Rossetti+3.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.3+MEND+PIECE--Mend+Piece-+Andrea+Rossetti+1.jpg'
     ],
-    tags: 'Participatory art, Conceptual art, Fluxus, Healing, Community',
-    status: 'past'
+    tags: 'Participatory art, Conceptual art, Fluxus, Healing, Community'
   },
   {
     id: '4',
@@ -182,8 +184,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.4+Like+Nouns+Slipping+Into+Verbs--Like+Nouns+Slipping+Into+Verbs-+Krittawat+Atthsis+49.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.4+Like+Nouns+Slipping+Into+Verbs--Like+Nouns+Slipping+Into+Verbs-+Krittawat+Atthsis+43.jpg'
     ],
-    tags: 'Minimalism, Sculpture, Anthropological, Spatial, USA',
-    status: 'past'
+    tags: 'Minimalism, Sculpture, Anthropological, Spatial, USA'
   },
   {
     id: '5',
@@ -204,18 +205,16 @@ export const exhibitions: Exhibition[] = [
     toDate: '2025-07-13',
     dateDisplay: formatDateDisplay('2025-02-01', '2025-07-13'),
     year: '2025',
-    imageCredits: 'Tang Chang, "Calligraphic Abstraction", 2025. Installation view, Bangkok Kunsthalle. Courtesy of The Tang Chang Private Museum and Bangkok Kunsthalle. Photo by Puttisin Choojesroom.',
-    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+2.jpg',
+    imageCredits: 'Tang Chang, \"Calligraphic Abstraction\", 2025. Installation view, Bangkok Kunsthalle. Courtesy of The Tang Chang Private Museum and Bangkok Kunsthalle. Photo by Puttisin Choojesroom.',
+    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+11+-+Copy.jpg',
     gallery: [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+2.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+11.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+30.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+11+-+Copy.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+35.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.5+Calligraphic+Abstraction--Calligraphic+Abstraction-+Puttisin+Choojesroom+66.jpg'
     ],
-    tags: 'Painting, Calligraphy, Abstract, Sino-Thai, Spirituality',
-    status: 'past'
+    tags: 'Painting, Calligraphy, Abstract, Sino-Thai, Spirituality'
   },
   {
     id: '6',
@@ -245,8 +244,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.6+Painting+as+Event--Xie+Fan-+Dining+Experience+Puttisin+9.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.6+Painting+as+Event--Xie+Fan-+Dining+Experience+Puttisin+17.jpg'
     ],
-    tags: 'Performance, Gastronomy, Ceramics, Materiality, China',
-    status: 'past'
+    tags: 'Performance, Gastronomy, Ceramics, Materiality, China'
   },
   {
     id: '7',
@@ -276,8 +274,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.7+Poetics+of+Horizontality--Poetics+of+Horizontality-+Puttisin+Choojesroom+44.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.7+Poetics+of+Horizontality--Poetics+of+Horizontality-+courtesy+of+Krittapas+Lersvananont+4.jpg'
     ],
-    tags: 'Thailand, Architecture, Memory, Pop-Surrealist, Care',
-    status: 'past'
+    tags: 'Thailand, Architecture, Memory, Pop-Surrealist, Care'
   },
   {
     id: '8',
@@ -304,14 +301,12 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--This+Page+is+Intentionally+Left+_____.-+Puttisin+Choojesroom+10.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--This+Page+is+Intentionally+Left+_____.-+Samatcha+Apaisuwan+28.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--This+Page+is+Intentionally+Left+_____.-+Samatcha+Apaisuwan+15.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--Anusorn+Thanyapalit-+Samatcha+Apaisuwan+11+-+Copy.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--Anusorn+Thanyapalit-+Samatcha+Apaisuwan+21.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--Anusorn+Thanyapalit-+Samatcha+Apaisuwan+14.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--Anusorn+Thanyapalit-+Samatcha+Apaisuwan+11.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.8+This+page+is+intentionally+left+_____.--Nat+Setthana-+Samatcha+Apaisuwan+3.jpg'
     ],
-    tags: 'Publishing, Language, Southeast Asia, Collective, Site-specific',
-    status: 'past'
+    tags: 'Publishing, Language, Southeast Asia, Collective, Site-specific'
   },
   {
     id: '9',
@@ -341,8 +336,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.9+Mitta+del+Santi--Mitta+del+Santi-+courtesy+of+Warun+Wanapaiboon+9.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.9+Mitta+del+Santi--Mitta+del+Santi-+courtesy+of+Warun+Wanapaiboon+3.jpg'
     ],
-    tags: 'Textile, Sustainability, Thailand, Weaving, Ecological',
-    status: 'past'
+    tags: 'Textile, Sustainability, Thailand, Weaving, Ecological'
   },
   {
     id: '10',
@@ -352,8 +346,8 @@ export const exhibitions: Exhibition[] = [
       th: 'วัตถุพื้นถิ่น'
     },
     artist: {
-      en: 'Mark Chearavanont',
-      th: 'มาร์ค เชียรวนนท์'
+      en: '',
+      th: ''
     },
     curator: {
       en: 'Mark Chearavanont',
@@ -372,8 +366,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.10+Vernacular+Objects--Vernacular+Objects-+Prapasiri+Kasemkijkajorn+49.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.10+Vernacular+Objects--Vernacular+Objects-+Prapasiri+Kasemkijkajorn+58.jpg'
     ],
-    tags: 'Ready-made, Material culture, Thailand, Curatorial, Urban',
-    status: 'current'
+    tags: 'Ready-made, Material culture, Thailand, Curatorial, Urban'
   },
   {
     id: '11',
@@ -403,8 +396,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.11+Description+Without+Place--Description+Without+Place-+Samatcha+Apaisuwan+2.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.11+Description+Without+Place--Description+Without+Place-+Samatcha+Apaisuwan+48.jpg'
     ],
-    tags: 'Architecture, Israel/France, Habitation, Sculpture, Philosophy',
-    status: 'current'
+    tags: 'Architecture, Israel/France, Habitation, Sculpture, Philosophy'
   },
   {
     id: '12',
@@ -431,11 +423,9 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.12+FOREVER+LOVE+SOUL+ENGINE--FOREVER+LOVE+SOUL+ENGINE-+Samatcha+Apaisuwan+23.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.12+FOREVER+LOVE+SOUL+ENGINE--FOREVER+LOVE+SOUL+ENGINE-+Napat+Roongrawewan+28.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.12+FOREVER+LOVE+SOUL+ENGINE--FOREVER+LOVE+SOUL+ENGINE-+Samatcha+Apaisuwan+29.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.12+FOREVER+LOVE+SOUL+ENGINE--FOREVER+LOVE+SOUL+ENGINE-+Samatcha+Apaisuwan+29+-+Copy.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.12+FOREVER+LOVE+SOUL+ENGINE--FOREVER+LOVE+SOUL+ENGINE-+Napat+Roongrawewan+29.jpg'
     ],
-    tags: 'Sound art, Performance, Techno-animism, Thailand, Installation',
-    status: 'current'
+    tags: 'Sound art, Performance, Techno-animism, Thailand, Installation'
   },
   {
     id: '13',
@@ -465,8 +455,7 @@ export const exhibitions: Exhibition[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.13+Blind+Spots--By+the+river-+Ratsiree+2.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.13+Blind+Spots--Silence+eyes-+Ratsiree+1.jpg'
     ],
-    tags: 'Painting, Thailand, Memory, Identity, Architecture',
-    status: 'current'
+    tags: 'Painting, Thailand, Memory, Identity, Architecture'
   },
   {
     id: '14',
@@ -491,14 +480,12 @@ export const exhibitions: Exhibition[] = [
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--%E0%B8%AA%E0%B8%B3%E0%B9%80%E0%B8%99%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87+Bangkok+portraits-595.jpg',
     gallery: [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--%E0%B8%AA%E0%B8%B3%E0%B9%80%E0%B8%99%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87+Bangkok+portraits-595.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--%E0%B8%AA%E0%B8%B3%E0%B9%80%E0%B8%99%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87+Bangkok+portraits-595+-+Copy.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--%E0%B8%AA%E0%B8%B3%E0%B9%80%E0%B8%99%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87+untitled-42.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--Rolf+Sachs-+Krittawat+22.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--Rolf+Sachs-+Preecha+Pattara+9.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.14+Soul+Searching--Rolf+Sachs-+Preecha+Pattara+27.jpg'
     ],
-    tags: 'Photography, Portraiture, Switzerland, Participatory, Community',
-    status: 'current'
+    tags: 'Photography, Portraiture, Switzerland, Participatory, Community'
   },
   {
     id: '15',
@@ -520,16 +507,15 @@ export const exhibitions: Exhibition[] = [
     dateDisplay: formatDateDisplay('2026-02-05', '2026-04-19'),
     year: '2026',
     imageCredits: 'Mafalda von Hessen, "Splendor in the City", 2026, Installation view, Bangkok Kunsthalle. Courtesy of the artist and Bangkok Kunsthalle. Photo by Krittawat Atthsis and Preecha Pattara.',
-    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+3+COVER.jpg',
+    featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+3+COVER-1920w.jpg',
     gallery: [
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalada-+Ponpavee+1.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Krittawat+Atthsis+14.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Krittawat+Atthsis+12.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+3.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+19.jpg'
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+3-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalada-+Ponpavee+1-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Krittawat+Atthsis+12-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Preecha+Pattara+19-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.15+Splendor+in+the+City--Mafalda-+Krittawat+Atthsis+14-1920w.jpg'
     ],
-    tags: 'Painting, Germany, Urban ecology, Materiality, Observation',
-    status: 'current'
+    tags: 'Painting, Germany, Urban ecology, Materiality, Observation'
   },
   {
     id: '16',
@@ -551,14 +537,13 @@ export const exhibitions: Exhibition[] = [
     dateDisplay: formatDateDisplay('2026-03-07', 'Onwards'),
     year: '2026',
     imageCredits: 'Not Vital, \"A Bit Fountain and a Bit Not\", 2026, Installation view, Bangkok Kunsthalle. Courtesy of the artist and Bangkok Kunsthalle. Photo by Krittawat Atthsis and Preecha Pattara.',
-    featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+1+COVER.jpg',
+    featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+1+COVER-1920w.jpg',
     gallery: [
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+3.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+1.jpg',
-      'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+2.jpg'
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+1-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+3-1920w.jpg',
+      'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+2-1920w.jpg'
     ],
-    tags: 'Installation, Switzerland, Water, Architecture, Permanent',
-    status: 'upcoming'
+    tags: 'Installation, Switzerland, Water, Architecture, Permanent'
   }
 ];
 
@@ -584,4 +569,43 @@ export function exhibitionToWPPost(exhibition: Exhibition, language: 'en' | 'th'
       imageCredits: exhibition.imageCredits
     }
   };
+}
+
+// Helper function to get all exhibitions with computed status
+export function getExhibitionsWithStatus(): ExhibitionWithStatus[] {
+  return exhibitions.map(exhibition => ({
+    ...exhibition,
+    status: determineStatus(exhibition.fromDate, exhibition.toDate)
+  }));
+}
+
+// Helper function to get exhibition by slug with computed status
+export function getExhibitionBySlug(slug: string): ExhibitionWithStatus | undefined {
+  const exhibition = exhibitions.find(ex => ex.slug === slug);
+  if (!exhibition) return undefined;
+  
+  return {
+    ...exhibition,
+    status: determineStatus(exhibition.fromDate, exhibition.toDate)
+  };
+}
+
+// Helper function to filter exhibitions by status
+export function getExhibitionsByStatus(status: Status): ExhibitionWithStatus[] {
+  return getExhibitionsWithStatus().filter(ex => ex.status === status);
+}
+
+// Helper function to get current exhibition(s)
+export function getCurrentExhibitions(): ExhibitionWithStatus[] {
+  return getExhibitionsByStatus('current');
+}
+
+// Helper function to get upcoming exhibitions
+export function getUpcomingExhibitions(): ExhibitionWithStatus[] {
+  return getExhibitionsByStatus('upcoming');
+}
+
+// Helper function to get past exhibitions
+export function getPastExhibitions(): ExhibitionWithStatus[] {
+  return getExhibitionsByStatus('past');
 }

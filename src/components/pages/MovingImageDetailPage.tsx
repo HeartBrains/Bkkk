@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../utils/languageContext';
 import { getMovingImageProgramBySlug } from '../../utils/movingImageData';
-import { movingImageGalleries } from '../../utils/movingImageGalleryData';
 import { getDetailContentByLanguage } from '../../utils/detailContent';
 import { ArrowLeft } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '../ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -16,34 +15,22 @@ interface MovingImageDetailPageProps {
 export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImageDetailPageProps) {
   const { language } = useLanguage();
   const program = getMovingImageProgramBySlug(slug);
-  const gallery = program?.gallery || movingImageGalleries[slug as keyof typeof movingImageGalleries];
   
   // Get detail content from detailContent.ts based on language
   const detailContent = getDetailContentByLanguage(slug, language) || '';
 
+  // Carousel state
   const plugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   )
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
-  const thumbnailsRef = useRef<HTMLDivElement>(null);
 
-  // Carousel logic
   useEffect(() => {
     if (!api) return
     setCurrent(api.selectedScrollSnap())
     api.on("select", () => setCurrent(api.selectedScrollSnap()))
   }, [api])
-
-  // Auto-scroll thumbnails to keep current thumbnail visible
-  useEffect(() => {
-    if (thumbnailsRef.current) {
-      const container = thumbnailsRef.current;
-      const thumbnailWidth = 64 + 8; // w-16 (64px) + gap (8px)
-      const scrollPosition = current * thumbnailWidth - (container.clientWidth / 2) + (thumbnailWidth / 2);
-      container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
-    }
-  }, [current]);
 
   const scrollTo = (index: number) => api?.scrollTo(index);
 
@@ -55,32 +42,37 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
     );
   }
 
-  const galleryImages = gallery && gallery.length > 0 ? gallery.slice(0, 5) : [];
+  // Use gallery from program data or fallback to featured image
+  const galleryImages = program.gallery && program.gallery.length > 0 
+    ? program.gallery 
+    : (program.featuredImage ? [program.featuredImage] : []);
 
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
-      {/* Hero Section - Only show if images exist */}
-      {galleryImages.length > 0 && (
-        <div className="h-[35vh] md:h-[80vh] w-full relative overflow-hidden group bg-black">
+      {/* Hero Section - Carousel with Dots */}
+      <div className="w-full relative group">
+        {galleryImages.length > 0 ? (
           <Carousel
             setApi={setApi}
             plugins={[plugin.current]}
-            className="w-full h-full"
+            className="w-full bg-black"
             opts={{ align: "start", loop: true }}
           >
-            <CarouselContent className="h-full -ml-0">
+            <CarouselContent className="-ml-0">
               {galleryImages.map((src, index) => (
-                <CarouselItem key={index} className="h-full pl-0">
-                  <img
-                    src={src}
-                    alt={`${program.title[language]} Gallery ${index + 1}`}
-                    className="w-full h-full object-cover opacity-90"
-                    loading={index === 0 ? "eager" : "lazy"}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
+                <CarouselItem key={index} className="pl-0">
+                  <div className="w-full h-[80vh] flex items-center justify-center bg-black">
+                    <img
+                      src={src}
+                      alt={`${program.title[language]} Gallery ${index + 1}`}
+                      className="w-full h-full object-contain"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -92,49 +84,48 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
               </div>
             )}
           </Carousel>
-
-          {/* Thumbnails */}
-          {galleryImages.length > 1 && (
-            <div className="absolute bottom-8 right-6 md:right-[5%] z-20 flex gap-2">
-              {galleryImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => scrollTo(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    current === index 
-                      ? 'bg-white scale-125' 
-                      : 'bg-white/50 hover:bg-white/75'
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Back Button */}
-          <div className="absolute bottom-8 left-6 md:left-12 z-20">
-            <button 
-              onClick={() => onNavigate?.(backPage || 'home')}
-              className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-sm font-normal font-sans">
-                {backPage === 'archives'
-                  ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
-                  : backPage === 'exhibitions'
-                  ? (language === 'th' ? 'กลับสู่นิทรรศการ' : 'Back to Exhibitions')
-                  : backPage === 'moving-image'
-                  ? (language === 'th' ? 'กลับสู่โปรแกรมภาพเคลื่อนไหว' : 'Back to Moving Image Program')
-                  : (language === 'th' ? 'กลับสู่หน้าหลัก' : 'Back to Home')
-                }
-              </span>
-            </button>
+        ) : (
+          <div className="w-full h-[80vh] bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-400">
+              {language === 'th' ? 'ไม่มีรูปภาพ' : 'No images available'}
+            </span>
           </div>
+        )}
+
+        {/* Dot Navigation */}
+        {galleryImages.length > 1 && (
+          <div className="absolute bottom-8 right-6 md:right-[5%] z-20 flex gap-2">
+            {galleryImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  current === index 
+                    ? 'bg-white scale-125' 
+                    : 'bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Back Button */}
+        <div className="absolute bottom-8 left-6 md:left-12 z-20">
+          <button 
+            onClick={() => onNavigate?.('moving-image')}
+            className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="text-sm font-normal font-sans">
+              {language === 'th' ? 'กลับสู่โปรแกรมภาพเคลื่อนไหว' : 'Back to Moving Image Program'}
+            </span>
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Main Content */}
-      <div className={`w-full px-[5%] md:py-16 ${galleryImages.length > 0 ? 'pt-[96px] pb-[0px]' : 'py-8'}`}>
+      <div className="w-full px-[5%] md:py-16 pt-[96px] pb-[0px]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8">
           {/* Left Column - Program Info */}
           <div className="md:col-span-6 flex flex-col gap-8">

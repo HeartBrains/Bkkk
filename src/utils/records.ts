@@ -22,7 +22,38 @@ export interface RecordItem {
 // Generate records from exhibitions data
 const today = new Date(2026, 2, 10); // March 10, 2026 (reference date)
 
-function getExhibitionStatus(startDate: Date, endDate: Date): RecordStatus {
+function getExhibitionStatus(fromDate: string, toDate: string, explicitStatus: RecordStatus): RecordStatus {
+  // Priority 1: Use explicit status if provided
+  if (explicitStatus) {
+    return explicitStatus;
+  }
+
+  // Priority 2: Calculate from dates
+  const startDate = new Date(fromDate);
+  // Handle "Onwards" as ongoing exhibitions (no end date)
+  const endDate = toDate === 'Onwards' 
+    ? new Date(9999, 11, 31) 
+    : new Date(toDate);
+
+  if (today < startDate) {
+    return 'upcoming';
+  } else if (today > endDate) {
+    return 'past';
+  } else {
+    return 'current';
+  }
+}
+
+function getMovingImageStatus(fromDate: string, toDate: string, explicitStatus: RecordStatus): RecordStatus {
+  // Priority 1: Use explicit status if provided
+  if (explicitStatus) {
+    return explicitStatus;
+  }
+
+  // Priority 2: Calculate from dates
+  const startDate = new Date(fromDate);
+  const endDate = new Date(toDate);
+
   if (today < startDate) {
     return 'upcoming';
   } else if (today > endDate) {
@@ -34,9 +65,7 @@ function getExhibitionStatus(startDate: Date, endDate: Date): RecordStatus {
 
 // Convert exhibitions to records (English version for base RECORDS array)
 const exhibitionRecords: RecordItem[] = exhibitions.map(exhibition => {
-  const startDate = new Date(exhibition.fromDate);
-  const endDate = new Date(exhibition.toDate);
-  const status = getExhibitionStatus(startDate, endDate);
+  const status = getExhibitionStatus(exhibition.fromDate, exhibition.toDate, exhibition.status);
   
   return {
     id: `exh-${exhibition.id}`,
@@ -68,9 +97,7 @@ export async function fetchRecords(params?: {
   
   // Add exhibition records dynamically based on language
   const exhibitionRecordsLang: RecordItem[] = exhibitions.map(exhibition => {
-    const startDate = new Date(exhibition.fromDate);
-    const endDate = new Date(exhibition.toDate);
-    const status = getExhibitionStatus(startDate, endDate);
+    const status = getExhibitionStatus(exhibition.fromDate, exhibition.toDate, exhibition.status);
     
     return {
       id: `exh-${exhibition.id}`,
@@ -90,9 +117,7 @@ export async function fetchRecords(params?: {
   
   // Add moving image programs dynamically
   const movingImageRecords: RecordItem[] = movingImagePrograms.map(program => {
-    const startDate = new Date(program.fromDate);
-    const endDate = new Date(program.toDate);
-    const status = getExhibitionStatus(startDate, endDate);
+    const status = getMovingImageStatus(program.fromDate, program.toDate, program.status);
     
     // Use featuredImage if available, otherwise fallback to first gallery image
     const gallery = program.gallery || movingImageGalleries[program.slug as keyof typeof movingImageGalleries];

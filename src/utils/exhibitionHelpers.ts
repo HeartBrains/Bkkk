@@ -9,6 +9,11 @@ const today = new Date(2026, 2, 10);
 export function getUpcomingExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
   return exhibitions
     .filter(exhibition => {
+      // Priority 1: Check explicit status tag
+      if (exhibition.status === 'upcoming') return true;
+      if (exhibition.status === 'current' || exhibition.status === 'past') return false;
+      
+      // Priority 2: Fall back to date calculation if status doesn't match
       const startDate = new Date(exhibition.fromDate);
       return startDate > today;
     })
@@ -20,8 +25,16 @@ export function getUpcomingExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
 export function getCurrentExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
   return exhibitions
     .filter(exhibition => {
+      // Priority 1: Check explicit status tag
+      if (exhibition.status === 'current') return true;
+      if (exhibition.status === 'upcoming' || exhibition.status === 'past') return false;
+      
+      // Priority 2: Fall back to date calculation if status doesn't match
       const startDate = new Date(exhibition.fromDate);
-      const endDate = new Date(exhibition.toDate);
+      // Handle "Onwards" as ongoing exhibitions (no end date)
+      const endDate = exhibition.toDate === 'Onwards' 
+        ? new Date(9999, 11, 31) // Far future date for ongoing exhibitions
+        : new Date(exhibition.toDate);
       return today >= startDate && today <= endDate;
     })
     .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime())
@@ -32,6 +45,13 @@ export function getCurrentExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
 export function getPastExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
   return exhibitions
     .filter(exhibition => {
+      // Priority 1: Check explicit status tag
+      if (exhibition.status === 'past') return true;
+      if (exhibition.status === 'current' || exhibition.status === 'upcoming') return false;
+      
+      // Priority 2: Fall back to date calculation if status doesn't match
+      // Ongoing exhibitions (Onwards) are never past
+      if (exhibition.toDate === 'Onwards') return false;
       const endDate = new Date(exhibition.toDate);
       return endDate < today;
     })

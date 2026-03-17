@@ -2,8 +2,8 @@ import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { useLanguage } from '../../utils/languageContext';
 import { useState, useEffect, useMemo } from 'react';
 import { fetchRecords, RecordItem } from '../../utils/records';
-import Slider from 'react-slick';
 import { getEmptyStateMessage } from '../../utils/siteConfig';
+import movingImageHero from 'figma:asset/429c8ad61cdb4d502462d129e377fe4faf35abf2.png';
 
 interface MovingImagePageProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -101,41 +101,12 @@ export function MovingImagePage({ onNavigate, targetSectionId }: MovingImagePage
     }
   }, [targetSectionId]);
 
-  // Get all hero images from moving image records
-  const heroImages = movingImageRecords
-    .filter(record => record.image) // Only include records with images
-    .map(record => record.image);
-
-  // Slider settings
-  const sliderSettings = {
-    dots: false,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    fade: true,
-    cssEase: 'ease-in-out',
-    pauseOnHover: false,
-    arrows: false,
-  };
-
   return (
     <div className="w-full bg-white min-h-screen pb-24 font-sans text-black">
       {/* Hero Section with Slider */}
-      {heroImages.length > 0 ? (
+      {movingImageHero ? (
         <div className="relative w-full h-[80vh] overflow-hidden z-0">
-          <Slider {...sliderSettings} className="h-full">
-            {heroImages.map((image, index) => (
-              <div key={index} className="relative h-[80vh]">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${image})` }}
-                />
-              </div>
-            ))}
-          </Slider>
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${movingImageHero})` }} />
           <div className="absolute inset-0 bg-black/40 pointer-events-none" />
           <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none md:hidden" />
         </div>

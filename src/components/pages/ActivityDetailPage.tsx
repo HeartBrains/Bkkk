@@ -124,15 +124,12 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
          {/* Back Button */}
          <div className="absolute bottom-8 left-6 md:left-12 z-20">
             <button 
-                onClick={() => onNavigate(backPage || 'activities')}
+                onClick={() => onNavigate('activities')}
                 className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-normal font-sans">
-                    {backPage === 'archives' 
-                        ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
-                        : (language === 'th' ? 'กลับสู่กิจกรรม' : 'Back to Activities')
-                    }
+                    {language === 'th' ? 'กลับสู่กิจกรรม' : 'Back to Activities'}
                 </span>
             </button>
         </div>

@@ -76,8 +76,7 @@ export function VisitInfo() {
                   </>
                 ) : (
                   <>
-                    <p className="text-xl md:text-2xl font-sans text-black">Entry to exhibitions is free, except for</p>
-                    <p className="text-xl md:text-2xl font-sans text-black">special events, charges will vary.</p>
+                    <p className="text-xl md:text-2xl font-sans text-black">Entry to exhibitions is free, except for special events, charges will vary.</p>
                   </>
                 )}
             </div>
@@ -162,7 +161,7 @@ export function VisitInfo() {
                     {language === 'th' ? (
                       <>
                         <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">ที่จอดรถในสถานที่มีจำกัดมากเนื่องจากตั้งอยู่ในซอยแคบ</p>
-                        <p className="text-xl md:text-2xl font-sans text-black mt-4 leading-[1.82em]">แนะนำอย่างยิ่งให้จอดรถที่ลานจอรถเชิพาณิชย์ใกล้เคียง:</p>
+                        <p className="text-xl md:text-2xl font-sans text-black mt-4 leading-[1.82em]">แนะนำอย่างยิ่งให้���อดรถที่ลานจอรถเชิพาณิชย์ใกล้เคียง:</p>
                         <p className="text-xl md:text-2xl font-sans text-black mt-2 leading-[1.82em]">
                           <a href="https://maps.app.goo.gl/bz9RmmiWfELuy4MV6" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">
                             อาคารจอดรถ Moh Mee Development

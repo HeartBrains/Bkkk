@@ -4,7 +4,6 @@ import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { useLanguage } from '../../utils/languageContext';
 import khaoYaiHero from "figma:asset/cf64d0ac119d7726ae241c9d4cf05ce82a8d3c8c.png";
 import bangkokHover from "figma:asset/c62c64ac454fd8fd1b5ba6a64e8e3a9305f2f778.png";
-import logoImage from "figma:asset/c4b9ac99c37ce625f62558a3efaf0107be9526ee.png";
 
 import svgPaths from '../../imports/svg-jcoid2vnfk';
 import bkkSvgPaths from '../../imports/svg-4a7jvyp0q8';

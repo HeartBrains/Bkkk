@@ -3,12 +3,21 @@ import { ParallaxHero } from '../ui/ParallaxHero';
 import { useLanguage } from '../../utils/languageContext';
 import { exhibitions } from '../../utils/exhibitionsDataNew';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { getEmptyStateMessage } from '../../utils/siteConfig';
+import { getEmptyStateMessage, siteConfig } from '../../utils/siteConfig';
 
 // Categorize exhibition status using ISO dates
-function getExhibitionStatus(fromDate: string, toDate: string, referenceDate: Date): 'current' | 'upcoming' | 'past' | null {
+function getExhibitionStatus(fromDate: string, toDate: string, explicitStatus: 'current' | 'upcoming' | 'past', referenceDate: Date): 'current' | 'upcoming' | 'past' | null {
+  // Priority 1: Use explicit status if provided
+  if (explicitStatus) {
+    return explicitStatus;
+  }
+
+  // Priority 2: Calculate from dates
   const start = new Date(fromDate);
-  const end = new Date(toDate);
+  // Handle "Onwards" as ongoing exhibitions (no end date)
+  const end = toDate === 'Onwards' 
+    ? new Date(9999, 11, 31) 
+    : new Date(toDate);
 
   // Upcoming: exhibition hasn't started yet
   if (referenceDate < start) {
@@ -42,34 +51,34 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
 
   // Categorize exhibitions by status
   const currentExhibitions = exhibitions
-    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'current')
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, ex.status, today) === 'current')
     .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   const upcomingExhibitions = exhibitions
-    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'upcoming')
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, ex.status, today) === 'upcoming')
     .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   const pastExhibitions = exhibitions
-    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, today) === 'past')
+    .filter(ex => getExhibitionStatus(ex.fromDate, ex.toDate, ex.status, today) === 'past')
     .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime());
 
   // Navigation sections
   const sections = [
-    { 
+    ...(siteConfig.visibility.exhibitions.upcoming ? [{ 
       id: 'upcoming-exhibitions', 
       label: language === 'th' ? 'นิทรรศการที่กำลังจะเริ่ม' : 'Upcoming Exhibitions',
       count: upcomingExhibitions.length
-    },
-    { 
+    }] : []),
+    ...(siteConfig.visibility.exhibitions.current ? [{ 
       id: 'current-exhibitions', 
       label: language === 'th' ? 'นิทรรศการปัจจุบัน' : 'Current Exhibitions',
       count: currentExhibitions.length
-    },
-    { 
+    }] : []),
+    ...(siteConfig.visibility.exhibitions.past ? [{ 
       id: 'past-exhibitions', 
       label: language === 'th' ? 'นิทรรศการที่ผ่านมา' : 'Past Exhibitions',
       count: pastExhibitions.length
-    }
+    }] : [])
   ];
 
   // Scroll to section handler
@@ -139,7 +148,7 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
             {item.title[language]}
           </h3>
           <p className={`text-xl md:text-2xl font-normal text-black leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-            {item.artist[language]}
+            {item.artist[language] || item.curator?.[language]}
           </p>
           <p className={`text-xl md:text-2xl font-normal text-black leading-tight mt-2 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
             {item.dateDisplay[language]}
@@ -190,50 +199,56 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
           {/* Content Sections */}
           <div className="w-full md:w-1/2 flex flex-col md:items-end">
             {/* Upcoming Exhibitions Section */}
-            <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
-                {upcomingExhibitions.length > 0 ? (
-                  upcomingExhibitions.map((item, index) => (
-                    <ExhibitionCard key={`upcoming-${item.id}`} item={item} index={index} prefix="upcoming" />
-                  ))
-                ) : (
-                  <EmptyState 
-                    message={getEmptyStateMessage('noUpcomingExhibitions', language)}
-                    className="w-full text-center"
-                  />
-                )}
-              </div>
-            </section>
+            {siteConfig.visibility.exhibitions.upcoming && (
+              <section id="upcoming-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:gap-16 md:items-end">
+                  {upcomingExhibitions.length > 0 ? (
+                    upcomingExhibitions.map((item, index) => (
+                      <ExhibitionCard key={`upcoming-${item.id}`} item={item} index={index} prefix="upcoming" />
+                    ))
+                  ) : (
+                    <EmptyState 
+                      message={getEmptyStateMessage('noUpcomingExhibitions', language)}
+                      className="w-full text-center"
+                    />
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* Current Exhibitions Section */}
-            <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
-                {currentExhibitions.length > 0 ? (
-                  currentExhibitions.map((item, index) => (
-                    <ExhibitionCard key={item.id} item={item} index={index} prefix="current" />
-                  ))
-                ) : (
-                  <EmptyState 
-                    message={getEmptyStateMessage('noCurrentExhibitions', language)}
-                  />
-                )}
-              </div>
-            </section>
+            {siteConfig.visibility.exhibitions.current && (
+              <section id="current-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:gap-16 md:items-end">
+                  {currentExhibitions.length > 0 ? (
+                    currentExhibitions.map((item, index) => (
+                      <ExhibitionCard key={item.id} item={item} index={index} prefix="current" />
+                    ))
+                  ) : (
+                    <EmptyState 
+                      message={getEmptyStateMessage('noCurrentExhibitions', language)}
+                    />
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* Past Exhibitions Section */}
-            <section id="past-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
-              <div className="flex flex-col gap-12 md:gap-16 md:items-end">
-                {pastExhibitions.length > 0 ? (
-                  pastExhibitions.map((item, index) => (
-                    <ExhibitionCard key={`past-${item.id}`} item={item} index={index} prefix="past" />
-                  ))
-                ) : (
-                  <EmptyState 
-                    message={getEmptyStateMessage('noPastExhibitions', language)}
-                  />
-                )}
-              </div>
-            </section>
+            {siteConfig.visibility.exhibitions.past && (
+              <section id="past-exhibitions" className="mb-32 md:mb-40 scroll-mt-32 w-full">
+                <div className="flex flex-col gap-12 md:gap-16 md:items-end">
+                  {pastExhibitions.length > 0 ? (
+                    pastExhibitions.map((item, index) => (
+                      <ExhibitionCard key={`past-${item.id}`} item={item} index={index} prefix="past" />
+                    ))
+                  ) : (
+                    <EmptyState 
+                      message={getEmptyStateMessage('noPastExhibitions', language)}
+                    />
+                  )}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>

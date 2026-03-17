@@ -97,15 +97,12 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             {/* Back Button */}
             <div className="absolute bottom-8 left-6 md:left-12 z-20">
                 <button 
-                    onClick={() => onNavigate(backPage || 'residency')}
+                    onClick={() => onNavigate('residency')}
                     className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
                 >
                     <ArrowLeft className="w-5 h-5" />
                     <span className="text-sm font-normal font-sans">
-                        {backPage === 'archives'
-                            ? (language === 'th' ? 'กลับสู่คลังข้อมูล' : 'Back to Archives')
-                            : (language === 'th' ? 'กลับสู่ศิลปินพำนัก' : 'Back to Residency')
-                        }
+                        {language === 'th' ? 'กลับสู่ศิลปินพำนัก' : 'Back to Residency'}
                     </span>
                 </button>
             </div>
@@ -155,10 +152,11 @@ export function ArtistDetailPage({ onNavigate, slug, backPage }: ArtistDetailPag
             </div>
 
             {/* Right Column - Text Content */}
-            <div className={`md:col-start-7 md:col-span-6 text-xl md:text-2xl text-black font-normal leading-tight space-y-8 ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                <div>
-                    <div className={`text-xl md:text-2xl text-gray-700 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''} [&>p]:mb-8`} dangerouslySetInnerHTML={{ __html: detailContent }} />
-                </div>
+            <div className="md:col-start-7 md:col-span-6 px-0 md:px-[28px]">
+                <div 
+                    className={`[&>p]:mb-8 [&>p]:text-2xl ${language === 'th' ? '[&>p]:leading-[1.82em]' : ''}`}
+                    dangerouslySetInnerHTML={{ __html: detailContent }} 
+                />
             </div>
         </div>
       </div>

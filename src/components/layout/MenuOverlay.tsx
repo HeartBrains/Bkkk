@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ASSETS } from '../../utils/assets';
 import { ExpandingSearch } from '../search/ExpandingSearch';
 import { useLanguage } from '../../utils/languageContext';
+import { siteConfig } from '../../utils/siteConfig';
 
 interface MenuOverlayProps {
   isOpen: boolean;
@@ -48,63 +49,63 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
 
   // Dynamic sitemap based on current language
   const sitemap: MenuItem[] = [
-    { label: t('nav.home'), page: 'home' },
-    { label: t('nav.visit'), page: 'visit' },
-    { 
+    ...(siteConfig.menu.home ? [{ label: t('nav.home'), page: 'home' }] : []),
+    ...(siteConfig.menu.visit ? [{ label: t('nav.visit'), page: 'visit' }] : []),
+    ...(siteConfig.menu.exhibitions ? [{ 
       label: t('nav.exhibitions'), 
       page: 'exhibitions',
       children: [
-          { label: t('exhibitions.upcoming'), page: 'exhibitions', sectionId: 'upcoming-exhibitions' },
-          { label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' },
-          { label: t('exhibitions.past'), page: 'exhibitions', sectionId: 'past-exhibitions' },
+          ...(siteConfig.visibility.exhibitions.upcoming ? [{ label: t('exhibitions.upcoming'), page: 'exhibitions', sectionId: 'upcoming-exhibitions' }] : []),
+          ...(siteConfig.visibility.exhibitions.current ? [{ label: t('exhibitions.current'), page: 'exhibitions', sectionId: 'current-exhibitions' }] : []),
+          ...(siteConfig.visibility.exhibitions.past ? [{ label: t('exhibitions.past'), page: 'exhibitions', sectionId: 'past-exhibitions' }] : []),
       ]
-    },
-    { 
+    }] : []),
+    ...(siteConfig.menu.movingImage ? [{ 
       label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหว' : 'Moving Image Program', 
       page: 'moving-image',
       children: [
-          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program', page: 'moving-image', sectionId: 'upcoming-programs' },
-          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program', page: 'moving-image', sectionId: 'current-programs' },
-          { label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program', page: 'moving-image', sectionId: 'past-programs' },
+          ...(siteConfig.visibility.movingImage.upcoming ? [{ label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึง' : 'Upcoming Moving Image Program', page: 'moving-image', sectionId: 'upcoming-programs' }] : []),
+          ...(siteConfig.visibility.movingImage.current ? [{ label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวปัจจุบัน' : 'Current Moving Image Program', page: 'moving-image', sectionId: 'current-programs' }] : []),
+          ...(siteConfig.visibility.movingImage.past ? [{ label: language === 'th' ? 'โปรแกรมภาพเคลื่อนไหวที่ผ่านมา' : 'Past Moving Image Program', page: 'moving-image', sectionId: 'past-programs' }] : []),
       ]
-    },
-    {
+    }] : []),
+    ...(siteConfig.menu.activities ? [{
         label: t('nav.activities'),
         page: 'activities',
         children: [
-            { label: 'Public Program', page: 'activities', sectionId: 'public-program' },
-            { label: t('activities.screenings'), page: 'activities', sectionId: 'screenings' },
+            ...(siteConfig.visibility.activities.publicProgram ? [{ label: 'Public Program', page: 'activities', sectionId: 'public-program' }] : []),
+            ...(siteConfig.visibility.activities.screenings ? [{ label: t('activities.screenings'), page: 'activities', sectionId: 'screenings' }] : []),
         ]
-    },
-    {
+    }] : []),
+    ...(siteConfig.menu.residency ? [{
         label: t('nav.residency'),
         page: 'residency',
         children: [
-            { label: t('residency.upcomingResidency'), page: 'residency', sectionId: 'upcoming-residency' },
-            { label: t('residency.currentArtists'), page: 'residency', sectionId: 'current-artists' },
-            { label: t('residency.pastArtists'), page: 'residency', sectionId: 'past-artists' },
+            ...(siteConfig.visibility.residency.upcoming ? [{ label: t('residency.upcomingResidency'), page: 'residency', sectionId: 'upcoming-residency' }] : []),
+            ...(siteConfig.visibility.residency.current ? [{ label: t('residency.currentArtists'), page: 'residency', sectionId: 'current-artists' }] : []),
+            ...(siteConfig.visibility.residency.past ? [{ label: t('residency.pastArtists'), page: 'residency', sectionId: 'past-artists' }] : []),
         ]
-    },
-    { label: t('nav.blog'), page: 'blog' },
-    { label: t('nav.aboutUs'), page: 'about' },
-    { label: t('nav.team'), page: 'team' },
-    {
+    }] : []),
+    ...(siteConfig.menu.blog ? [{ label: t('nav.blog'), page: 'blog' }] : []),
+    ...(siteConfig.menu.about ? [{ label: t('nav.aboutUs'), page: 'about' }] : []),
+    ...(siteConfig.menu.team ? [{ label: t('nav.team'), page: 'team' }] : []),
+    ...(siteConfig.menu.shop ? [{
         label: t('nav.shop'),
         page: 'shop',
         children: [
-            { label: 'Bookings', page: 'shop', sectionId: 'bookings' },
-            { label: 'Products', page: 'shop', sectionId: 'products' },
+            ...(siteConfig.visibility.shop.bookings ? [{ label: 'Bookings', page: 'shop', sectionId: 'bookings' }] : []),
+            ...(siteConfig.visibility.shop.products ? [{ label: 'Products', page: 'shop', sectionId: 'products' }] : []),
         ]
-    },
-    {
+    }] : []),
+    ...(siteConfig.menu.archives ? [{
         label: t('nav.archives'),
         page: 'archives',
         children: [
-            { label: t('exhibitions.past'), page: 'archives', sectionId: 'past-exhibitions' },
-            { label: 'Past Activities', page: 'archives', sectionId: 'past-activities' },
+            ...(siteConfig.visibility.archives.pastExhibitions ? [{ label: t('exhibitions.past'), page: 'archives', sectionId: 'past-exhibitions' }] : []),
+            ...(siteConfig.visibility.archives.pastActivities ? [{ label: 'Past Activities', page: 'archives', sectionId: 'past-activities' }] : []),
         ]
-    },
-    { label: t('nav.contact'), page: 'contact' },
+    }] : []),
+    ...(siteConfig.menu.contact ? [{ label: t('nav.contact'), page: 'contact' }] : []),
   ];
 
   const isItemActive = (itemPage: string, currentPage: string) => {
@@ -265,15 +266,17 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                     }}
                 >
                     <div className="flex items-center gap-6">
-                        <ExpandingSearch 
-                            onNavigate={(page) => {
-                                onNavigate(page);
-                                onClose();
-                            }}
-                            className="gap-2"
-                            iconClassName="w-6 h-6 text-white"
-                            inputClassName="w-40 text-[18px] text-white placeholder:text-gray-500"
-                        />
+                        {siteConfig.menu.search && (
+                          <ExpandingSearch 
+                              onNavigate={(page) => {
+                                  onNavigate(page);
+                                  onClose();
+                              }}
+                              className="gap-2"
+                              iconClassName="w-6 h-6 text-white"
+                              inputClassName="w-40 text-[18px] text-white placeholder:text-gray-500"
+                          />
+                        )}
                         <a 
                             href="https://kyaf.thaicms.com"
                             className="text-[18px] text-white font-normal hover:text-gray-300 transition-colors uppercase tracking-wide"
@@ -282,21 +285,23 @@ export function MenuOverlay({ isOpen, onClose, onNavigate, activePage }: MenuOve
                         </a>
                     </div>
 
-                    <div className="text-[18px] font-normal text-gray-500 select-none tracking-wide flex items-center">
-                        <button 
-                            className={`cursor-pointer transition-colors ${language === 'en' ? 'text-white' : 'hover:text-white'}`}
-                            onClick={() => setLanguage && setLanguage('en')}
-                        >
-                            EN
-                        </button>
-                        <span className="mx-2">|</span>
-                        <button 
-                            className={`cursor-pointer transition-colors ${language === 'th' ? 'text-white' : 'hover:text-white'}`}
-                            onClick={() => setLanguage && setLanguage('th')}
-                        >
-                            TH
-                        </button>
-                    </div>
+                    {siteConfig.menu.languageSwitcher && (
+                      <div className="text-[18px] font-normal text-gray-500 select-none tracking-wide flex items-center">
+                          <button 
+                              className={`cursor-pointer transition-colors ${language === 'en' ? 'text-white' : 'hover:text-white'}`}
+                              onClick={() => setLanguage && setLanguage('en')}
+                          >
+                              EN
+                          </button>
+                          <span className="mx-2">|</span>
+                          <button 
+                              className={`cursor-pointer transition-colors ${language === 'th' ? 'text-white' : 'hover:text-white'}`}
+                              onClick={() => setLanguage && setLanguage('th')}
+                          >
+                              TH
+                          </button>
+                      </div>
+                    )}
                 </motion.div>
 
              </motion.div>

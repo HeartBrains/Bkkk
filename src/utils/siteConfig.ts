@@ -4,6 +4,63 @@
  */
 
 export const siteConfig = {
+  // Main menu visibility controls - toggle menu items
+  menu: {
+    home: true,
+    visit: true,
+    exhibitions: true,
+    movingImage: true,
+    activities: false,
+    residency: true,
+    blog: true,
+    about: true,
+    team: true,
+    shop: true,
+    archives: true,
+    contact: true,
+    languageSwitcher: true,
+    search: true,
+  },
+
+  // Home page anchor menu visibility controls
+  homeAnchors: {
+    currentExhibitions: true,
+    upcomingExhibitions: true,
+    currentMovingImageProgram: true,
+    currentActivities: false,
+  },
+
+  // Section visibility controls - toggle submenu items and listing pages
+  visibility: {
+    exhibitions: {
+      upcoming: true,
+      current: true,
+      past: true,
+    },
+    movingImage: {
+      upcoming: true,
+      current: true,
+      past: true,
+    },
+    activities: {
+      publicProgram: true,
+      screenings: true,
+    },
+    residency: {
+      upcoming: true,
+      current: true,
+      past: true,
+    },
+    shop: {
+      bookings: true,
+      products: true,
+    },
+    archives: {
+      pastExhibitions: true,
+      pastActivities: true,
+    }
+  },
+  
   // Empty state messages - editable from here
   emptyStates: {
     comingSoon: {

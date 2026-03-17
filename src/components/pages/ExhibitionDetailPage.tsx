@@ -88,21 +88,21 @@ export function ExhibitionDetailPage({ onNavigate, exhibition, slug, backPage }:
   return (
     <div className="w-full bg-white pb-24 min-h-screen">
        {/* Hero Section */}
-       <div className="h-[35vh] md:h-[80vh] w-full relative overflow-hidden group bg-black">
+       <div className="w-full relative group">
           {galleryImages.length > 0 ? (
               <Carousel
                 setApi={setApi}
                 plugins={[plugin.current]}
-                className="w-full h-full"
+                className="w-full bg-black"
                 opts={{ align: "start", loop: true }}
               >
-                <CarouselContent className="h-full -ml-0">
+                <CarouselContent className="-ml-0">
                    {galleryImages.map((src, index) => (
-                      <CarouselItem key={index} className="h-full pl-0 flex items-center justify-center">
+                      <CarouselItem key={index} className="pl-0">
                          <img
                             src={src}
                             alt={`${postData.title} Gallery ${index + 1}`}
-                            className="w-full h-full object-cover object-center"
+                            className="w-full h-auto block"
                             loading={index === 0 ? "eager" : "lazy"}
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
