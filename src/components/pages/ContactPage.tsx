@@ -4,6 +4,7 @@ import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { useLanguage } from '../../utils/languageContext';
 import { Facebook, Instagram, Globe } from 'lucide-react';
+import { ImageWithFallback } from '../figma/ImageWithFallback';
 
 export function ContactPage() {
   const { language } = useLanguage();
@@ -12,7 +13,7 @@ export function ContactPage() {
     <div className="bg-white min-h-screen pb-24 font-sans text-black">
       {/* Hero Map */}
        <div className="w-full h-[60vh] md:h-[80vh] bg-[#D9D9D9] relative overflow-hidden">
-          <img 
+          <ImageWithFallback 
               src="https://irp.cdn-website.com/5516674f/dms3rep/multi/cover-contact-1-89b6eddb.jpg"
               alt="Bangkok Kunsthalle"
               className="w-full h-full object-cover"

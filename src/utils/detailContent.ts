@@ -92,6 +92,11 @@ export const DETAIL_CONTENT: DetailContent[] = [
     category: 'Exhibition',
     content: `<p>"A Bit Fountain and a Bit Not" (2026) is an imaginary river flowing quietly through the heart of Bangkok Kunsthalle. The work is a subtle yet radical intervention that transforms an ordinary architectural element into a living source of movement.</p><p>Water runs silently inside the existing handrail of the 55 meter staircase, turning the railing into a fountain without altering its appearance. What appears to be a purely functional support reveals another ontological condition: the handrail becomes a conduit, a hidden river circulating through the building. At the base of the railing, a large basin collects the water, completing the cycle.</p><p>The gesture is primitive and elemental. Throughout history, fountains have served as places of encounter—points around which communities gather. Water produces presence, pause, and conversation; in this sense, the fountain can be understood as one of the earliest forms of public space. By introducing this quiet fountain within the interior of the Kunsthalle, the work reveals the institution's deeper vocation: to bring the life of the city into the building. A typically outdoor civic device—the fountain—is relocated indoors, allowing urban rhythms, gathering, and circulation to flow through the architecture itself.</p><p>The handrail remains visually unchanged, yet its meaning is transformed. Within the most ordinary structure, another reality begins to flow—a river that is both present and invisible, a bit fountain and a bit not.</p><p> Artist Biography </p><p>Not Vital (b. 1948, Switzerland) is a renowned Swiss artist known for a nomadic practice, dividing his time between Brazil, Chile, China, and Switzerland. His works are inspired by personal impressions and experiences from travels, often reflecting on nature, architecture, and varied cultural traditions through surreal sculpture, installation, and painting</p>`
   },
+  {
+    slug: 'dial-a-poem-thailand',
+    category: 'Exhibition',
+    content: ``
+  },
 
   // MOVING IMAGE PROGRAMS
   {
@@ -127,7 +132,7 @@ export const DETAIL_CONTENT: DetailContent[] = [
   {
     slug: 'upcoming-program-2026',
     category: 'Moving Image Program',
-    content: `<p>Details of our upcoming Moving Image Program will be announced soon. Stay tuned for another thought-provoking exploration of cinema and contemporary art.</p>`
+    content: `<p>Coming soon</p>`
   },
 
   // RESIDENCIES

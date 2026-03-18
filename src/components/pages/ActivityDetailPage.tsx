@@ -125,7 +125,7 @@ export function ActivityDetailPage({ onNavigate, activity, slug, backPage }: Act
          <div className="absolute bottom-8 left-6 md:left-12 z-20">
             <button 
                 onClick={() => onNavigate('activities')}
-                className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+                className="fixed top-[120px] left-6 z-30 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-normal font-sans">

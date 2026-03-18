@@ -23,14 +23,7 @@ export interface MovingImageProgram {
     title: string;
     year: string;
   }>;
-  films: {
-    title: string;
-    artist: string;
-    year: string;
-    format: string;
-    duration: string;
-    credit: string;
-  }[];
+  additionalInfo?: string; // HTML content from CSV
 }
 
 export const movingImagePrograms: MovingImageProgram[] = [
@@ -38,8 +31,8 @@ export const movingImagePrograms: MovingImageProgram[] = [
     id: '6',
     slug: 'upcoming-program-2026',
     title: {
-      en: 'To Be Announced',
-      th: 'จะประกาศในเร็วๆ นี้'
+      en: 'Wantanee Siripattananuntakul',
+      th: 'วันทนีย์ ศิริพัฒนานันทกุล'
     },
     curator: {
       en: 'Rosalia Namsai Engchuan',
@@ -48,14 +41,13 @@ export const movingImagePrograms: MovingImageProgram[] = [
     fromDate: '2026-05-01',
     toDate: '2026-07-31',
     dateDisplay: {
-      en: '1 May 2026 - 31 July 2026',
-      th: '1 พฤษภาคม 2569 - 31 กรกฎาคม 2569'
+      en: '',
+      th: ''
     },
     status: 'upcoming',
-    gallery: [
-      'https://images.unsplash.com/photo-1764689668473-b834a1a575e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaWxtJTIwcHJvamVjdG9yJTIwY2luZW1hJTIwYXJ0fGVufDF8fHx8MTc3MzU2MjYzMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-    ],
-    films: []
+    featuredImage: '',
+    gallery: [],
+    installationViews: []
   },
   {
     id: '1',
@@ -75,6 +67,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '23 ตุลาคม 2567 - 22 ธันวาคม 2567'
     },
     status: 'past',
+    additionalInfo: '<p>1. Chulayarnnon Siriphol, "Birth of Golden Snail", 2018, 16 mm film, black & white, silence, 20 minutes.</p> <p>2. Aura Satz, "While Smoke Signals", 2023, color, sound, 9 minutes.</p> <p>3. Jiří Žák, "Unfinished Love Letter", 2020, color, sound, 23 minutes.</p> <p>4. Riar Rizaldi, "Notes from Gog Magog", 2022, color, sound, 20 minutes.</p> <p>5. Rhea Storr, "A Protest, A Celebration, A Mixed Message", 2018, color, sound, 12 minutes.</p> <p>6. Martha Atienza, "Anito", 2015, color, sound, 9 minutes.</p> <p>7. Sky Hopinka, "I\'ll Remember You as You Were, Not as What You\'ll Become", 2016, color, sound, 13 minutes.</p>',
     featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+1+COVER-1920w.jpg',
     gallery: [
       'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.1+Infringes--Infringes+-Andrea+Rossetti+30-1920w.jpg',
@@ -99,64 +92,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
         title: 'I\'ll Remember You as You Were, Not as What You\'ll Become',
         year: '2016'
       }
-    ],
-    films: [
-      {
-        title: 'Birth of Golden Snail',
-        artist: 'Chulayarnnon Siriphol',
-        year: '2018',
-        format: '16 mm film, black & white, silence',
-        duration: '20 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'While Smoke Signals',
-        artist: 'Aura Satz',
-        year: '2023',
-        format: 'color, sound',
-        duration: '9 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Unfinished Love Letter',
-        artist: 'Jiří Žák',
-        year: '2020',
-        format: 'color, sound',
-        duration: '23 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Notes from Gog Magog',
-        artist: 'Riar Rizaldi',
-        year: '2022',
-        format: 'color, sound',
-        duration: '20 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'A Protest, A Celebration, A Mixed Message',
-        artist: 'Rhea Storr',
-        year: '2018',
-        format: 'color, sound',
-        duration: '12 minutes',
-        credit: 'Courtesy of the artist and LUX London.'
-      },
-      {
-        title: 'Anito',
-        artist: 'Martha Atienza',
-        year: '2015',
-        format: 'color, sound',
-        duration: '9 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'I\'ll Remember You as You Were, Not as What You\'ll Become',
-        artist: 'Sky Hopinka',
-        year: '2016',
-        format: 'color, sound',
-        duration: '13 minutes',
-        credit: 'Courtesy of the artist.'
-      }
     ]
   },
   {
@@ -168,7 +103,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
     },
     curator: {
       en: 'Rosalia Namsai Engchuan',
-      th: 'โรซาเลีย นามทราย เอ็งชวน'
+      th: 'โรซเลีย นามทราย เอ็งชวน'
     },
     fromDate: '2025-11-22',
     toDate: '2026-02-22',
@@ -177,6 +112,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '22 พฤศจิกายน 2568 - 22 กุมภาพันธ์ 2569'
     },
     status: 'past',
+    additionalInfo: '<p>1. Stephanie Comilang, "Search for Life I", 2024, color, sound, 20:20 minutes.</p> <p>2. Prapat Jiwarangsan, "The Wandering Ghost", 2018, color, sound, 20 minutes.</p> <p>3. Prapat Jiwarangsan, "Ploy", 2020, color, sound, 51 minutes.</p> <p>4. Kidlat Tahimik, "Perfumed Nightmare", 1977, color, sound, 91 minutes.</p> <p>5. Shen Xin, "Warm Spell", 2018, color, sound, 34:22 minutes.</p> <p>6. Jon Uengphakorn, "Hara Factory Workers Struggle", 1975, 16 mm film, color, sound, 45 minutes.</p>',
     
     featuredImage: 'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+5+COVER-1920w.jpg',
     gallery: [
@@ -185,56 +121,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
       'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+1-1920w.jpg',
       'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I+2-1920w.jpg',
       'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.5+Search+for+Life+I--Search+for+Life+I-+Krittawat+-+Prapasiri+10-1920w.jpg'
-    ],
-    films: [
-      {
-        title: 'Search for Life I',
-        artist: 'Stephanie Comilang',
-        year: '2024',
-        format: 'color, sound',
-        duration: '20:20 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'The Wandering Ghost',
-        artist: 'Prapat Jiwarangsan',
-        year: '2018',
-        format: 'color, sound',
-        duration: '20 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Ploy',
-        artist: 'Prapat Jiwarangsan',
-        year: '2020',
-        format: 'color, sound',
-        duration: '51 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Perfumed Nightmare',
-        artist: 'Kidlat Tahimik',
-        year: '1977',
-        format: 'color, sound',
-        duration: '91 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Warm Spell',
-        artist: 'Shen Xin',
-        year: '2018',
-        format: 'color, sound',
-        duration: '34:22 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Hara Factory Workers Struggle',
-        artist: 'Jon Uengphakorn',
-        year: '1975',
-        format: '16 mm film, color, sound',
-        duration: '45 minutes',
-        credit: 'Courtesy of the artist.'
-      }
     ],
     installationViews: [
       {
@@ -262,6 +148,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '17 มกราคม 2568 - 27 กุมภาพันธ์ 2568'
     },
     status: 'past',
+    additionalInfo: '<p>1. Surapong Pinijkhar, "Sampeng (The Chinatown Montage)", 1982, 16 mm film, color, sound, 60 minutes.</p> <p>2. Ming Wong, "After Chinatown", 2012, black & white, sound, 7:09 minutes.</p> <p>3. Doug Aitken, "Wilderness", 2022, color, sound, 13:54 minutes.</p> <p>4. Lawrence Lek, "Black Cloud", 2021, color, sound, 11 minutes.</p>',
 
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.2+Shapeshifting+Spaces--Moving+Image+Programs-+Puttisin+Choojesroom+1+COVER.jpg',
     gallery: [
@@ -270,40 +157,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.2+Shapeshifting+Spaces--Moving+Image+Programs-+Puttisin+Choojesroom+2.jpg',      
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.2+Shapeshifting+Spaces--Lawrence+Lek-+Black+Cloud-+courtesy+of+the+artist+10.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.2+Shapeshifting+Spaces--Surapong+Pinijkhar-+Sampeng+1.jpg'
-    ],
-    films: [
-      {
-        title: 'Sampeng (The Chinatown Montage)',
-        artist: 'Surapong Pinijkhar',
-        year: '1982',
-        format: '16 mm film, color, sound',
-        duration: '60 minutes',
-        credit: 'Courtesy of the artist and Thai Film Archive.'
-      },
-      {
-        title: 'After Chinatown',
-        artist: 'Ming Wong',
-        year: '2012',
-        format: 'black & white, sound',
-        duration: '7:09 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Wilderness',
-        artist: 'Doug Aitken',
-        year: '2022',
-        format: 'color, sound',
-        duration: '13:54 minutes',
-        credit: 'Courtesy of the artist; 303 Gallery, New York; Galerie Eva Presenhuber, Zurich; Victoria Miro, London; and Regen Projects, Los Angeles.'
-      },
-      {
-        title: 'Black Cloud',
-        artist: 'Lawrence Lek',
-        year: '2021',
-        format: 'color, sound',
-        duration: '11 minutes',
-        credit: 'Commissioned for the 4th VH Award, sponsored by Hyundai Motor Corporation. Courtesy of the artist.'
-      }
     ],
     installationViews: [
       {
@@ -341,6 +194,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '28 กุมภาพันธ์ 2568 - 27 เคมีนาคม 2568'
     },
     status: 'past',
+    additionalInfo: '<p>1. Cinthia Marcelle and Tiago Mata Machado, "Comunidade", 2015 - 2016, color, sound, 8:16 minutes.</p> <p>2. Isaac Chong Wai, "Rehearsal of the Futures: Police Training Exercises", 2018, performance and video, 18:14 minutes.</p> <p>3. Andrew Norman Wilson, "Silvesterchläusen", 2024, color, sound, 12:17 minutes.</p> <p>4. Saodat Ismailova, "Chillpiq", 2018, color, sound, 17 minutes.</p> <p>5. AFSAR×DAVRA, "Proxy Conference: In Forest", 2023, color, sound, 35:04 minutes.</p>',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.3+we+gather--Moving+Image+Programs-+Puttisin+Choojesroom+15+COVER.jpg',
     gallery: [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.3+we+gather--Moving+Image+Programs-+Puttisin+Choojesroom+15.jpg',
@@ -348,48 +202,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.3+we+gather--Saodat+Ismailova-+Chillpiq+1.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.3+we+gather--AFSAR-DAVRA-+Proxy+Conference+In+Forest+11.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.3+we+gather--Andrew+Norman+Wilson-+Silvesterchl%C3%A4usen+1.jpg'
-    ],
-    films: [
-      {
-        title: 'Comunidade',
-        artist: 'Cinthia Marcelle and Tiago Mata Machado',
-        year: '2015–2016',
-        format: 'color, sound',
-        duration: '8:16 minutes',
-        credit: 'Courtesy of the artists, Luisa Strina Gallery, and Sproviery Gallery.'
-      },
-      {
-        title: 'Rehearsal of the Futures: Police Training Exercises',
-        artist: 'Isaac Chong Wai',
-        year: '2018',
-        format: 'performance and video',
-        duration: '18:14 minutes',
-        credit: 'Commissioned by M+ Museum for M+ Live Art: Audience as Performer. Courtesy of the artist, Blindspot Gallery, and Zilberman Gallery.'
-      },
-      {
-        title: 'Silvesterchläusen',
-        artist: 'Andrew Norman Wilson',
-        year: '2024',
-        format: 'color, sound',
-        duration: '12:17 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Chillpiq',
-        artist: 'Saodat Ismailova',
-        year: '2018',
-        format: 'color, sound',
-        duration: '17 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Proxy Conference: In Forest',
-        artist: 'AFSAR×DAVRA',
-        year: '2023',
-        format: 'color, sound',
-        duration: '35:04 minutes',
-        credit: 'Commissioned by Tai Kwun Contemporary. Courtesy of the artists.'
-      }
     ],
     installationViews: [
       {
@@ -417,6 +229,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '30 เมษายน 2568 - 22 มิถุนายน 2568'
     },
     status: 'past',
+    additionalInfo: '<p>1. Tang Han, \"Ginkgo and Other Times\", 2023, color, sound, 15 minutes.</p> <p>2. Mooni Perry, \"Binlang Xishi: Chapter 1 and 2\", 2021 - 2022, color, sound, 25 minutes.</p>',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.4+seeds--Tang+Han-+Ginkgo+and+Other+Times+3+COVER.jpg',
     gallery: [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.4+seeds--Tang+Han-+Ginkgo+and+Other+Times+3.jpg',
@@ -424,24 +237,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.4+seeds--Mooni+Perry-+Binlang+Xishi+3.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.4+seeds--Tang+Han-+Ginkgo+and+Other+Times+1.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.4+seeds--Mooni+Perry-+Binlang+Xishi+2.jpg'
-    ],
-    films: [
-      {
-        title: 'Ginkgo and Other Times',
-        artist: 'Tang Han',
-        year: '2023',
-        format: 'color, sound',
-        duration: '15 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Binlang Xishi: Chapter 1 and 2',
-        artist: 'Mooni Perry',
-        year: '2021–2022',
-        format: 'color, sound',
-        duration: '25 minutes',
-        credit: 'Courtesy of the artist.'
-      }
     ]
   },
   {
@@ -462,6 +257,7 @@ export const movingImagePrograms: MovingImageProgram[] = [
       th: '28 กุมภาพันธ์ 2569 - 3 พฤษภาคม 2569'
     },
     status: 'current',
+    additionalInfo: '<p>1. Parinda Mai, \"12 Kalpas: A Beginning of Beginning\", 2021, color, sound, 8 minutes.</p> <p>2. Parinda Mai, \"Blinded by Centuries\", 2023, color, sound, 14 minutes.</p> <p>3. Hutsama Juntaratana, \"Offerings\", 2026, sculptural installation.</p>',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.6+Inviting+You+to+Die+With+Me--Inviting+You+to+Die+With+Me-+Prapasiri+3+COVER.jpg',
     gallery: [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.6+Inviting+You+to+Die+With+Me--Inviting+You+to+Die+With+Me-+Prapasiri+3.jpg',
@@ -469,32 +265,6 @@ export const movingImagePrograms: MovingImageProgram[] = [
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.6+Inviting+You+to+Die+With+Me--Blinded+by+Centuries+1.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.6+Inviting+You+to+Die+With+Me--Blinded+by+Centuries+2.jpg',
       'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-4.+Moving+Image+Program-4.6+Inviting+You+to+Die+With+Me--12+Kalpas+A+Beginning+of+Beginning+4.jpg'
-    ],
-    films: [
-      {
-        title: '12 Kalpas: A Beginning of Beginning',
-        artist: 'Parinda Mai',
-        year: '2021',
-        format: 'color, sound',
-        duration: '8 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Blinded by Centuries',
-        artist: 'Parinda Mai',
-        year: '2023',
-        format: 'color, sound',
-        duration: '14 minutes',
-        credit: 'Courtesy of the artist.'
-      },
-      {
-        title: 'Offerings',
-        artist: 'Hutsama Juntaratana',
-        year: '2026',
-        format: 'sculptural installation',
-        duration: '',
-        credit: 'Courtesy of the artist.'
-      }
     ],
     installationViews: [
       {

@@ -127,8 +127,8 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
         className="flex flex-col gap-6 w-full cursor-pointer group" 
         onClick={() => onNavigate?.('exhibition-detail', item.slug)}
       >
-        <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
-          {imageUrl && !imgError ? (
+        {imageUrl && !imgError && (
+          <div className="aspect-[3/4] w-full bg-gray-100 overflow-hidden relative">
             <ImageWithFallback 
               src={imageUrl} 
               alt={item.title[language]}
@@ -137,12 +137,8 @@ export function ExhibitionsPage({ onNavigate, targetSectionId }: ExhibitionsPage
               onError={() => setImgError(true)}
               crossOrigin="anonymous"
             />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
-              {language === 'th' ? 'ไม่สามารถโหลดรูปภาพ' : 'Image unavailable'}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
         <div className="flex flex-col gap-1">
           <h3 className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
             {item.title[language]}

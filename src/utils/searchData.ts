@@ -172,9 +172,6 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
 
   // 5. Moving Image Programs
   movingImagePrograms.forEach(program => {
-    // Get film artists for keywords
-    const filmArtists = program.films.map(f => f.artist).join(' ');
-    
     // Get detail content from detailContent.ts instead of inline content
     const enContent = getDetailContentByLanguage(program.slug, 'en') || '';
     const thContent = getDetailContentByLanguage(program.slug, 'th') || '';
@@ -184,7 +181,7 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       id: `moving-image-${program.id}-en`,
       title: program.title.en,
       content: stripHtml(enContent),
-      keywords: `moving image film video cinema ${program.curator.en} ${filmArtists} ภาพยนตร์ วิดีโอ`,
+      keywords: `moving image film video cinema ${program.curator.en} ภาพยนตร์ วิดีโอ`,
       page: 'moving-image-detail',
       slug: program.slug,
       lang: 'en'
@@ -195,7 +192,7 @@ export async function getFullSearchData(): Promise<SearchDocument[]> {
       id: `moving-image-${program.id}-th`,
       title: program.title.th,
       content: stripHtml(thContent),
-      keywords: `moving image film video cinema ${program.curator.th} ${filmArtists} ภาพยนตร์ วิดีโอ ภาพเคลื่อนไหว`,
+      keywords: `moving image film video cinema ${program.curator.th} ภาพยนตร์ วิดีโอ ภาพเคลื่อนไหว`,
       page: 'moving-image-detail',
       slug: program.slug,
       lang: 'th'

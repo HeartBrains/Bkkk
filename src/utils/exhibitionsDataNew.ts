@@ -24,15 +24,11 @@ export interface Exhibition {
     th: string;
   };
   year: string;
+  status?: 'current' | 'upcoming' | 'past';
   imageCredits: string;
   featuredImage?: string;
   gallery?: string[];
   tags?: string;
-}
-
-// Interface with computed status
-export interface ExhibitionWithStatus extends Exhibition {
-  status: Status;
 }
 
 function formatDateDisplay(fromDate: string, toDate: string): { en: string, th: string } {
@@ -88,6 +84,7 @@ export const exhibitions: Exhibition[] = [
     toDate: '2024-03-10',
     dateDisplay: formatDateDisplay('2024-01-12', '2024-03-10'),
     year: '2024',
+    status: 'past',
     imageCredits: 'Michel Auder, "Nine Plus Five Works", 2024. Installation view, Bangkok Kunsthalle. Courtesy of the artist and Bangkok Kunsthalle. Photo by Preecha Pattara and Samatcha Apaisuwan.',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.1+Nine+Plus+Five+Works--Nine+Plus+Five+Works+Opening-+Samatcha+Apaisuwan+23+COVER.jpg',
     gallery: [
@@ -118,6 +115,7 @@ export const exhibitions: Exhibition[] = [
     toDate: '2024-10-31',
     dateDisplay: formatDateDisplay('2024-05-31', '2024-10-31'),
     year: '2024',
+    status: 'past',
     imageCredits: 'Korakrit Arunanondchai, "nostalgia for unity", 2024. Installation view, Bangkok Kunsthalle. Courtesy of the artist and Bangkok Kunsthalle. Photo by Samatcha Apaisuwan.',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.2+nostalgia+for+unity--nostalgia+for+unity-+Samatcha+Apaisuwan+1+COVER.jpg',
     gallery: [
@@ -145,6 +143,7 @@ export const exhibitions: Exhibition[] = [
     toDate: '2024-12-22',
     dateDisplay: formatDateDisplay('2024-08-30', '2024-12-22'),
     year: '2024',
+    status: 'past',
     imageCredits: 'Yoko Ono, "MEND PIECE", A4 Arts Foundation, Cape Town version, 1966/2018. Installation view, Bangkok Kunsthalle. Courtesy of the artist and Bangkok Kunsthalle. Photo by Andrea Rossetti.',
     featuredImage: 'https://irp.cdn-website.com/5516674f/dms3rep/multi/Puma_Images+for+Website-Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.3+MEND+PIECE--Mend+Piece-+Andrea+Rossetti+2+COVER.jpg',
     gallery: [
@@ -544,6 +543,31 @@ export const exhibitions: Exhibition[] = [
       'https://lirp.cdn-website.com/5516674f/dms3rep/multi/opt/Puma_Bangkok+Kunsthalle+Images+for+Website-3.+Exhibition-3.16+A+Bit+Fountain+and+a+Bit+Not--A+Bit+Fountain+and+a+Bit+Not+2-1920w.jpg'
     ],
     tags: 'Installation, Switzerland, Water, Architecture, Permanent'
+  },
+  {
+    id: '17',
+    slug: 'dial-a-poem-thailand',
+    title: {
+      en: 'Dial-A-Poem Thailand',
+      th: 'Dial-A-Poem Thailand'
+    },
+    artist: {
+      en: '',
+      th: ''
+    },
+    curator: {
+      en: '',
+      th: ''
+    },
+    fromDate: '2026-04-10',
+    toDate: '2026-07-31',
+    dateDisplay: formatDateDisplay('2026-04-10', '2026-07-31'),
+    year: '2026',
+    status: 'upcoming',
+    imageCredits: '',
+    featuredImage: '',
+    gallery: [],
+    tags: 'Poetry, Sound art, Thailand, Interactive, Communication'
   }
 ];
 

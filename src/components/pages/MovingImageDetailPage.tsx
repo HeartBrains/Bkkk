@@ -114,7 +114,7 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
         <div className="absolute bottom-8 left-6 md:left-12 z-20">
           <button 
             onClick={() => onNavigate?.('moving-image')}
-            className="fixed top-[120px] left-6 z-50 md:static md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+            className="md:ml-[5%] flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm font-normal font-sans">
@@ -152,22 +152,12 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
                 {language === 'th' ? 'ภาพยนตร์ในโปรแกรม' : 'Films in Program'}
               </h2>
               
-              <div className="space-y-8">
-                {program.films.map((film, index) => (
-                  <div key={index} className="space-y-2">
-                    <p className={`text-xl md:text-2xl font-normal leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      <span className="font-medium">{index + 1}.</span> {film.artist}, <em>{film.title}</em>, {film.year}
-                    </p>
-                    <p className={`text-xl md:text-2xl text-gray-600 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {film.format}
-                      {film.duration && `, ${film.duration}`}
-                    </p>
-                    <p className={`text-xl md:text-2xl text-gray-500 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
-                      {film.credit.replace(/courtesy of the artist\.?/i, '').trim()}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              {program.additionalInfo && (
+                <div 
+                  className={`[&>p]:mb-4 [&>p]:text-xl [&>p]:md:text-2xl ${language === 'th' ? '[&>p]:leading-[1.82em]' : '[&>p]:leading-tight'}`}
+                  dangerouslySetInnerHTML={{ __html: program.additionalInfo }}
+                />
+              )}
               
               {/* Installation Views */}
               {program.installationViews && program.installationViews.length > 0 && (
@@ -177,7 +167,7 @@ export function MovingImageDetailPage({ slug, onNavigate, backPage }: MovingImag
                       <li key={index} className={`text-[12px] text-gray-600 leading-tight ${language === 'th' ? 'leading-[1.82em]' : ''}`}>
                         {view.artist}, <em>{view.title}</em>, {view.year}. {language === 'th' ? 'ภาพจัดแสดง, บางกอก คุนสท์ฮัลเล่' : 'Installation view, Bangkok Kunsthalle'}.
                       </li>
-                    ))}
+                    ))  }
                   </ul>
                 </div>
               )}

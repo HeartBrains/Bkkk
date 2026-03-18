@@ -17,7 +17,7 @@ export const DETAIL_CONTENT_THAI: DetailContentThai[] = [
   {
     slug: 'nostalgia-for-unity',
     category: 'Exhibition',
-    content: `<p>กรกฤต อรุณานนท์ชัย (เกิด พ.ศ. 2529, ไทย) เป็นศิลปินทัศนศิลป์และผู้สร้างภาพยนตร์ที่มีฐานอยู่ในนิวยอร์กและกรุงเทพฯ นิทรรศการเดี่ยวล่าสุดของเขารวมถึงที่ Moderna Museet ในสตอกโฮล์ม, Art Sonje Center ในโซล, และพิพิธภัณฑ์ศิลปะสิงคโปร์ในสิงคโปร์ (2022), Migros Museum für Gegenwartskunst ในสวิตเซอร์แลนด์ (2021), พิพิธภัณฑ์ Serralves ในปอร์โต (2020) และ Vienna Secession (2019)</p>`
+    content: `<p>กรกฤต อรุณานนท์ชัย (เกิด พ.ศ. 2529, ไทย) เป็นศิลปินทัศนศิลป์และผู้สร้างภาพยนตร์ที่มีฐานอยู่ในนิวยอร์กและกรุงเทพฯ นิทรรศการเดี่ย���ล่าสุดของเขารวมถึงที่ Moderna Museet ในสตอกโฮล์ม, Art Sonje Center ในโซล, และพิพิธภัณฑ์ศิลปะสิงคโปร์ในสิงคโปร์ (2022), Migros Museum für Gegenwartskunst ในสวิตเซอร์แลนด์ (2021), พิพิธภัณฑ์ Serralves ในปอร์โต (2020) และ Vienna Secession (2019)</p>`
   },
   {
     slug: 'mend-piece',
@@ -89,6 +89,11 @@ export const DETAIL_CONTENT_THAI: DetailContentThai[] = [
     category: 'Exhibition',
     content: `<p>นอต ไวทัล (เกิด พ.ศ. 2491, สวิตเซอร์แลนด์) เป็นศิลปินชาวสวิสที่มีชื่อเสียงซึ่งรู้จักจากการปฏิบัติแบบเร่ร่อน แบ่งเวลาของเขาระหว่างบราซิล ชิลี จีน และสวิตเซอร์แลนด์</p>`
   },
+  {
+    slug: 'dial-a-poem-thailand',
+    category: 'Exhibition',
+    content: ``
+  },
 
   // MOVING IMAGE PROGRAMS
   {
@@ -124,7 +129,7 @@ export const DETAIL_CONTENT_THAI: DetailContentThai[] = [
   {
     slug: 'upcoming-program-2026',
     category: 'Moving Image Program',
-    content: `<p>รายละเอียดของโปรแกรมภาพเคลื่อนไหวที่กำลังจะมาถึงของเราจะประกาศในเร็วๆ นี้ ติดตามการสำรวจภาพยนตร์และศิลปะร่วมสมัยที่กระตุ้นความคิด</p>`
+    content: `<p>เร็วๆ นี้</p>`
   },
 
   // RESIDENCIES
