@@ -85,19 +85,19 @@ export const siteConfig = {
     },
     noCurrentMovingImage: {
       th: 'เร็วๆ นี้',
-      en: 'Coming soon'
+      en: 'Coming Soon'
     },
     noUpcomingMovingImage: {
       th: 'เร็วๆ นี้',
-      en: 'Coming soon'
+      en: 'Coming Soon'
     },
     noPastMovingImage: {
       th: 'เร็วๆ นี้',
-      en: 'Coming soon'
+      en: 'Coming Soon'
     },
     noCurrentResidency: {
       th: 'เร็วๆ นี้',
-      en: 'Coming soon'
+      en: 'Coming Soon'
     }
   }
 };

@@ -1,6 +1,5 @@
 import { WPPost } from './types';
 import { exhibitions, exhibitionToWPPost } from './exhibitionsDataNew';
-import { getDetailContent } from './detailContent';
 
 // Reference date: March 10, 2026
 const today = new Date(2026, 2, 10);
@@ -58,3 +57,9 @@ export function getPastExhibitions(language: 'en' | 'th' = 'en'): WPPost[] {
     .sort((a, b) => new Date(b.fromDate).getTime() - new Date(a.fromDate).getTime())
     .map(exhibition => exhibitionToWPPost(exhibition, language));
 }
+
+export const exhibitionHelpers = {
+  getUpcomingExhibitions,
+  getCurrentExhibitions,
+  getPastExhibitions
+};
